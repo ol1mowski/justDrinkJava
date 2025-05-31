@@ -1,1 +1,12 @@
-@import "tailwindcss"; 
+@import "tailwindcss";
+
+@theme {
+  --color-java-orange: #f89820;
+  --color-java-red: #ed8b00;
+  --color-java-blue: #5382a1;
+  --color-java-gray: #404040;
+  --color-java-light-gray: #f5f5f5;
+  --color-java-white: #ffffff;
+
+  --font-family-java: Inter, system-ui, sans-serif;
+} 
