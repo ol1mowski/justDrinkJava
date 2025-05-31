@@ -1,50 +1,31 @@
-import { useState, useTransition, memo } from 'react'
+import { memo } from 'react'
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { useLanguage } from '../../../hooks/useLanguage.hooks'
+import { useTranslations } from '../../../translations'
 
 export const SearchBar = memo(() => {
-  const [isPending, startTransition] = useTransition()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [isFocused, setIsFocused] = useState(false)
-
-  const handleSearch = (formData: FormData) => {
-    const query = formData.get('search') as string
-    startTransition(() => {
-      console.log('Searching for:', query)
-    })
-  }
+  const { currentLanguage } = useLanguage()
+  const t = useTranslations(currentLanguage)
 
   return (
-    <form action={handleSearch} className="relative group w-full">
+    <div className="relative group w-full">
       <div className="relative">
         <input
           type="text"
           name="search"
-          placeholder="Szukaj w świecie Java..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          onFocus={() => setIsFocused(true)}
-          onBlur={() => setIsFocused(false)}
-          disabled={isPending}
-          className={`w-full pl-10 pr-4 py-2 border-2 rounded-lg
-                     bg-java-white/90 backdrop-blur-sm transition-all duration-300
-                     focus:ring-2 focus:ring-java-orange/50 text-sm outline-none
-                     disabled:opacity-50 placeholder:text-java-gray/50
-                     ${isFocused 
-                       ? 'border-java-orange focus:border-java-orange bg-java-white' 
-                       : 'border-java-gray/20 hover:border-java-orange/50'
-                     }`}
+          placeholder={t.search.placeholder}
+          className="w-full pl-10 pr-4 py-2 border-2 rounded-lg
+                     bg-java-white dark:bg-java-dark-surface backdrop-blur-sm 
+                     transition-all duration-300 focus:ring-2 focus:ring-java-orange/50 
+                     text-sm outline-none border-java-gray/20 dark:border-java-dark-text/20
+                     hover:border-java-orange/50 focus:border-java-orange 
+                     text-java-gray dark:text-java-dark-text
+                     placeholder:text-java-gray/50 dark:placeholder:text-java-dark-text-secondary"
         />
-        <div className={`absolute left-3 top-1/2 transform -translate-y-1/2 transition-all duration-300
-                        ${isFocused ? 'text-java-orange scale-110' : 'text-java-gray/60'}`}>
-          <MagnifyingGlassIcon className="w-4 h-4" />
-        </div>
-        {isPending && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
-            <div className="w-4 h-4 border-2 border-java-orange border-t-transparent rounded-full animate-spin" />
-          </div>
-        )}
+        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 
+                                       w-4 h-4 text-java-gray/60 dark:text-java-dark-text-secondary" />
       </div>
-    </form>
+    </div>
   )
 })
 

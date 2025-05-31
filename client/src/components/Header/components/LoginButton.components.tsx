@@ -1,7 +1,13 @@
 import { memo } from 'react'
 import { UserIcon } from '@heroicons/react/24/outline'
+import { useTranslations } from '../../../translations'
+import { useLanguage } from '../../../hooks/useLanguage.hooks'
+
 
 export const LoginButton = memo(() => {
+  const { currentLanguage } = useLanguage()
+  const t = useTranslations(currentLanguage)
+
   return (
     <a
       href="/login"
@@ -13,7 +19,7 @@ export const LoginButton = memo(() => {
                      hover:scale-105 hover:bg-java-orange/90
                      whitespace-nowrap focus:outline-none">
         <UserIcon className="w-4 h-4" />
-        <span>Zaloguj</span>
+        <span>{t.navigation.login}</span>
       </div>
     </a>
   )

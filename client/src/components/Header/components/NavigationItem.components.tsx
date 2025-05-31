@@ -1,49 +1,44 @@
 import { memo } from 'react'
-import type { NavigationItem as NavigationItemType } from '../types/navigation.types'
 
 interface NavigationItemProps {
-  item: NavigationItemType
+  name?: string
+  href?: string
+  item?: {
+    name: string
+    href: string
+  }
   isMobile?: boolean
   onClick?: () => void
   animationDelay?: string
 }
 
 export const NavigationItem = memo<NavigationItemProps>(({ 
+  name, 
+  href, 
   item, 
-  isMobile = false, 
-  onClick,
+  isMobile, 
+  onClick, 
   animationDelay 
 }) => {
-  const baseClasses = `
-    relative font-medium transition-all duration-300 group focus:outline-none
-    text-java-gray hover:text-java-orange
-  `
+  const itemName = name || item?.name || ''
+  const itemHref = href || item?.href || ''
   
-  const desktopClasses = `
-    px-3 py-2 rounded-lg text-sm
-  `
-  
-  const mobileClasses = `
-    block px-4 py-4 rounded-xl transform hover:translate-x-2
-    border border-transparent hover:border-java-orange/10
-  `
+  const baseClasses = isMobile
+    ? "block w-full text-left px-4 py-3 rounded-xl text-java-gray hover:text-java-orange hover:bg-java-orange/5 transition-all duration-300 font-medium"
+    : "relative px-3 py-2 text-java-gray dark:text-java-dark-text hover:text-java-orange font-medium transition-all duration-300 group rounded-lg text-sm focus:outline-none"
 
   return (
     <a
-      href={item.href}
-      className={`${baseClasses} ${isMobile ? mobileClasses : desktopClasses}`}
+      href={itemHref}
       onClick={onClick}
+      className={baseClasses}
       style={animationDelay ? { animationDelay } : undefined}
     >
-      {item.name}
-      
-      <span 
-        className={`absolute h-0.5 bg-java-orange transition-all duration-300 
-                   ${isMobile 
-                     ? 'bottom-2 left-4 w-0 group-hover:w-[calc(100%-2rem)]'
-                     : 'bottom-1 left-3 w-0 group-hover:w-[calc(100%-1.5rem)]'
-                   }`} 
-      />
+      {itemName}
+      {!isMobile && (
+        <span className="absolute bottom-1 left-3 w-0 h-0.5 bg-java-orange 
+                       transition-all duration-300 group-hover:w-[calc(100%-1.5rem)]" />
+      )}
     </a>
   )
 })
