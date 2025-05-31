@@ -8,8 +8,8 @@ export const Header = memo(() => {
   return (
     <>
       <header className="sticky top-0 z-40 transition-all duration-300
-                        bg-java-white/95 dark:bg-java-dark-bg/95 backdrop-blur-md 
-                        border-b border-java-gray/10 dark:border-java-dark-text/10">
+                        bg-java-white dark:bg-java-dark-bg backdrop-blur-md 
+                        border-b border-java-gray/20 dark:border-java-dark-text/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 gap-4">
             <BrandLogo />

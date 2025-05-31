@@ -4,26 +4,29 @@
   --color-java-orange: #f89820;
   --color-java-red: #ed8b00;
   --color-java-blue: #5382a1;
-  --color-java-gray: #404040;
+  --color-java-gray: #000000;  /* Czarny tekst w trybie jasnym */
   --color-java-light-gray: #f5f5f5;
-  --color-java-white: #ffffff;
+  --color-java-white: #ffffff;  /* Białe tło w trybie jasnym */
 
   /* Dark mode colors */
-  --color-java-dark-bg: #1a1a1a;
-  --color-java-dark-surface: #2d2d2d;
-  --color-java-dark-text: #e5e5e5;
-  --color-java-dark-text-secondary: #a1a1a1;
+  --color-java-dark-bg: #000000;  /* Czarne tło w trybie ciemnym */
+  --color-java-dark-surface: #1a1a1a;  /* Ciemna powierzchnia */
+  --color-java-dark-text: #ffffff;  /* Biały tekst w trybie ciemnym */
+  --color-java-dark-text-secondary: #cccccc;  /* Jasnoszary tekst pomocniczy */
 
   --font-family-java: Inter, system-ui, sans-serif;
 }
 
+input {
+  border-color: #99999949;
+}
+
+
 /* Dark mode color overrides */
 .dark {
   color-scheme: dark;
-}
-
-.dark * {
-  border-color: #404040;
+  background-color: var(--color-java-dark-bg);
+  color: var(--color-java-dark-text);
 }
 
 /* Custom dark mode background colors */
@@ -42,4 +45,18 @@
 
 .dark .text-java-gray\/70 {
   color: var(--color-java-dark-text-secondary) !important;
+}
+
+/* Light mode explicit styles */
+html:not(.dark) {
+  background-color: var(--color-java-white);
+  color: var(--color-java-gray);
+}
+
+html:not(.dark) .bg-java-white {
+  background-color: var(--color-java-white) !important;
+}
+
+html:not(.dark) .text-java-gray {
+  color: var(--color-java-gray) !important;
 } 

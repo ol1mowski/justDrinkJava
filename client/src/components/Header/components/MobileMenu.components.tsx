@@ -13,33 +13,22 @@ interface MobileMenuProps {
 export const MobileMenu = memo<MobileMenuProps>(({ isOpen, onClose }) => {
   return (
     <div 
-      className={`fixed inset-0 z-50 lg:hidden transition-all duration-500 ${
+      className={`absolute inset-0 z-100 lg:hidden transition-all duration-500 ${
         isOpen ? 'opacity-100 visible' : 'opacity-0 invisible'
       }`}
     >
-      <div 
-        className={`absolute inset-0 bg-black/60 backdrop-blur-md transition-all duration-500 ${
-          isOpen ? 'opacity-100' : 'opacity-0'
-        }`}
-        onClick={onClose}
-      />
       
       <div 
         className={`fixed top-0 right-0 h-full w-80 
-                   bg-java-white/95 backdrop-blur-xl border-l border-java-gray/10
+                   bg-java-white/95 backdrop-blur-xl border-l border-java-orange/10
                    transform transition-all duration-500 ${
                      isOpen ? 'translate-x-0' : 'translate-x-full'
                    }`}
       >
-        <div className="flex items-center justify-between p-6 border-b border-java-gray/10">
-          <img 
-            src="/JustDrinkJava_logo.png" 
-            alt="JustDrinkJava" 
-            className="h-8 w-auto transform hover:scale-105 transition-transform duration-200"
-          />
+        <div className="flex items-center justify-between p-6 border-b border-java-orange/10">
           <button
             onClick={onClose}
-            className="p-2 rounded-xl hover:bg-java-light-gray/50 
+            className="p-2 rounded-xl hover:bg-java-orange/10 cursor-pointer
                       transition-all duration-200 hover:rotate-90 group focus:outline-none"
           >
             <XMarkIcon className="w-6 h-6 text-java-gray group-hover:text-java-orange transition-colors" />
