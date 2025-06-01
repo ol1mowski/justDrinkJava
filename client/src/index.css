@@ -2,7 +2,7 @@
 
 @theme {
   --color-java-orange: #f89820;
-  --color-java-red: #ed8b00;
+  --color-java-red: #f54337;
   --color-java-blue: #5382a1;
   --color-java-gray: #000000;  /* Czarny tekst w trybie jasnym */
   --color-java-light-gray: #f5f5f5;
@@ -17,10 +17,24 @@
   --font-family-java: Inter, system-ui, sans-serif;
 }
 
+/* Utility classes for line clamping */
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
 input {
   border-color: #99999949;
 }
-
 
 /* Dark mode color overrides */
 .dark {
@@ -47,6 +61,10 @@ input {
   color: var(--color-java-dark-text-secondary) !important;
 }
 
+.dark .text-java-blue\/90 {
+  color: var(--color-java-dark-text-secondary) !important;
+}
+
 /* Light mode explicit styles */
 html:not(.dark) {
   background-color: var(--color-java-white);
@@ -59,4 +77,8 @@ html:not(.dark) .bg-java-white {
 
 html:not(.dark) .text-java-gray {
   color: var(--color-java-gray) !important;
+}
+
+html:not(.dark) .text-java-blue\/90 {
+  color: rgba(83, 130, 161, 0.9) !important;
 } 
