@@ -21,7 +21,7 @@ public class PostService {
     private final PostMapper postMapper;
     
     public PostDTO getLatestPost() {
-        Post latestPost = postRepository.findTopByOrderByCreatedAtDesc()
+        Post latestPost = postRepository.findLatestPost()
                 .orElseThrow(() -> {
                     log.error("Nie znaleziono żadnego postu w bazie danych");
                     return new PostNotFoundException("Nie znaleziono żadnego postu");
@@ -31,7 +31,7 @@ public class PostService {
     }
     
     public PostDTO getLatestPostByCategory(Integer categoryId) {
-        Post latestPost = postRepository.findTopByCategoryIdOrderByCreatedAtDesc(categoryId)
+        Post latestPost = postRepository.findLatestPostByCategory(categoryId)
                 .orElseThrow(() -> {
                     log.error("Nie znaleziono postu dla kategorii: {}", categoryId);
                     return new PostNotFoundException(

@@ -1,5 +1,6 @@
 package pl.justdrinkjava.JustDrinkJava.mapper;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import pl.justdrinkjava.JustDrinkJava.dto.PostDTO;
@@ -8,6 +9,12 @@ import pl.justdrinkjava.JustDrinkJava.entity.Post;
 @Component
 public class PostMapper {
     
+    @Autowired
+    private UserMapper userMapper;
+    
+    @Autowired
+    private CategoryMapper categoryMapper;
+    
     public PostDTO toDTO(Post post) {
         if (post == null) {
             return null;
@@ -15,28 +22,13 @@ public class PostMapper {
         
         return PostDTO.builder()
                 .id(post.getId())
-                .userId(post.getUserId())
-                .categoryId(post.getCategoryId())
+                .user(userMapper.toDTO(post.getUser()))
+                .category(categoryMapper.toDTO(post.getCategory()))
                 .title(post.getTitle())
                 .description(post.getDescription())
                 .createdAt(post.getCreatedAt())
                 .readTime(post.getReadTime())
-                .build();
-    }
-    
-    public Post toEntity(PostDTO postDTO) {
-        if (postDTO == null) {
-            return null;
-        }
-        
-        return Post.builder()
-                .id(postDTO.getId())
-                .userId(postDTO.getUserId())
-                .categoryId(postDTO.getCategoryId())
-                .title(postDTO.getTitle())
-                .description(postDTO.getDescription())
-                .createdAt(postDTO.getCreatedAt())
-                .readTime(postDTO.getReadTime())
+                .imageUrl(post.getImageUrl())
                 .build();
     }
 } 

@@ -82,25 +82,6 @@ export const PopularTags = memo(() => {
           Zobacz wszystkie tematy →
         </button>
       </div>
-
-      <div className="mt-4 p-4 bg-java-light-gray dark:bg-java-dark-bg rounded-xl">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-java-blue/90 dark:text-java-dark-text-secondary">
-            Łącznie tagów:
-          </span>
-          <span className="font-bold text-java-orange">
-            {popularTags.length}+
-          </span>
-        </div>
-        <div className="flex items-center justify-between text-sm mt-2">
-          <span className="text-java-blue/90 dark:text-java-dark-text-secondary">
-            Wszystkie posty:
-          </span>
-          <span className="font-bold text-java-blue">
-            {popularTags.reduce((acc, tag) => acc + tag.count, 0)}
-          </span>
-        </div>
-      </div>
     </div>
   )
 })

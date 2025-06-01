@@ -13,22 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDTO {
+public class UserDTO {
     
     private Integer id;
-    private UserDTO user;
-    private CategoryDTO category;
-    private String title;
-    private String description;
+    private String username;
+    private String email;
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime createdAt;
-    
-    private Integer readTime;
-    private String imageUrl;
-    
-    public String getReadTimeFormatted() {
-        if (readTime == null) return null;
-        return readTime + " min czytania";
-    }
 } 
