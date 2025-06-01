@@ -1,6 +1,6 @@
 # 🍵 Just Drink Java
 
-Aplikacja webowa stworzona z myślą o miłośnikach kawy i społeczności Java Developer. Projekt łączy w sobie elegancki frontend w React z potężnym backendem w Spring Boot.
+Aplikacja webowa stworzona z myślą o społeczności Java Developer. Projekt łączy w sobie elegancki frontend w React z potężnym backendem w Spring Boot.
 
 ## 🚀 Technologie
 
