@@ -3,7 +3,7 @@ import {
   DocumentTextIcon, 
   QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline'
-import { useStatistics } from '../../../hooks/useStatistics.hook'
+import { useStatistics } from '../hooks/useStatistics.hook'
 import { ErrorBoundaryWrapper } from '../../ui'
 import { StatisticsLoadingState } from './StatisticsLoadingState.component'
 import { StatisticsErrorState } from './StatisticsErrorState.component'

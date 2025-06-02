@@ -1,5 +1,5 @@
 import { memo } from 'react'
-import { useLatestPost } from '../../../hooks/useLatestPost'
+import { useLatestPost } from '../hooks/useLatestPost'
 import { PostLoadingSkeleton } from './PostLoadingSkeleton.component'
 import { PostErrorState } from './PostErrorState.component'
 import { PostBadge } from './PostBadge.component'

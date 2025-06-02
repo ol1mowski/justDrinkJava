@@ -1,9 +1,12 @@
 package pl.justdrinkjava.JustDrinkJava.controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,24 @@ public class PostController {
             return ResponseEntity.ok(latestPost);
         } catch (Exception e) {
             log.error("Błąd podczas pobierania najnowszego postu: {}", e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    @GetMapping
+    public ResponseEntity<List<PostDTO>> getLatestPosts(
+            @RequestParam(defaultValue = "9") int limit) {
+        try {
+            log.info("Żądanie pobrania {} ostatnich postów", limit);
+            
+            List<PostDTO> posts = postService.getLatestPosts(limit);
+            
+            log.info("Zwracanie {} postów", posts.size());
+            
+            return ResponseEntity.ok(posts);
+            
+        } catch (Exception e) {
+            log.error("Błąd podczas pobierania postów: {}", e.getMessage(), e);
             throw e;
         }
     }

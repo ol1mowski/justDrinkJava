@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { API_BASE_URL } from '../utils/api'
-import { useErrorHandler } from './useErrorHandler.hook'
+import { API_BASE_URL } from '../../../utils/api'
+import { useErrorHandler } from '../../../hooks/useErrorHandler.hook'
 
 export interface StatisticsDto {
   postsCount: number

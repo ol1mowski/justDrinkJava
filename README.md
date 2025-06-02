@@ -174,12 +174,12 @@ npm run test # (jeśli zostanie dodane)
 
 ## 📝 API Documentation
 
-API będzie dostępne pod adresem `http://localhost:8080/api/v1/`
+API będzie dostępne pod adresem `http://localhost:8080/api/`
 
 ### Główne endpointy:
-- `GET /api/v1/health` - Status aplikacji
-- `POST /api/v1/auth/login` - Logowanie
-- `POST /api/v1/auth/register` - Rejestracja
+- `GET /api/health` - Status aplikacji
+- `POST /api/auth/login` - Logowanie
+- `POST /api/auth/register` - Rejestracja
 
 ## 🤝 Współpraca
 

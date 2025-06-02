@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { apiService } from '../utils/api'
-import type { PostData } from '../utils/api'
+import { apiService } from '../../../utils/api'
+import type { PostData } from '../../../utils/api'
 
 interface UseLatestPostState {
   data: PostData | null

@@ -1,5 +1,7 @@
 package pl.justdrinkjava.JustDrinkJava.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,4 +32,15 @@ public class PostService {
         return postMapper.toDTO(latestPost);
     }
     
+    public List<PostDTO> getLatestPosts(int limit) {
+        log.info("Pobieranie {} ostatnich postów z bazy danych", limit);
+        
+        List<Post> posts = postRepository.findLatestPosts(limit);
+        
+        log.info("Znaleziono {} postów", posts.size());
+        
+        return posts.stream()
+                .map(postMapper::toDTO)
+                .toList();
+    }
 } 
