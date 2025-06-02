@@ -1,9 +1,7 @@
 import { memo } from 'react'
 import { 
   DocumentTextIcon, 
-  UserGroupIcon, 
-  EyeIcon, 
-  HeartIcon 
+  QuestionMarkCircleIcon,
 } from '@heroicons/react/24/outline'
 
 interface Statistic {
@@ -26,28 +24,12 @@ const statistics: Statistic[] = [
   },
   {
     id: '2',
-    icon: UserGroupIcon,
+    icon: QuestionMarkCircleIcon,
     value: '1.2k',
-    label: 'Developerów',
+    label: 'Quizów',
     color: 'blue',
     growth: '+28%'
   },
-  {
-    id: '3',
-    icon: EyeIcon,
-    value: '50k',
-    label: 'Wyświetleń',
-    color: 'red',
-    growth: '+45%'
-  },
-  {
-    id: '4',
-    icon: HeartIcon,
-    value: '95%',
-    label: 'Zadowolonych',
-    color: 'orange',
-    growth: '+3%'
-  }
 ]
 
 const getStatisticStyles = (color: Statistic['color']) => {
