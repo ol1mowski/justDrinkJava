@@ -13,4 +13,5 @@ public class HashtagDto {
 
     private Integer id;
     private String name;
+    private Long postCount;
 } 

@@ -5,6 +5,7 @@ import { useErrorHandler } from '../../../hooks/useErrorHandler.hook'
 export interface HashtagDto {
   id: number
   name: string
+  postCount: number
 }
 
 export interface Tag {
@@ -18,13 +19,13 @@ export interface Tag {
 const hashtagToTag = (hashtag: HashtagDto, index: number): Tag => {
   const colors: Tag['color'][] = ['orange', 'red', 'blue']
   const randomColor = colors[index % colors.length]
-  const randomCount = Math.floor(Math.random() * 150) + 20 
-  const trending = Math.random() > 0.7 
+  
+  const trending = hashtag.postCount > 5
   
   return {
     id: hashtag.id.toString(),
     name: hashtag.name,
-    count: randomCount,
+    count: hashtag.postCount,
     color: randomColor,
     trending
   }

@@ -15,4 +15,14 @@ public interface HashtagRepository extends JpaRepository<Hashtag, Integer> {
     
     @Query("SELECT h FROM Hashtag h WHERE h.name = :name")
     List<Hashtag> findByName(String name);
+    
+    @Query(value = """
+        SELECT h.id, h.name, 
+               COALESCE((SELECT COUNT(*) 
+                        FROM post_hashtags ph 
+                        WHERE ph.hashtag_id = h.id), 0) as postCount
+        FROM hashtags h 
+        ORDER BY postCount DESC, h.name ASC
+        """, nativeQuery = true)
+    List<Object[]> findHashtagsWithPostCount();
 } 

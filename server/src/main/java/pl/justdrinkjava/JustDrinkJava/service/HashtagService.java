@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.justdrinkjava.JustDrinkJava.dto.HashtagDto;
-import pl.justdrinkjava.JustDrinkJava.entity.Hashtag;
 import pl.justdrinkjava.JustDrinkJava.mapper.HashtagMapper;
 import pl.justdrinkjava.JustDrinkJava.repository.HashtagRepository;
 
@@ -22,12 +21,12 @@ public class HashtagService {
     private final HashtagMapper hashtagMapper;
 
     public List<HashtagDto> getAllHashtags() {
-        log.info("Pobieranie wszystkich hashtagów z bazy danych");
+        log.info("Pobieranie wszystkich hashtagów z liczbą postów z bazy danych");
         
-        List<Hashtag> hashtags = hashtagRepository.findAllByOrderByNameAsc();
+        List<Object[]> hashtagsWithCounts = hashtagRepository.findHashtagsWithPostCount();
         
-        log.info("Znaleziono {} hashtagów", hashtags.size());
+        log.info("Znaleziono {} hashtagów z liczbami postów", hashtagsWithCounts.size());
         
-        return hashtagMapper.toDtoList(hashtags);
+        return hashtagMapper.fromQueryResults(hashtagsWithCounts);
     }
 } 

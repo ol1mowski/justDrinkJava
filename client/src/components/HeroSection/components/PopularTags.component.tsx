@@ -5,7 +5,6 @@ import { HashtagsLoadingState } from './HashtagsLoadingState.component'
 import { HashtagsErrorState } from './HashtagsErrorState.component'
 import { PopularTagsHeader } from './PopularTagsHeader.component'
 import { TagsList } from './TagsList.component'
-import { PopularTagsFooter } from './PopularTagsFooter.component'
 
 export const PopularTags = memo(() => {
   const { tags, loading, error, refetch } = useHashtags(10)
@@ -27,7 +26,6 @@ export const PopularTags = memo(() => {
                      border border-java-gray/10 dark:border-java-dark-text/10">
         <PopularTagsHeader />
         <TagsList tags={tags} />
-        <PopularTagsFooter />
       </div>
     </ErrorBoundaryWrapper>
   )
