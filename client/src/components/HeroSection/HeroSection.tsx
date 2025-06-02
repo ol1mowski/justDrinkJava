@@ -4,6 +4,7 @@ import { LatestPost } from './components/LatestPost.component'
 import { CallToAction } from './components/CallToAction.components'
 import { StatisticsGrid } from './components/StatisticsGrid.components'
 import { PopularTags } from './components/PopularTags.component'
+import { QuizBanner } from './components/QuizBanner.component'
 
 export const HeroSection = memo(() => {
   return (
@@ -41,6 +42,13 @@ export const HeroSection = memo(() => {
                   message="Wystąpił problem podczas ładowania najnowszego posta"
                 >
                   <LatestPost />
+                </ErrorBoundaryWrapper>
+                
+                <ErrorBoundaryWrapper
+                  title="Błąd banera quizów"
+                  message="Wystąpił problem podczas ładowania banera z quizami"
+                >
+                  <QuizBanner />
                 </ErrorBoundaryWrapper>
               </div>
             </div>
