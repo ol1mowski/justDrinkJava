@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import pl.justdrinkjava.JustDrinkJava.entity.Post;
@@ -16,9 +15,4 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
     
     @Query("SELECT p FROM Post p LEFT JOIN FETCH p.user LEFT JOIN FETCH p.category ORDER BY p.createdAt DESC LIMIT 1")
     Optional<Post> findLatestPost();
-    
-    @Query("SELECT p FROM Post p LEFT JOIN FETCH p.user LEFT JOIN FETCH p.category WHERE p.category.id = :categoryId ORDER BY p.createdAt DESC LIMIT 1")
-    Optional<Post> findLatestPostByCategory(@Param("categoryId") Integer categoryId);
-    
-    Optional<Post> findTopByCategoryIdOrderByCreatedAtDesc(Integer categoryId);
 } 

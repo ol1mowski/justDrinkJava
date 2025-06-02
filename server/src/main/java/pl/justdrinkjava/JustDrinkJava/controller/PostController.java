@@ -3,7 +3,6 @@ package pl.justdrinkjava.JustDrinkJava.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,25 +27,6 @@ public class PostController {
             return ResponseEntity.ok(latestPost);
         } catch (Exception e) {
             log.error("Błąd podczas pobierania najnowszego postu: {}", e.getMessage(), e);
-            throw e;
-        }
-    }
-    
-    @GetMapping("/latest/category/{categoryId}")
-    public ResponseEntity<PostDTO> getLatestPostByCategory(
-            @PathVariable("categoryId") Integer categoryId) {
-        
-        if (categoryId == null || categoryId <= 0) {
-            log.error("Nieprawidłowe ID kategorii: {}", categoryId);
-            return ResponseEntity.badRequest().build();
-        }
-        
-        try {
-            PostDTO latestPost = postService.getLatestPostByCategory(categoryId);
-            return ResponseEntity.ok(latestPost);
-        } catch (Exception e) {
-            log.error("Błąd podczas pobierania najnowszego postu dla kategorii {}: {}", 
-                    categoryId, e.getMessage(), e);
             throw e;
         }
     }

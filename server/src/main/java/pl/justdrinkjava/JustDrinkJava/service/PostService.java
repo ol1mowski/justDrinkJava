@@ -30,14 +30,4 @@ public class PostService {
         return postMapper.toDTO(latestPost);
     }
     
-    public PostDTO getLatestPostByCategory(Integer categoryId) {
-        Post latestPost = postRepository.findLatestPostByCategory(categoryId)
-                .orElseThrow(() -> {
-                    log.error("Nie znaleziono postu dla kategorii: {}", categoryId);
-                    return new PostNotFoundException(
-                            String.format("Nie znaleziono postu dla kategorii: %d", categoryId));
-                });
-        
-        return postMapper.toDTO(latestPost);
-    }
 } 
