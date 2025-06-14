@@ -12,6 +12,7 @@ export const DesktopNavigation = memo(() => {
     { name: t.navigation.about, href: '/about' },
     { name: t.navigation.quizzes, href: '/quizzes' },
     { name: t.navigation.jobs, href: '/jobs' },
+    { name: t.navigation.cvGuide, href: '/cv-guide' },
   ]
 
   return (

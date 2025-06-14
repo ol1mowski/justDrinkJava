@@ -6,6 +6,7 @@ export interface Translations {
     about: string
     quizzes: string
     jobs: string
+    cvGuide: string
     login: string
   }
   search: {
@@ -25,6 +26,7 @@ export const translations: Record<Language, Translations> = {
       about: 'O nas',
       quizzes: 'Quizy', 
       jobs: 'Oferty pracy',
+      cvGuide: 'Poradnik CV',
       login: 'Zaloguj'
     },
     search: {
@@ -41,7 +43,8 @@ export const translations: Record<Language, Translations> = {
       posts: 'Posts',
       about: 'About',
       quizzes: 'Quizzes',
-      jobs: 'Job Offers', 
+      jobs: 'Job Offers',
+      cvGuide: 'CV Guide',
       login: 'Login'
     },
     search: {
@@ -59,6 +62,7 @@ export const translations: Record<Language, Translations> = {
       about: 'Über uns',
       quizzes: 'Quiz',
       jobs: 'Stellenangebote',
+      cvGuide: 'CV Leitfaden',
       login: 'Anmelden'
     },
     search: {

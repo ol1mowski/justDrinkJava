@@ -4,15 +4,9 @@
   --color-java-orange: #f89820;
   --color-java-red: #f54337;
   --color-java-blue: #5382a1;
-  --color-java-gray: #000000;  /* Czarny tekst w trybie jasnym */
+  --color-java-gray: #000000;
   --color-java-light-gray: #f5f5f5;
-  --color-java-white: #ffffff;  /* Białe tło w trybie jasnym */
-
-  /* Dark mode colors */
-  --color-java-dark-bg: #000000;  /* Czarne tło w trybie ciemnym */
-  --color-java-dark-surface: #1a1a1a;  /* Ciemna powierzchnia */
-  --color-java-dark-text: #ffffff;  /* Biały tekst w trybie ciemnym */
-  --color-java-dark-text-secondary: #cccccc;  /* Jasnoszary tekst pomocniczy */
+  --color-java-white: #ffffff;
 
   --font-family-java: Inter, system-ui, sans-serif;
 }
@@ -103,57 +97,11 @@ html {
   background: #e67e22;
 }
 
-.dark ::-webkit-scrollbar-track {
-  background: var(--color-java-dark-surface);
+/* Explicit color overrides */
+.text-java-blue\/80 {
+  color: rgba(83, 130, 161, 0.8) !important;
 }
 
-.dark ::-webkit-scrollbar-thumb {
-  background: var(--color-java-orange);
-}
-
-/* Dark mode color overrides */
-.dark {
-  color-scheme: dark;
-  background-color: var(--color-java-dark-bg);
-  color: var(--color-java-dark-text);
-}
-
-/* Custom dark mode background colors */
-.dark .bg-java-white {
-  background-color: var(--color-java-dark-bg) !important;
-}
-
-.dark .bg-java-light-gray {
-  background-color: var(--color-java-dark-surface) !important;
-}
-
-/* Custom dark mode text colors */
-.dark .text-java-gray {
-  color: var(--color-java-dark-text) !important;
-}
-
-.dark .text-java-gray\/70 {
-  color: var(--color-java-dark-text-secondary) !important;
-}
-
-.dark .text-java-blue\/90 {
-  color: var(--color-java-dark-text-secondary) !important;
-}
-
-/* Light mode explicit styles */
-html:not(.dark) {
-  background-color: var(--color-java-white);
-  color: var(--color-java-gray);
-}
-
-html:not(.dark) .bg-java-white {
-  background-color: var(--color-java-white) !important;
-}
-
-html:not(.dark) .text-java-gray {
-  color: var(--color-java-gray) !important;
-}
-
-html:not(.dark) .text-java-blue\/90 {
+.text-java-blue\/90 {
   color: rgba(83, 130, 161, 0.9) !important;
 } 
