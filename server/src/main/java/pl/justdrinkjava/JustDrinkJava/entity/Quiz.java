@@ -1,15 +1,11 @@
 package pl.justdrinkjava.JustDrinkJava.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "quizzes")
@@ -23,12 +19,20 @@ public class Quiz {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String question;
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
     
-    @Column(nullable = false, columnDefinition = "TEXT")
-    private String answers;
+    @Column(nullable = false)
+    private String title;
     
-    @Column(name = "correct_answers", nullable = false, columnDefinition = "TEXT")
-    private String correctAnswers;
+    @Column(columnDefinition = "TEXT")
+    private String description;
+    
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+    
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 } 
