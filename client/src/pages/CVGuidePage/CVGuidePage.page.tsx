@@ -137,7 +137,7 @@ const CVSection = memo<{
     className={`relative p-6 rounded-lg border-2 transition-all duration-200 cursor-pointer
       ${isActive 
         ? 'border-java-orange bg-java-orange/10 shadow-lg' 
-        : 'border-gray-200 dark:border-java-gray/30 hover:border-java-orange/60 hover:bg-java-orange/5 hover:shadow-md'
+        : 'border-java-orange/30 hover:border-java-orange/60 hover:bg-java-orange/5 hover:shadow-md'
       }`}
     onClick={onClick}
   >
@@ -175,7 +175,7 @@ const Tooltip = memo<{
         className="bg-white dark:bg-java-dark-bg rounded-xl max-w-2xl w-full max-h-[80vh] overflow-y-auto shadow-2xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="sticky top-0 bg-white dark:bg-java-dark-bg border-b border-gray-200 dark:border-java-gray/20 p-6 flex justify-between items-center">
+        <div className="sticky top-0 bg-white dark:bg-java-dark-bg border-b border-java-orange/30 p-6 flex justify-between items-center">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-java-dark-text">
             {data.title}
           </h2>
@@ -340,7 +340,7 @@ export const CVGuidePage = memo(() => {
 
       {/* Interactive CV */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="bg-white dark:bg-java-dark-bg shadow-2xl rounded-xl p-8 lg:p-12 border border-gray-200 dark:border-java-gray/20">
+        <div className="bg-gradient-to-br from-java-orange/20 via-java-orange/10 to-java-orange/5 dark:from-java-orange/30 dark:via-java-orange/20 dark:to-java-orange/10 shadow-2xl rounded-xl p-8 lg:p-12">
           
           {/* Header Section */}
           <CVSection
@@ -349,7 +349,7 @@ export const CVGuidePage = memo(() => {
             onClick={() => handleSectionClick('header')}
             isActive={activeTooltip === 'header'}
           >
-            <div className="text-center border-b border-gray-200 dark:border-java-gray/20 pb-6">
+            <div className="text-center border-b border-java-orange/20 pb-6">
               <div className="flex flex-col items-center mb-4">
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-java-orange to-java-blue mb-4 flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                   JK
@@ -378,7 +378,7 @@ export const CVGuidePage = memo(() => {
             onClick={() => handleSectionClick('summary')}
             isActive={activeTooltip === 'summary'}
           >
-            <div className="py-6 border-b border-gray-200 dark:border-java-gray/20">
+            <div className="py-6 border-b border-java-orange/20">
               <p className="text-gray-700 dark:text-java-dark-text-secondary leading-relaxed">
                 Doświadczony Java Developer z 5-letnim stażem w tworzeniu aplikacji enterprise. 
                 Specjalizuję się w Spring Boot, mikrousługach i architekturze chmurowej. 
@@ -397,7 +397,7 @@ export const CVGuidePage = memo(() => {
             onClick={() => handleSectionClick('experience')}
             isActive={activeTooltip === 'experience'}
           >
-            <div className="py-6 border-b border-gray-200 dark:border-java-gray/20 space-y-6">
+            <div className="py-6 border-b border-java-orange/20 space-y-6">
               <div>
                 <div className="flex justify-between items-start mb-2">
                   <h3 className="text-lg font-semibold text-gray-800 dark:text-java-dark-text">
@@ -440,7 +440,7 @@ export const CVGuidePage = memo(() => {
             onClick={() => handleSectionClick('skills')}
             isActive={activeTooltip === 'skills'}
           >
-            <div className="py-6 border-b border-gray-200 dark:border-java-gray/20">
+            <div className="py-6 border-b border-java-orange/20">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-semibold text-gray-800 dark:text-java-dark-text mb-3">Backend</h4>
@@ -490,7 +490,7 @@ export const CVGuidePage = memo(() => {
             onClick={() => handleSectionClick('projects')}
             isActive={activeTooltip === 'projects'}
           >
-            <div className="py-6 border-b border-gray-200 dark:border-java-gray/20 space-y-4">
+            <div className="py-6 border-b border-java-orange/20 space-y-4">
               <div>
                 <h4 className="font-semibold text-gray-800 dark:text-java-dark-text mb-2">
                   TaskManager Pro
