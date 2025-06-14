@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { PlayIcon, LockClosedIcon, CalendarIcon, UserIcon, SparklesIcon } from '@heroicons/react/24/outline'
 import { FireIcon } from '@heroicons/react/24/solid'
+import { LoginSection } from '../../../components/LoginSection'
 import type { QuizCardProps } from '../types'
 
 export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQuiz }) => {
@@ -52,9 +53,13 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Aby uzyskać dostęp do ekskluzywnych quizów musisz się zalogować
               </p>
-              <button className="bg-java-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                Zaloguj się
-              </button>
+              <LoginSection 
+                triggerElement={
+                  <button className="bg-java-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                    Zaloguj się
+                  </button>
+                }
+              />
             </div>
           </div>
         )}
