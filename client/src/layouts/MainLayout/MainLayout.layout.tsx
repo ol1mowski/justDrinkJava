@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../../components/Header/Header'
+import Footer from '../../components/Footer/Footer'
 import { ErrorBoundaryWrapper } from '../../components/ui'
 
 export const MainLayout = memo(() => {
@@ -15,6 +16,7 @@ export const MainLayout = memo(() => {
         <main>
           <Outlet />
         </main>
+        <Footer />
       </ErrorBoundaryWrapper>
     </div>
   )
