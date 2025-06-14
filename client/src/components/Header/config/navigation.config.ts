@@ -8,4 +8,5 @@ export const navigationItems: NavigationItem[] = [
   { name: 'About', href: '/about' },
   { name: 'Quizzes', href: '/quizzes' },
   { name: 'Jobs', href: '/jobs' },
+  { name: 'CV Guide', href: '/cv-guide' },
 ] 

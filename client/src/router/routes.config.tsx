@@ -7,6 +7,7 @@ const PostsPage = lazy(() => import('../pages/PostsPage/PostsPage.page').then(mo
 const AboutPage = lazy(() => import('../pages/AboutPage/AboutPage.page').then(module => ({ default: module.AboutPage })))
 const JobsPage = lazy(() => import('../pages/JobsPage/JobsPage.page').then(module => ({ default: module.JobsPage })))
 const QuizzesPage = lazy(() => import('../pages/QuizzesPage/QuizzesPage.page').then(module => ({ default: module.QuizzesPage })))
+const CVGuidePage = lazy(() => import('../pages/CVGuidePage/CVGuidePage.page').then(module => ({ default: module.CVGuidePage })))
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage.page').then(module => ({ default: module.NotFoundPage })))
 
 export const routes: RouteObject[] = [
@@ -33,6 +34,10 @@ export const routes: RouteObject[] = [
       {
         path: 'quizzes',
         element: <QuizzesPage />,
+      },
+      {
+        path: 'cv-guide',
+        element: <CVGuidePage />,
       },
     ],
   },
