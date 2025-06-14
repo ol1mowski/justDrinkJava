@@ -62,6 +62,15 @@ input {
   }
 }
 
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(248, 152, 32, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(248, 152, 32, 0.6);
+  }
+}
+
 .animate-fadeInUp {
   animation: fadeInUp 0.6s ease-out;
 }
@@ -72,6 +81,10 @@ input {
 
 .animate-slideInDown {
   animation: slideInDown 0.4s ease-out;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
 /* Smooth scrolling */
