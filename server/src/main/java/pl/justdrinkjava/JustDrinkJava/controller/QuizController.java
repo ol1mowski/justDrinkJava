@@ -9,7 +9,7 @@ import pl.justdrinkjava.JustDrinkJava.repository.QuizRepository;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/quizzes")
+@RequestMapping("/quizzes")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class QuizController {
