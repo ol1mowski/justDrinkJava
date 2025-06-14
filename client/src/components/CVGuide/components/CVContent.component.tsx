@@ -5,7 +5,6 @@ import { CVExperienceSection } from './CVExperienceSection.component'
 import { CVSkillsSection } from './CVSkillsSection.component'
 import { CVProjectsSection } from './CVProjectsSection.component'
 import { CVEducationSection } from './CVEducationSection.component'
-import { LoginSection } from '../../LoginSection'
 import type { CVContentProps } from '../types'
 
 export const CVContent = memo<CVContentProps>(({ activeTooltip, onSectionClick }) => (
@@ -81,13 +80,9 @@ export const CVContent = memo<CVContentProps>(({ activeTooltip, onSectionClick }
               <p className="text-gray-600 mb-4">
                 Aby zobaczyć więcej porad musisz się zalogować
               </p>
-              <LoginSection 
-                triggerElement={
-                  <button className="bg-java-orange hover:bg-java-orange/90 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
-                    Zaloguj się
-                  </button>
-                }
-              />
+              <button className="bg-java-orange hover:bg-java-orange/90 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                Zaloguj się
+              </button>
             </div>
           </div>
         </div>
