@@ -25,14 +25,12 @@ export const RegisterForm = memo<RegisterFormProps>(({ onSubmit, isLoading: exte
       }}
       className="space-y-6"
     >
-      {/* Server Error Display */}
       {errors.server && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
           <p className="text-sm">{errors.server}</p>
         </div>
       )}
 
-      {/* Email Field */}
       <div>
         <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-2">
           Adres email
@@ -56,7 +54,6 @@ export const RegisterForm = memo<RegisterFormProps>(({ onSubmit, isLoading: exte
         )}
       </div>
 
-      {/* First Name Field */}
       <div>
         <label htmlFor="register-firstName" className="block text-sm font-medium text-gray-700 mb-2">
           Imię
@@ -80,7 +77,6 @@ export const RegisterForm = memo<RegisterFormProps>(({ onSubmit, isLoading: exte
         )}
       </div>
 
-      {/* Last Name Field */}
       <div>
         <label htmlFor="register-lastName" className="block text-sm font-medium text-gray-700 mb-2">
           Nazwisko
@@ -104,7 +100,6 @@ export const RegisterForm = memo<RegisterFormProps>(({ onSubmit, isLoading: exte
         )}
       </div>
 
-      {/* Password Field */}
       <div>
         <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 mb-2">
           Hasło
@@ -142,8 +137,7 @@ export const RegisterForm = memo<RegisterFormProps>(({ onSubmit, isLoading: exte
           <p className="mt-1 text-sm text-red-600">{errors.password}</p>
         )}
       </div>
-
-      {/* Submit Button */}
+        
       <button
         type="submit"
         disabled={loading}

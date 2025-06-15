@@ -1,12 +1,10 @@
 import { useState, useCallback, useEffect } from 'react'
-import { authApi, type AuthResponse, type LoginRequest, type RegisterRequest } from '../utils/api'
+import { authApi, type LoginRequest, type RegisterRequest } from '../utils/api'
 
 interface User {
   id: number
   email: string
-  firstName: string
-  lastName: string
-  role: string
+  username: string
   createdAt: string
 }
 
@@ -27,7 +25,6 @@ export const useAuth = () => {
     error: null,
   })
 
-  // Initialize auth state from localStorage
   useEffect(() => {
     const token = localStorage.getItem('accessToken')
     const userStr = localStorage.getItem('user')
@@ -44,7 +41,6 @@ export const useAuth = () => {
         console.log('✅ User authenticated from localStorage:', user.email)
       } catch (error) {
         console.error('❌ Failed to parse user from localStorage:', error)
-        // Clear invalid data
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
       }
@@ -61,7 +57,6 @@ export const useAuth = () => {
       if (response.status === 'success' && response.data) {
         const { token, user } = response.data
         
-        // Store in localStorage
         localStorage.setItem('accessToken', token)
         localStorage.setItem('user', JSON.stringify(user))
         
@@ -108,8 +103,7 @@ export const useAuth = () => {
 
       if (response.status === 'success' && response.data) {
         const { token, user } = response.data
-        
-        // Store in localStorage
+            
         localStorage.setItem('accessToken', token)
         localStorage.setItem('user', JSON.stringify(user))
         

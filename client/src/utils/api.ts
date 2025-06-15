@@ -13,9 +13,7 @@ export interface AuthResponse {
   user: {
     id: number
     email: string
-    firstName: string
-    lastName: string
-    role: string
+    username: string
     createdAt: string
   }
 }
@@ -28,8 +26,6 @@ export interface LoginRequest {
 export interface RegisterRequest {
   email: string
   password: string
-  firstName: string
-  lastName: string
 }
 
 class ApiClient {

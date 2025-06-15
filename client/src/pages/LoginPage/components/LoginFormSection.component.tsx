@@ -11,14 +11,10 @@ export const LoginFormSection = memo(() => {
 
   const handleLogin = (data: LoginFormData) => {
     console.log('✅ Login completed successfully for:', data.email)
-    // Login is handled by LoginForm internally via useAuth hook
-    // This callback is called after successful login
   }
 
   const handleRegister = () => {
     console.log('✅ Registration completed successfully')
-    // Registration is handled by RegisterForm internally via useAuth hook
-    // This callback is called after successful registration
   }
 
   const handleGoogleLogin = () => {
@@ -41,13 +37,11 @@ export const LoginFormSection = memo(() => {
 
   const handleForgotPasswordClick = () => {
     console.log('Navigate to forgot password')
-    // TODO: Navigate to forgot password page
   }
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-8 lg:p-12">
       <div className="max-w-md w-full">
-        {/* Header */}
         <div className="text-center mb-8">
           <div className="w-16 h-16 bg-java-orange rounded-full flex items-center justify-center mx-auto mb-6">
             {isRegisterMode ? (
@@ -67,9 +61,7 @@ export const LoginFormSection = memo(() => {
           </p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl p-8">
-          {/* Form Mode Toggle */}
           <div className="flex mb-6">
             <button
               onClick={handleLoginClick}
@@ -95,13 +87,11 @@ export const LoginFormSection = memo(() => {
 
           {!isRegisterMode && (
             <>
-              {/* Social Login - tylko dla logowania */}
               <SocialLogin
                 onGoogleLogin={handleGoogleLogin}
                 onGithubLogin={handleGithubLogin}
               />
 
-              {/* Divider */}
               <div className="relative my-6">
                 <div className="absolute inset-0 flex items-center">
                   <div className="w-full border-t border-gray-300" />
@@ -113,14 +103,12 @@ export const LoginFormSection = memo(() => {
             </>
           )}
 
-          {/* Form */}
           {isRegisterMode ? (
             <RegisterForm onSubmit={handleRegister} />
           ) : (
             <LoginForm onSubmit={handleLogin} />
           )}
 
-          {/* Actions - tylko dla logowania */}
           {!isRegisterMode && (
             <div className="mt-6">
               <LoginActions
@@ -131,7 +119,6 @@ export const LoginFormSection = memo(() => {
           )}
         </div>
 
-        {/* Footer */}
         <div className="mt-8 text-center">
           <p className="text-sm text-gray-500">
             {isRegisterMode ? 'Rejestrując się' : 'Logując się'}, akceptujesz nasze{' '}
