@@ -41,13 +41,13 @@ export const UserMenu = memo(() => {
       {/* User Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex cu items-center space-x-2 px-3 py-2 rounded-lg
+        className="flex cursor-pointer items-center space-x-2 px-3 py-2 rounded-lg
                    transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-java-orange"
       >
         <div className="w-8 h-8 bg-java-orange rounded-full flex items-center justify-center">
           <UserIcon className="w-4 h-4 text-white" />
         </div>
-                 <span className="text-sm font-medium text-java-gray max-w-24 break-words">
+                 <span className="text-sm font-medium text-java-gray max-w-24 truncate">
            {user.username}
          </span>
         <ChevronDownIcon 
@@ -60,16 +60,16 @@ export const UserMenu = memo(() => {
 
              {/* Dropdown Menu */}
        {isOpen && (
-         <div className="absolute right-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
+         <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
           {/* User Info */}
-          <div className="px-4 py-3 border-b border-gray-200">
-            <p className="text-sm font-medium text-java-gray">
-              {user.username}
-            </p>
-            <p className="text-xs text-java-gray truncate">
-              {user.email}
-            </p>
-          </div>
+                     <div className="px-4 py-3 border-b border-gray-200">
+             <p className="text-sm font-medium text-java-gray break-words">
+               {user.username}
+             </p>
+             <p className="text-xs text-java-gray break-words">
+               {user.email}
+             </p>
+           </div>
 
           {/* Menu Items */}
           <button
