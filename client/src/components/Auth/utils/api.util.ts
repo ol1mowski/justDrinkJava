@@ -1,4 +1,4 @@
-import type { LoginFormData, RegisterFormData, AuthResponse, ApiError as ApiErrorType } from '../types'
+import type { LoginFormData, RegisterFormData, AuthResponse } from '../types'
 
 const API_BASE_URL = 'http://localhost:8080/api'
 
@@ -50,7 +50,6 @@ export const authApi = {
   }
 }
 
-// Token management
 export const tokenStorage = {
   get: (): string | null => {
     return localStorage.getItem('auth_token')

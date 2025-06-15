@@ -26,7 +26,6 @@ export const useLoginForm = (): UseLoginFormReturn => {
   const updateField = useCallback((field: keyof LoginFormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }))
     
-    // Clear field error when user starts typing
     if (errors[field]) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -35,7 +34,6 @@ export const useLoginForm = (): UseLoginFormReturn => {
       })
     }
     
-    // Clear server error when user makes changes
     if (errors.server) {
       setErrors(prev => {
         const newErrors = { ...prev }
@@ -52,8 +50,7 @@ export const useLoginForm = (): UseLoginFormReturn => {
 
   const handleSubmit = useCallback(async (onSuccess?: () => void) => {
     console.log('📝 Login form submission started')
-    
-    // Validate form
+      
     const validationErrors = validateLoginForm(formData)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)

@@ -1,6 +1,5 @@
 import type { LoginFormData, RegisterFormData } from '../types'
 
-// Validation rules
 export const VALIDATION_RULES = {
   email: {
     required: 'Email jest wymagany',
@@ -20,8 +19,7 @@ export const VALIDATION_RULES = {
     required: 'Potwierdzenie hasła jest wymagane'
   }
 } as const
-
-// Validation functions
+    
 export const validateEmail = (email: string): string | null => {
   if (!email) return VALIDATION_RULES.email.required
   if (!VALIDATION_RULES.email.pattern.value.test(email)) {
