@@ -41,16 +41,15 @@ export const UserMenu = memo(() => {
       {/* User Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center space-x-2 px-3 py-2 rounded-lg
-                   bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700
+        className="flex cu items-center space-x-2 px-3 py-2 rounded-lg
                    transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-java-orange"
       >
         <div className="w-8 h-8 bg-java-orange rounded-full flex items-center justify-center">
           <UserIcon className="w-4 h-4 text-white" />
         </div>
-        <span className="text-sm font-medium text-gray-700 dark:text-gray-300 max-w-24 truncate">
-          {user.username}
-        </span>
+                 <span className="text-sm font-medium text-java-gray max-w-24 break-words">
+           {user.username}
+         </span>
         <ChevronDownIcon 
           className={[
             'w-4 h-4 text-gray-500 transition-transform duration-200',
@@ -59,15 +58,15 @@ export const UserMenu = memo(() => {
         />
       </button>
 
-      {/* Dropdown Menu */}
-      {isOpen && (
-        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-1 z-50">
+             {/* Dropdown Menu */}
+       {isOpen && (
+         <div className="absolute right-0 bottom-full mb-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
           {/* User Info */}
-          <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
-            <p className="text-sm font-medium text-gray-900 dark:text-gray-100">
+          <div className="px-4 py-3 border-b border-gray-200">
+            <p className="text-sm font-medium text-java-gray">
               {user.username}
             </p>
-            <p className="text-xs text-gray-500 dark:text-gray-400 truncate">
+            <p className="text-xs text-java-gray truncate">
               {user.email}
             </p>
           </div>
@@ -75,7 +74,7 @@ export const UserMenu = memo(() => {
           {/* Menu Items */}
           <button
             onClick={handleSettings}
-            className="w-full flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+            className="w-full flex items-center px-4 py-2 text-sm text-java-gray hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
           >
             <Cog6ToothIcon className="w-4 h-4 mr-3" />
             Ustawienia
