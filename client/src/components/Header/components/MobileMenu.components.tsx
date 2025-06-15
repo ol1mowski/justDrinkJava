@@ -2,8 +2,10 @@ import { memo } from 'react'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { SearchBar } from './SearchBar.components'
 import { LoginButton } from './LoginButton.components'
+import { UserMenu } from './UserMenu.component'
 import { NavigationItem } from './NavigationItem.components'
 import { navigationItems } from '../config/navigation.config'
+import { useAuth } from '../../../hooks/useAuth.hook'
 
 interface MobileMenuProps {
   isOpen: boolean
@@ -11,6 +13,8 @@ interface MobileMenuProps {
 }
 
 export const MobileMenu = memo<MobileMenuProps>(({ isOpen, onClose }) => {
+  const { isAuthenticated } = useAuth()
+
   return (
     <div 
       className={`absolute inset-0 z-100 lg:hidden transition-all duration-500 ${
@@ -49,7 +53,7 @@ export const MobileMenu = memo<MobileMenuProps>(({ isOpen, onClose }) => {
           </div>
           
           <div className="pb-4 border-b border-java-gray/10">
-            <LoginButton />
+            {isAuthenticated ? <UserMenu /> : <LoginButton />}
           </div>
           
           <div className="pt-4">
