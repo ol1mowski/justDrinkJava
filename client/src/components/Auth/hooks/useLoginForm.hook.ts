@@ -49,12 +49,9 @@ export const useLoginForm = (): UseLoginFormReturn => {
   }, [formData])
 
   const handleSubmit = useCallback(async (onSuccess?: () => void) => {
-    console.log('📝 Login form submission started')
-      
     const validationErrors = validateLoginForm(formData)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
-      console.log('❌ Form validation failed:', validationErrors)
       return
     }
 
@@ -65,7 +62,6 @@ export const useLoginForm = (): UseLoginFormReturn => {
       })
 
       if (result.success) {
-        console.log('✅ Login successful')
         setFormData({
           email: '',
           password: '',
@@ -73,9 +69,8 @@ export const useLoginForm = (): UseLoginFormReturn => {
         })
         setErrors({})
         onSuccess?.()
+        window.location.href = '/'
       } else {
-        console.log('❌ Login failed:', result.error)
-        
         if (result.errors) {
           setErrors(result.errors)
         } else {
@@ -83,7 +78,6 @@ export const useLoginForm = (): UseLoginFormReturn => {
         }
       }
     } catch (error) {
-      console.error('💥 Unexpected login error:', error)
       setErrors({ 
         server: 'Wystąpił nieoczekiwany błąd. Spróbuj ponownie.' 
       })

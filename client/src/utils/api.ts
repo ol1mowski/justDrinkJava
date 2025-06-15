@@ -109,17 +109,14 @@ export const apiClient = new ApiClient(API_BASE_URL)
 
 export const authApi = {
   login: (credentials: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
-    console.log('🔐 Attempting to login user:', credentials.email)
     return apiClient.post<AuthResponse>('/auth/login', credentials)
   },
 
   register: (userData: RegisterRequest): Promise<ApiResponse<AuthResponse>> => {
-    console.log('📝 Attempting to register user:', userData.email)
     return apiClient.post<AuthResponse>('/auth/register', userData)
   },
 
   logout: (): void => {
-    console.log('👋 User logged out')
     localStorage.removeItem('accessToken')
     localStorage.removeItem('user')
   },

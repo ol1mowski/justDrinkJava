@@ -38,9 +38,7 @@ export const useAuth = () => {
           token,
           isAuthenticated: true,
         }))
-        console.log('✅ User authenticated from localStorage:', user.email)
       } catch (error) {
-        console.error('❌ Failed to parse user from localStorage:', error)
         localStorage.removeItem('accessToken')
         localStorage.removeItem('user')
       }
@@ -48,7 +46,6 @@ export const useAuth = () => {
   }, [])
 
   const login = useCallback(async (credentials: LoginRequest) => {
-    console.log('🔐 Starting login process for:', credentials.email)
     setAuthState(prev => ({ ...prev, isLoading: true, error: null }))
 
     try {
@@ -68,7 +65,6 @@ export const useAuth = () => {
           error: null,
         })
         
-        console.log('✅ Login successful for user:', user.email)
         return { success: true }
       } else {
         const errorMessage = response.message || 'Login failed'
@@ -78,7 +74,6 @@ export const useAuth = () => {
           error: errorMessage,
         }))
         
-        console.log('❌ Login failed:', errorMessage)
         return { success: false, error: errorMessage, errors: response.errors }
       }
     } catch (error) {
@@ -89,13 +84,11 @@ export const useAuth = () => {
         error: errorMessage,
       }))
       
-      console.error('💥 Login error:', error)
       return { success: false, error: errorMessage }
     }
   }, [])
 
   const register = useCallback(async (userData: RegisterRequest) => {
-    console.log('📝 Starting registration process for:', userData.email)
     setAuthState(prev => ({ ...prev, isLoading: true, error: null }))
 
     try {
@@ -115,7 +108,6 @@ export const useAuth = () => {
           error: null,
         })
         
-        console.log('✅ Registration successful for user:', user.email)
         return { success: true }
       } else {
         const errorMessage = response.message || 'Registration failed'
@@ -125,7 +117,6 @@ export const useAuth = () => {
           error: errorMessage,
         }))
         
-        console.log('❌ Registration failed:', errorMessage)
         return { success: false, error: errorMessage, errors: response.errors }
       }
     } catch (error) {
@@ -136,13 +127,11 @@ export const useAuth = () => {
         error: errorMessage,
       }))
       
-      console.error('💥 Registration error:', error)
       return { success: false, error: errorMessage }
     }
   }, [])
 
   const logout = useCallback(() => {
-    console.log('👋 Logging out user:', authState.user?.email)
     authApi.logout()
     setAuthState({
       user: null,
@@ -151,7 +140,7 @@ export const useAuth = () => {
       isLoading: false,
       error: null,
     })
-  }, [authState.user?.email])
+  }, [])
 
   const clearError = useCallback(() => {
     setAuthState(prev => ({ ...prev, error: null }))

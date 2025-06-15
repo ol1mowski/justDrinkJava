@@ -49,12 +49,9 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
   }, [formData])
 
   const handleSubmit = useCallback(async (onSuccess?: () => void) => {
-    console.log('📝 Registration form submission started')
-        
     const validationErrors = validateRegisterForm(formData)
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors)
-      console.log('❌ Form validation failed:', validationErrors)
       return
     }
 
@@ -65,7 +62,6 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
       })
 
       if (result.success) {
-        console.log('✅ Registration successful')
         setFormData({
           email: '',
           password: '',
@@ -73,9 +69,8 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         })
         setErrors({})
         onSuccess?.()
+        window.location.href = '/'
       } else {
-        console.log('❌ Registration failed:', result.error)
-        
         if (result.errors) {
           setErrors(result.errors)
         } else {
@@ -83,7 +78,6 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
         }
       }
     } catch (error) {
-      console.error('💥 Unexpected registration error:', error)
       setErrors({ 
         server: 'Wystąpił nieoczekiwany błąd. Spróbuj ponownie.' 
       })

@@ -12,7 +12,6 @@ export const UserMenu = memo(() => {
   const [isOpen, setIsOpen] = useState(false)
   const menuRef = useRef<HTMLDivElement>(null)
 
-  // Zamknij menu po kliknięciu poza nim
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
@@ -27,10 +26,10 @@ export const UserMenu = memo(() => {
   const handleLogout = () => {
     logout()
     setIsOpen(false)
+    window.location.href = '/login'
   }
 
   const handleSettings = () => {
-    console.log('Navigate to settings')
     setIsOpen(false)
   }
 
@@ -38,7 +37,6 @@ export const UserMenu = memo(() => {
 
   return (
     <div className="relative" ref={menuRef}>
-      {/* User Button */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex cursor-pointer items-center space-x-2 px-3 py-2 rounded-lg
@@ -58,10 +56,8 @@ export const UserMenu = memo(() => {
         />
       </button>
 
-             {/* Dropdown Menu */}
        {isOpen && (
          <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-          {/* User Info */}
                      <div className="px-4 py-3 border-b border-gray-200">
              <p className="text-sm font-medium text-java-gray break-words">
                {user.username}
@@ -71,10 +67,9 @@ export const UserMenu = memo(() => {
              </p>
            </div>
 
-          {/* Menu Items */}
           <button
             onClick={handleSettings}
-            className="w-full flex items-center px-4 py-2 text-sm text-java-gray hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200"
+            className="w-full flex items-center px-4 py-2 text-sm text-java-gray hover:bg-java-gray/10 cursor-pointer transition-colors duration-200"
           >
             <Cog6ToothIcon className="w-4 h-4 mr-3" />
             Ustawienia
@@ -82,7 +77,7 @@ export const UserMenu = memo(() => {
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200"
+            className="w-full cursor-pointer flex items-center px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors duration-200"
           >
             <ArrowRightOnRectangleIcon className="w-4 h-4 mr-3" />
             Wyloguj się
