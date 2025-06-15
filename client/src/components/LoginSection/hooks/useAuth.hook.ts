@@ -11,7 +11,6 @@ export const useAuth = () => {
     error: null,
   });
 
-  // Initialize auth state from localStorage
   useEffect(() => {
     const token = AuthService.getStoredToken();
     const user = AuthService.getStoredUser();
