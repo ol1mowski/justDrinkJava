@@ -1,10 +1,14 @@
 import { memo, useState } from 'react'
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'
-import { useLoginForm } from '../hooks/useLoginForm.hook'
-import type { LoginFormProps } from '../types'
+import { useRegisterForm } from '../hooks/useRegisterForm.hook'
 
-export const LoginForm = memo<LoginFormProps>(({ onSubmit, isLoading: externalLoading = false }) => {
-  const { formData, errors, isLoading, updateField, handleSubmit } = useLoginForm()
+interface RegisterFormProps {
+  onSubmit?: () => void
+  isLoading?: boolean
+}
+
+export const RegisterForm = memo<RegisterFormProps>(({ onSubmit, isLoading: externalLoading = false }) => {
+  const { formData, errors, isLoading, updateField, handleSubmit } = useRegisterForm()
   const [showPassword, setShowPassword] = useState(false)
 
   const loading = isLoading || externalLoading
@@ -15,24 +19,26 @@ export const LoginForm = memo<LoginFormProps>(({ onSubmit, isLoading: externalLo
         e.preventDefault()
         handleSubmit(() => {
           if (onSubmit) {
-            onSubmit(formData)
+            onSubmit()
           }
         })
       }}
       className="space-y-6"
     >
+      {/* Server Error Display */}
       {errors.server && (
         <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
           <p className="text-sm">{errors.server}</p>
         </div>
       )}
 
+      {/* Email Field */}
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="register-email" className="block text-sm font-medium text-gray-700 mb-2">
           Adres email
         </label>
         <input
-          id="email"
+          id="register-email"
           type="email"
           value={formData.email}
           onChange={(e) => updateField('email', e.target.value)}
@@ -50,13 +56,62 @@ export const LoginForm = memo<LoginFormProps>(({ onSubmit, isLoading: externalLo
         )}
       </div>
 
+      {/* First Name Field */}
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="register-firstName" className="block text-sm font-medium text-gray-700 mb-2">
+          Imię
+        </label>
+        <input
+          id="register-firstName"
+          type="text"
+          value={formData.firstName}
+          onChange={(e) => updateField('firstName', e.target.value)}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-java-orange focus:border-transparent transition-colors duration-200 ${
+            errors.firstName 
+              ? 'border-red-300 bg-red-50' 
+              : 'border-gray-300 bg-white hover:border-gray-400'
+          }`}
+          placeholder="Jan"
+          disabled={loading}
+          autoComplete="given-name"
+        />
+        {errors.firstName && (
+          <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>
+        )}
+      </div>
+
+      {/* Last Name Field */}
+      <div>
+        <label htmlFor="register-lastName" className="block text-sm font-medium text-gray-700 mb-2">
+          Nazwisko
+        </label>
+        <input
+          id="register-lastName"
+          type="text"
+          value={formData.lastName}
+          onChange={(e) => updateField('lastName', e.target.value)}
+          className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-java-orange focus:border-transparent transition-colors duration-200 ${
+            errors.lastName 
+              ? 'border-red-300 bg-red-50' 
+              : 'border-gray-300 bg-white hover:border-gray-400'
+          }`}
+          placeholder="Kowalski"
+          disabled={loading}
+          autoComplete="family-name"
+        />
+        {errors.lastName && (
+          <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>
+        )}
+      </div>
+
+      {/* Password Field */}
+      <div>
+        <label htmlFor="register-password" className="block text-sm font-medium text-gray-700 mb-2">
           Hasło
         </label>
         <div className="relative">
           <input
-            id="password"
+            id="register-password"
             type={showPassword ? 'text' : 'password'}
             value={formData.password}
             onChange={(e) => updateField('password', e.target.value)}
@@ -65,9 +120,9 @@ export const LoginForm = memo<LoginFormProps>(({ onSubmit, isLoading: externalLo
                 ? 'border-red-300 bg-red-50' 
                 : 'border-gray-300 bg-white hover:border-gray-400'
             }`}
-            placeholder="Wprowadź hasło"
+            placeholder="Minimum 8 znaków"
             disabled={loading}
-            autoComplete="current-password"
+            autoComplete="new-password"
           />
           <button
             type="button"
@@ -88,19 +143,7 @@ export const LoginForm = memo<LoginFormProps>(({ onSubmit, isLoading: externalLo
         )}
       </div>
 
-      <div className="flex items-center justify-between">
-        <label className="flex items-center">
-          <input
-            type="checkbox"
-            checked={formData.rememberMe}
-            onChange={(e) => updateField('rememberMe', e.target.checked)}
-            className="w-4 h-4 text-java-orange border-gray-300 rounded focus:ring-java-orange focus:ring-2"
-            disabled={loading}
-          />
-          <span className="ml-2 text-sm text-gray-600">Zapamiętaj mnie</span>
-        </label>
-      </div>
-        
+      {/* Submit Button */}
       <button
         type="submit"
         disabled={loading}
@@ -109,14 +152,14 @@ export const LoginForm = memo<LoginFormProps>(({ onSubmit, isLoading: externalLo
         {loading ? (
           <>
             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-            Logowanie...
+            Rejestracja...
           </>
         ) : (
-          'Zaloguj się'
+          'Zarejestruj się'
         )}
       </button>
     </form>
   )
 })
 
-LoginForm.displayName = 'LoginForm' 
+RegisterForm.displayName = 'RegisterForm' 

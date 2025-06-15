@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react'
+import { useAuth } from '../../../hooks/useAuth.hook'
 import type { LoginFormData } from '../types'
 
 export const useLoginForm = () => {
@@ -7,19 +8,21 @@ export const useLoginForm = () => {
     password: '',
     rememberMe: false
   })
-  const [errors, setErrors] = useState<Partial<LoginFormData>>({})
-  const [isLoading, setIsLoading] = useState(false)
+  const [errors, setErrors] = useState<Partial<Record<keyof LoginFormData | 'server', string>>>({})
+  const { login, isLoading } = useAuth()
 
   const updateField = useCallback((field: keyof LoginFormData, value: string | boolean) => {
     setFormData(prev => ({ ...prev, [field]: value }))
-    // Clear error when user starts typing
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: undefined }))
+    }
+    if (errors.server) {
+      setErrors(prev => ({ ...prev, server: undefined }))
     }
   }, [errors])
 
   const validateForm = useCallback((): boolean => {
-    const newErrors: Partial<LoginFormData> = {}
+    const newErrors: Partial<Record<keyof LoginFormData, string>> = {}
 
     if (!formData.email) {
       newErrors.email = 'Email jest wymagany'
@@ -29,22 +32,65 @@ export const useLoginForm = () => {
 
     if (!formData.password) {
       newErrors.password = 'Hasło jest wymagane'
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Hasło musi mieć co najmniej 6 znaków'
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Hasło musi mieć minimum 8 znaków'
     }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }, [formData])
 
-  const handleSubmit = useCallback((onSubmit: (data: LoginFormData) => void) => {
-    if (validateForm()) {
-      setIsLoading(true)
-      onSubmit(formData)
-      // Reset loading state after submission
-      setTimeout(() => setIsLoading(false), 1000)
+  const handleSubmit = useCallback(async (onSuccess?: () => void) => {
+    console.log('📝 Form submission started')
+    
+    if (!validateForm()) {
+      console.log('❌ Form validation failed')
+      return
     }
-  }, [formData, validateForm])
+
+    try {
+      const result = await login({
+        email: formData.email,
+        password: formData.password,
+      })
+
+      if (result.success) {
+        console.log('✅ Login successful, clearing form')
+        setFormData({
+          email: '',
+          password: '',
+          rememberMe: false
+        })
+        setErrors({})
+        if (onSuccess) {
+          onSuccess()
+        }
+      } else {
+        console.log('❌ Login failed:', result.error)
+        
+        if (result.errors) {
+          const serverErrors: Partial<Record<keyof LoginFormData, string>> = {}
+          
+          if (result.errors.email) {
+            serverErrors.email = result.errors.email
+          }
+          if (result.errors.password) {
+            serverErrors.password = result.errors.password
+          }
+          
+          setErrors(prev => ({ ...prev, ...serverErrors }))
+        } else {
+          setErrors(prev => ({ ...prev, server: result.error }))
+        }
+      }
+    } catch (error) {
+      console.error('💥 Unexpected login error:', error)
+      setErrors(prev => ({ 
+        ...prev, 
+        server: 'Wystąpił nieoczekiwany błąd. Spróbuj ponownie.' 
+      }))
+    }
+  }, [formData, validateForm, login])
 
   const resetForm = useCallback(() => {
     setFormData({
@@ -53,7 +99,6 @@ export const useLoginForm = () => {
       rememberMe: false
     })
     setErrors({})
-    setIsLoading(false)
   }, [])
 
   return {
