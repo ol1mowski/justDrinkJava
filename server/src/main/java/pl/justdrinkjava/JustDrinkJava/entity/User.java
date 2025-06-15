@@ -33,58 +33,26 @@ public class User implements UserDetails {
     @Email(message = "Email musi mieć poprawny format")
     private String email;
     
-    @Column(nullable = false)
+    @Column(unique = true, nullable = false)
+    private String username;
+    
+    @Column(name = "password_hash", nullable = false)
     @NotBlank(message = "Hasło jest wymagane")
     @Size(min = 8, message = "Hasło musi mieć minimum 8 znaków")
     private String password;
-    
-    @Column(name = "first_name", nullable = false)
-    @NotBlank(message = "Imię jest wymagane")
-    @Size(min = 2, max = 50, message = "Imię musi mieć od 2 do 50 znaków")
-    private String firstName;
-    
-    @Column(name = "last_name", nullable = false)
-    @NotBlank(message = "Nazwisko jest wymagane")
-    @Size(min = 2, max = 50, message = "Nazwisko musi mieć od 2 do 50 znaków")
-    private String lastName;
-    
-    @Enumerated(EnumType.STRING)
-    @Builder.Default
-    private Role role = Role.USER;
     
     @Column(name = "created_at")
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
     
-    @Column(name = "updated_at")
-    @Builder.Default
-    private LocalDateTime updatedAt = LocalDateTime.now();
-    
-    @Builder.Default
-    private boolean enabled = true;
-    
-    @Builder.Default
-    private boolean accountNonExpired = true;
-    
-    @Builder.Default
-    private boolean accountNonLocked = true;
-    
-    @Builder.Default
-    private boolean credentialsNonExpired = true;
-    
-    @PreUpdate
-    private void preUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
-    
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_" + role.name()));
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
     }
     
     @Override
     public String getUsername() {
-        return email;
+        return username != null ? username : email;
     }
     
     @Override
@@ -94,21 +62,21 @@ public class User implements UserDetails {
     
     @Override
     public boolean isAccountNonExpired() {
-        return accountNonExpired;
+        return true;
     }
     
     @Override
     public boolean isAccountNonLocked() {
-        return accountNonLocked;
+        return true;
     }
     
     @Override
     public boolean isCredentialsNonExpired() {
-        return credentialsNonExpired;
+        return true;
     }
     
     @Override
     public boolean isEnabled() {
-        return enabled;
+        return true;
     }
 } 

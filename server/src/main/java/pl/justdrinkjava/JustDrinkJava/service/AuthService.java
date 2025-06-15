@@ -27,24 +27,26 @@ public class AuthService {
         log.info("Attempting to register user with email: {}", request.getEmail());
         
         if (userRepository.existsByEmail(request.getEmail())) {
-            log.warn("Registration failed - email already exists: {}", request.getEmail());
-            throw new UserAlreadyExistsException("Użytkownik z tym adresem email już istnieje");
+            throw new UserAlreadyExistsException("Użytkownik z tym emailem już istnieje");
         }
         
         User user = User.builder()
                 .email(request.getEmail())
+                .username(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .firstName(request.getFirstName())
-                .lastName(request.getLastName())
                 .build();
         
         User savedUser = userRepository.save(user);
-        log.info("User successfully registered with email: {}", savedUser.getEmail());
+        String token = jwtService.generateToken(savedUser);
         
-        String jwtToken = jwtService.generateToken(user);
-        UserDto userDto = userMapper.toDto(savedUser);
-        
-        return new AuthResponse(jwtToken, userDto);
+        return AuthResponse.builder()
+                .token(token)
+                .user(UserDto.builder()
+                        .id(savedUser.getId())
+                        .email(savedUser.getEmail())
+                        .username(savedUser.getUsername())
+                        .build())
+                .build();
     }
     
     public AuthResponse login(LoginRequest request) {

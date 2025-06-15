@@ -1,7 +1,5 @@
-// API Base URL
 const API_BASE_URL = 'http://localhost:8080/api'
 
-// API Response types
 export interface ApiResponse<T> {
   data?: T
   status: 'success' | 'error'
@@ -34,7 +32,6 @@ export interface RegisterRequest {
   lastName: string
 }
 
-// HTTP Client with error handling
 class ApiClient {
   private baseURL: string
 
@@ -56,7 +53,6 @@ class ApiClient {
       ...options,
     }
 
-    // Add JWT token if available
     const token = localStorage.getItem('accessToken')
     if (token) {
       config.headers = {
@@ -112,11 +108,9 @@ class ApiClient {
     return this.request<T>(endpoint, { method: 'DELETE' })
   }
 }
-
-// API Client instance
+  
 export const apiClient = new ApiClient(API_BASE_URL)
 
-// Auth API endpoints
 export const authApi = {
   login: (credentials: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
     console.log('🔐 Attempting to login user:', credentials.email)
