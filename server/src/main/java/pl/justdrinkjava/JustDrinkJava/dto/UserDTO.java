@@ -13,11 +13,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class UserDTO {
+public class UserDto {
     
-    private Integer id;
-    private String username;
+    private Long id;
     private String email;
+    private String firstName;
+    private String lastName;
+    private String role;
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime createdAt;
