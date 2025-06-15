@@ -1,4 +1,139 @@
-export const API_BASE_URL = 'http://localhost:8080/api'
+// API Base URL
+const API_BASE_URL = 'http://localhost:8080/api'
+
+// API Response types
+export interface ApiResponse<T> {
+  data?: T
+  status: 'success' | 'error'
+  message?: string
+  errors?: Record<string, string>
+}
+
+export interface AuthResponse {
+  token: string
+  type: string
+  user: {
+    id: number
+    email: string
+    firstName: string
+    lastName: string
+    role: string
+    createdAt: string
+  }
+}
+
+export interface LoginRequest {
+  email: string
+  password: string
+}
+
+export interface RegisterRequest {
+  email: string
+  password: string
+  firstName: string
+  lastName: string
+}
+
+// HTTP Client with error handling
+class ApiClient {
+  private baseURL: string
+
+  constructor(baseURL: string) {
+    this.baseURL = baseURL
+  }
+
+  private async request<T>(
+    endpoint: string,
+    options: RequestInit = {}
+  ): Promise<ApiResponse<T>> {
+    const url = `${this.baseURL}${endpoint}`
+    
+    const config: RequestInit = {
+      headers: {
+        'Content-Type': 'application/json',
+        ...options.headers,
+      },
+      ...options,
+    }
+
+    // Add JWT token if available
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      config.headers = {
+        ...config.headers,
+        Authorization: `Bearer ${token}`,
+      }
+    }
+
+    try {
+      const response = await fetch(url, config)
+      const data = await response.json()
+
+      if (!response.ok) {
+        return {
+          status: 'error',
+          message: data.message || 'Wystąpił błąd',
+          errors: data.errors,
+        }
+      }
+
+      return {
+        status: 'success',
+        data,
+      }
+    } catch (error) {
+      console.error('API Error:', error)
+      return {
+        status: 'error',
+        message: 'Błąd połączenia z serwerem',
+      }
+    }
+  }
+
+  async get<T>(endpoint: string): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'GET' })
+  }
+
+  async post<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'POST',
+      body: body ? JSON.stringify(body) : undefined,
+    })
+  }
+
+  async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, {
+      method: 'PUT',
+      body: body ? JSON.stringify(body) : undefined,
+    })
+  }
+
+  async delete<T>(endpoint: string): Promise<ApiResponse<T>> {
+    return this.request<T>(endpoint, { method: 'DELETE' })
+  }
+}
+
+// API Client instance
+export const apiClient = new ApiClient(API_BASE_URL)
+
+// Auth API endpoints
+export const authApi = {
+  login: (credentials: LoginRequest): Promise<ApiResponse<AuthResponse>> => {
+    console.log('🔐 Attempting to login user:', credentials.email)
+    return apiClient.post<AuthResponse>('/auth/login', credentials)
+  },
+
+  register: (userData: RegisterRequest): Promise<ApiResponse<AuthResponse>> => {
+    console.log('📝 Attempting to register user:', userData.email)
+    return apiClient.post<AuthResponse>('/auth/register', userData)
+  },
+
+  logout: (): void => {
+    console.log('👋 User logged out')
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('user')
+  },
+}
 
 export interface UserData {
   id: number
