@@ -22,7 +22,7 @@ public class PostMapper {
         
         return PostDTO.builder()
                 .id(post.getId())
-                .user(userMapper.toDTO(post.getUser()))
+                .user(userMapper.toDto(post.getUser()))
                 .category(categoryMapper.toDTO(post.getCategory()))
                 .title(post.getTitle())
                 .description(post.getDescription())
