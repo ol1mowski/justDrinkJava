@@ -25,4 +25,14 @@ export interface CVSectionContentProps {
 
 export type CVContentProps = CVSectionContentProps
 
-export type TooltipSection = 'header' | 'summary' | 'experience' | 'skills' | 'education' | 'projects' 
+export type TooltipSection = 'header' | 'summary' | 'experience' | 'skills' | 'education' | 'projects'
+
+// Career Tips types
+export interface CareerTip {
+  id: number
+  title: string
+  description: string
+  icon: string
+}
+
+export { careerTips } from './careerTipsData' 
