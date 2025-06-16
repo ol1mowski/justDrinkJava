@@ -1,5 +1,12 @@
 import { useState, useCallback, useEffect } from 'react'
 import { authApi, type LoginRequest, type RegisterRequest } from '../utils/api'
+import { 
+  getUserFromToken, 
+  isTokenExpired, 
+  getTokenFromStorage, 
+  setTokenToStorage, 
+  removeTokenFromStorage 
+} from '../utils/jwt'
 
 export interface AuthUser {
   id: string | number
@@ -45,25 +52,68 @@ export const useAuth = (): UseAuthReturn => {
     error: null,
   })
 
-  useEffect(() => {
-    const token = localStorage.getItem('accessToken')
-    const userStr = localStorage.getItem('user')
-    
-    if (token && userStr) {
-      try {
-        const user = JSON.parse(userStr) as AuthUser
+  const checkAuthStatus = useCallback(() => {
+    try {
+      const token = getTokenFromStorage()
+
+      if (token && !isTokenExpired(token)) {
+        const userFromToken = getUserFromToken(token)
+        
+        if (userFromToken) {
+          const authUser: AuthUser = {
+            id: '',
+            email: userFromToken.email,
+            username: userFromToken.username,
+            createdAt: ''
+          }
+          
+          setAuthState(prev => ({
+            ...prev,
+            user: authUser,
+            token,
+            isAuthenticated: true,
+            isLoading: false
+          }))
+          console.log('👤 Użytkownik zalogowany:', authUser.username)
+        } else {
+          removeTokenFromStorage()
+          setAuthState(prev => ({
+            ...prev,
+            user: null,
+            token: null,
+            isAuthenticated: false,
+            isLoading: false
+          }))
+        }
+      } else {
+        if (token) {
+          removeTokenFromStorage() // Usuń wygasły token
+        }
         setAuthState(prev => ({
           ...prev,
-          user,
-          token,
-          isAuthenticated: true,
+          user: null,
+          token: null,
+          isAuthenticated: false,
+          isLoading: false
         }))
-      } catch (error) {
-        localStorage.removeItem('accessToken')
-        localStorage.removeItem('user')
+        console.log('👤 Użytkownik niezalogowany')
       }
+    } catch (error) {
+      console.error('❌ Błąd sprawdzania stanu logowania:', error)
+      removeTokenFromStorage()
+      setAuthState(prev => ({
+        ...prev,
+        user: null,
+        token: null,
+        isAuthenticated: false,
+        isLoading: false
+      }))
     }
   }, [])
+
+  useEffect(() => {
+    checkAuthStatus()
+  }, [checkAuthStatus])
 
   const login = useCallback(async (credentials: LoginRequest) => {
     setAuthState(prev => ({ ...prev, isLoading: true, error: null }))
@@ -74,11 +124,19 @@ export const useAuth = (): UseAuthReturn => {
       if (response.status === 'success' && response.data) {
         const { token, user } = response.data
         
-        localStorage.setItem('accessToken', token)
-        localStorage.setItem('user', JSON.stringify(user))
+        setTokenToStorage(token)
+        
+        // Dane użytkownika z tokenu
+        const userFromToken = getUserFromToken(token)
+        const authUser: AuthUser = {
+          id: user.id,
+          email: userFromToken?.email || user.email,
+          username: userFromToken?.username || user.username,
+          createdAt: user.createdAt
+        }
         
         setAuthState({
-          user,
+          user: authUser,
           token,
           isAuthenticated: true,
           isLoading: false,
@@ -117,11 +175,19 @@ export const useAuth = (): UseAuthReturn => {
       if (response.status === 'success' && response.data) {
         const { token, user } = response.data
             
-        localStorage.setItem('accessToken', token)
-        localStorage.setItem('user', JSON.stringify(user))
+        setTokenToStorage(token)
+        
+        // Dane użytkownika z tokenu
+        const userFromToken = getUserFromToken(token)
+        const authUser: AuthUser = {
+          id: user.id,
+          email: userFromToken?.email || user.email,
+          username: userFromToken?.username || user.username,
+          createdAt: user.createdAt
+        }
         
         setAuthState({
-          user,
+          user: authUser,
           token,
           isAuthenticated: true,
           isLoading: false,
@@ -152,7 +218,7 @@ export const useAuth = (): UseAuthReturn => {
   }, [])
 
   const logout = useCallback(() => {
-    authApi.logout()
+    removeTokenFromStorage()
     setAuthState({
       user: null,
       token: null,
@@ -166,46 +232,9 @@ export const useAuth = (): UseAuthReturn => {
     setAuthState(prev => ({ ...prev, error: null }))
   }, [])
 
-  const checkAuthStatus = useCallback(() => {
-    try {
-      const token = localStorage.getItem('accessToken')
-      const userData = localStorage.getItem('user')
-
-      if (token && userData) {
-        const parsedUser = JSON.parse(userData) as AuthUser
-        setAuthState(prev => ({
-          ...prev,
-          user: parsedUser,
-          isAuthenticated: true,
-        }))
-        console.log('👤 Użytkownik zalogowany:', parsedUser.username)
-      } else {
-        setAuthState(prev => ({
-          ...prev,
-          user: null,
-          isAuthenticated: false,
-        }))
-        console.log('👤 Użytkownik niezalogowany')
-      }
-    } catch (error) {
-      console.error('❌ Błąd sprawdzania stanu logowania:', error)
-      setAuthState(prev => ({
-        ...prev,
-        user: null,
-        isAuthenticated: false,
-      }))
-    } finally {
-      setAuthState(prev => ({ ...prev, isLoading: false }))
-    }
-  }, [])
-
-  useEffect(() => {
-    checkAuthStatus()
-  }, [checkAuthStatus])
-
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'accessToken' || e.key === 'user') {
+      if (e.key === 'accessToken') {
         checkAuthStatus()
       }
     }

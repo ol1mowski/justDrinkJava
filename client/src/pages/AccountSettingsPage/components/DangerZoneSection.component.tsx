@@ -2,9 +2,28 @@ import { memo, useState } from 'react'
 import { Button } from '../../../components/ui/Button/Button.component'
 import { Input } from '../../../components/ui/Input/Input.component'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { useDeleteAccount } from '../hooks/useDeleteAccount.hook'
 
 export const DangerZoneSection = memo(() => {
+  const { isLoading, error, deleteAccount, clearState } = useDeleteAccount()
   const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+  const [confirmation, setConfirmation] = useState('')
+
+  const handleDeleteAccount = async () => {
+    if (confirmation !== 'USUŃ KONTO') return
+
+    try {
+      await deleteAccount({ confirmation })
+    } catch (error) {
+      console.error('Błąd podczas usuwania konta:', error)
+    }
+  }
+
+  const handleCancel = () => {
+    setShowDeleteConfirmation(false)
+    setConfirmation('')
+    clearState()
+  }
 
   return (
     <div className="bg-white rounded-xl shadow-sm border border-red-200 p-6">
@@ -31,6 +50,12 @@ export const DangerZoneSection = memo(() => {
                 Ta operacja jest nieodwracalna.
               </p>
               
+              {error && (
+                <div className="mb-4 p-3 bg-red-100 border border-red-300 rounded-lg text-red-800 text-sm">
+                  {error}
+                </div>
+              )}
+              
               {!showDeleteConfirmation ? (
                 <Button
                   variant="danger"
@@ -47,19 +72,25 @@ export const DangerZoneSection = memo(() => {
                     </p>
                     <Input
                       placeholder="USUŃ KONTO"
+                      value={confirmation}
+                      onChange={(e) => setConfirmation(e.target.value)}
                       className="mb-3"
                     />
                     <div className="flex gap-3">
                       <Button
                         variant="danger"
                         size="sm"
+                        onClick={handleDeleteAccount}
+                        isLoading={isLoading}
+                        disabled={confirmation !== 'USUŃ KONTO'}
                       >
                         Potwierdź usunięcie
                       </Button>
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setShowDeleteConfirmation(false)}
+                        onClick={handleCancel}
+                        disabled={isLoading}
                       >
                         Anuluj
                       </Button>

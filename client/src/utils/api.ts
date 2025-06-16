@@ -135,7 +135,6 @@ export const authApi = {
 
   logout: (): void => {
     localStorage.removeItem("accessToken");
-    localStorage.removeItem("user");
   },
 };
 
@@ -175,6 +174,20 @@ export interface SearchPostsResponse {
   hasMore: boolean;
 }
 
+export interface UpdateProfileRequest {
+  username: string;
+}
+
+export interface ChangePasswordRequest {
+  currentPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+
+export interface DeleteAccountRequest {
+  confirmation: string;
+}
+
 export interface ApiError {
   timestamp: string;
   status: number;
@@ -189,9 +202,11 @@ class ApiService {
     options?: RequestInit
   ): Promise<T> {
     try {
+      const token = localStorage.getItem("accessToken");
       const response = await fetch(url, {
         headers: {
           "Content-Type": "application/json",
+          ...(token && { Authorization: `Bearer ${token}` }),
           ...options?.headers,
         },
         ...options,
@@ -235,6 +250,43 @@ class ApiService {
           limit: request.limit || 10,
           offset: request.offset || 0
         })
+      }
+    );
+  }
+
+  // User management methods
+  async getCurrentUser(): Promise<UserData> {
+    return this.fetchWithErrorHandling<UserData>(
+      `${API_BASE_URL}/user/profile`
+    );
+  }
+
+  async updateProfile(request: UpdateProfileRequest): Promise<UserData> {
+    return this.fetchWithErrorHandling<UserData>(
+      `${API_BASE_URL}/user/profile`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(request)
+      }
+    );
+  }
+
+  async changePassword(request: ChangePasswordRequest): Promise<{status: string, message: string}> {
+    return this.fetchWithErrorHandling<{status: string, message: string}>(
+      `${API_BASE_URL}/user/password`,
+      {
+        method: 'PUT',
+        body: JSON.stringify(request)
+      }
+    );
+  }
+
+  async deleteAccount(request: DeleteAccountRequest): Promise<{status: string, message: string}> {
+    return this.fetchWithErrorHandling<{status: string, message: string}>(
+      `${API_BASE_URL}/user/account`,
+      {
+        method: 'DELETE',
+        body: JSON.stringify(request)
       }
     );
   }

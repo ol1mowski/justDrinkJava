@@ -1,4 +1,10 @@
 import { useState, useEffect, useCallback } from 'react'
+import { 
+  getUserFromToken, 
+  isTokenExpired, 
+  getTokenFromStorage, 
+  removeTokenFromStorage 
+} from '../utils/jwt'
 
 export interface AuthUser {
   id: string | number
@@ -29,21 +35,38 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
 
   const checkAuthStatus = useCallback(() => {
     try {
-      const token = localStorage.getItem('accessToken')
-      const userData = localStorage.getItem('user')
+      const token = getTokenFromStorage()
 
-      if (token && userData) {
-        const parsedUser = JSON.parse(userData) as AuthUser
-        setUser(parsedUser)
-        setIsAuthenticated(true)
-        console.log('👤 Użytkownik zalogowany:', parsedUser.username)
+      if (token && !isTokenExpired(token)) {
+        const userFromToken = getUserFromToken(token)
+        
+        if (userFromToken) {
+          const authUser: AuthUser = {
+            id: '',
+            email: userFromToken.email,
+            username: userFromToken.username,
+            createdAt: ''
+          }
+          
+          setUser(authUser)
+          setIsAuthenticated(true)
+          console.log('👤 Użytkownik zalogowany:', authUser.username)
+        } else {
+          removeTokenFromStorage()
+          setUser(null)
+          setIsAuthenticated(false)
+        }
       } else {
+        if (token) {
+          removeTokenFromStorage() // Usuń wygasły token
+        }
         setUser(null)
         setIsAuthenticated(false)
         console.log('👤 Użytkownik niezalogowany')
       }
     } catch (error) {
       console.error('❌ Błąd sprawdzania stanu logowania:', error)
+      removeTokenFromStorage()
       setUser(null)
       setIsAuthenticated(false)
     } finally {
@@ -57,7 +80,7 @@ export const useAuthStatus = (): UseAuthStatusReturn => {
 
   useEffect(() => {
     const handleStorageChange = (e: StorageEvent) => {
-      if (e.key === 'accessToken' || e.key === 'user') {
+      if (e.key === 'accessToken') {
         checkAuthStatus()
       }
     }

@@ -30,12 +30,6 @@ export const useAuthWithGoogle = (): UseAuthWithGoogleReturn => {
         const authData: AuthResponse = response.data
         
         localStorage.setItem('accessToken', authData.token)
-        localStorage.setItem('user', JSON.stringify({
-          id: authData.user.id,
-          email: authData.user.email,
-          username: authData.user.username,
-          createdAt: authData.user.createdAt
-        }))
         window.location.href = '/'
       } else {
         throw new Error(response.message || 'Błąd podczas logowania przez Google')
