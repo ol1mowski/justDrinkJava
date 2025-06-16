@@ -1,7 +1,7 @@
 export interface JWTPayload {
-  sub: string; // email lub username
-  iat: number; // issued at
-  exp: number; // expiration
+  sub: string;
+  iat: number;
+  exp: number;
 }
 
 export interface UserFromToken {
@@ -11,22 +11,17 @@ export interface UserFromToken {
 
 export const decodeJWT = (token: string): JWTPayload | null => {
   try {
-    // Dzielę token na części
     const parts = token.split('.');
     if (parts.length !== 3) {
       return null;
     }
 
-    // Dekoduję payload (środkową część)
     const payload = parts[1];
     
-    // Dodaję padding jeśli potrzebny
     const paddedPayload = payload + '='.repeat((4 - payload.length % 4) % 4);
     
-    // Dekoduję base64
     const decodedPayload = atob(paddedPayload);
     
-    // Parsuje JSON
     return JSON.parse(decodedPayload);
   } catch (error) {
     console.error('Błąd podczas dekodowania JWT:', error);
@@ -40,10 +35,8 @@ export const getUserFromToken = (token: string): UserFromToken | null => {
     return null;
   }
 
-  // sub zawiera email lub username
   const emailOrUsername = payload.sub;
   
-  // Sprawdzam czy to email czy username
   const isEmail = emailOrUsername.includes('@');
   
   return {
@@ -58,7 +51,6 @@ export const isTokenExpired = (token: string): boolean => {
     return true;
   }
 
-  // exp jest w sekundach, Date.now() w milisekundach
   return payload.exp * 1000 < Date.now();
 };
 

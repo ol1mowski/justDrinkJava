@@ -12,7 +12,6 @@ import pl.justdrinkjava.JustDrinkJava.dto.DeleteAccountRequest;
 import pl.justdrinkjava.JustDrinkJava.dto.UpdateProfileRequest;
 import pl.justdrinkjava.JustDrinkJava.dto.UserDto;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
-import pl.justdrinkjava.JustDrinkJava.mapper.UserMapper;
 import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
 
 @Service
@@ -22,7 +21,6 @@ import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
 
     public UserDto getCurrentUser() {
@@ -37,7 +35,6 @@ public class UserService {
                     
             log.info("Znaleziono użytkownika: {} z ID: {}", user.getUsername(), user.getId());
             
-            // Manual mapping jako fallback
             UserDto userDto = UserDto.builder()
                     .id(user.getId())
                     .email(user.getEmail())
@@ -72,8 +69,7 @@ public class UserService {
             User savedUser = userRepository.save(user);
             
             log.info("Zaktualizowano profil użytkownika: {}", savedUser.getUsername());
-            
-            // Manual mapping
+                
             return UserDto.builder()
                     .id(savedUser.getId())
                     .email(savedUser.getEmail())

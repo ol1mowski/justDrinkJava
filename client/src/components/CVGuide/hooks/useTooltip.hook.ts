@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react'
-import type { TooltipSection } from '../types'
 
 export const useTooltip = () => {
   const [activeTooltip, setActiveTooltip] = useState<string | null>(null)
