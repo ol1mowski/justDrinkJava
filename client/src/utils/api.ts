@@ -32,6 +32,11 @@ export interface GoogleAuthRequest {
   credential: string;
 }
 
+export interface GitHubAuthRequest {
+  code: string;
+  state: string;
+}
+
 class ApiClient {
   private baseURL: string;
 
@@ -122,6 +127,10 @@ export const authApi = {
 
   googleAuth: (googleData: GoogleAuthRequest): Promise<ApiResponse<AuthResponse>> => {
     return apiClient.post<AuthResponse>("/auth/google", googleData);
+  },
+
+  githubAuth: (githubData: GitHubAuthRequest): Promise<ApiResponse<AuthResponse>> => {
+    return apiClient.post<AuthResponse>("/auth/github", githubData);
   },
 
   logout: (): void => {

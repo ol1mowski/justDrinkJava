@@ -9,6 +9,7 @@ const JobsPage = lazy(() => import('../pages/JobsPage/JobsPage.page').then(modul
 const QuizzesPage = lazy(() => import('../pages/QuizzesPage/QuizzesPage.page').then(module => ({ default: module.QuizzesPage })))
 const CVGuidePage = lazy(() => import('../pages/CVGuidePage/CVGuidePage.page').then(module => ({ default: module.CVGuidePage })))
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage.page').then(module => ({ default: module.LoginPage })))
+const GitHubCallbackPage = lazy(() => import('../pages/GitHubCallbackPage/GitHubCallbackPage.page').then(module => ({ default: module.GitHubCallbackPage })))
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage.page').then(module => ({ default: module.NotFoundPage })))
 
 export const routes: RouteObject[] = [
@@ -45,6 +46,10 @@ export const routes: RouteObject[] = [
   {
     path: 'login',
     element: <LoginPage />,
+  },
+  {
+    path: 'auth/github/callback',
+    element: <GitHubCallbackPage />,
   },
   {
     path: '*',
