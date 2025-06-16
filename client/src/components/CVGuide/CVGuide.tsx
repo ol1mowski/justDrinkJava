@@ -1,6 +1,7 @@
 import { memo } from 'react'
 import { CVHeroSection } from './components/CVHeroSection.component'
 import { CVContent } from './components/CVContent.component'
+import { CVCareerTipsSection } from './components/CVCareerTipsSection.component'
 import { Tooltip } from './components/Tooltip.component'
 import { useTooltip } from './hooks/useTooltip.hook'
 import { tooltips } from './types/tooltipData'
@@ -15,6 +16,7 @@ export const CVGuide = memo(() => {
         activeTooltip={activeTooltip}
         onSectionClick={handleSectionClick}
       />
+      <CVCareerTipsSection />
       {activeTooltip && (
         <Tooltip 
           data={tooltips[activeTooltip]} 
