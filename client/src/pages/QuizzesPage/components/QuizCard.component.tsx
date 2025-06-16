@@ -24,16 +24,13 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
         ? 'opacity-70 scale-95' 
         : 'hover:scale-105 hover:shadow-2xl hover:-translate-y-2 cursor-pointer'
     }`}>
-      {/* Background */}
       <div className="absolute inset-0 bg-blue-50" />
       
-      {/* Animated Background Pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 right-0 w-32 h-32 bg-java-orange rounded-full transform translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-700" />
         <div className="absolute bottom-0 left-0 w-24 h-24 bg-java-blue rounded-full transform -translate-x-12 translate-y-12 group-hover:scale-125 transition-transform duration-500" />
       </div>
 
-      {/* Main Card Content */}
       <div className="relative bg-white/90 backdrop-blur-sm border border-gray-200 rounded-2xl p-6 shadow-xl">
         {isBlocked && (
           <div className="absolute inset-0 bg-white/90 backdrop-blur-sm rounded-2xl flex items-center justify-center z-10">
@@ -52,7 +49,13 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
               <p className="text-gray-600 mb-6 leading-relaxed">
                 Aby uzyskać dostęp do ekskluzywnych quizów musisz się zalogować
               </p>
-              <button className="bg-java-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation()
+                  window.location.href = '/login'
+                }}
+                className="bg-java-orange hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
                 Zaloguj się
               </button>
             </div>
@@ -60,7 +63,6 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
         )}
 
         <div className={isBlocked ? 'blur-sm' : ''}>
-          {/* Header with Icon */}
           <div className="flex items-start justify-between mb-6">
             <div className="flex items-center space-x-3">
               <div className="w-12 h-12 bg-java-orange rounded-xl flex items-center justify-center shadow-lg transform group-hover:rotate-12 transition-transform duration-300">
@@ -82,17 +84,14 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
             )}
           </div>
 
-          {/* Title */}
           <h3 className="text-2xl font-bold text-gray-800 mb-3 leading-tight">
             {quiz.title}
           </h3>
 
-          {/* Description */}
           <p className="text-gray-600 text-sm leading-relaxed mb-6 line-clamp-2">
             {quiz.description}
           </p>
 
-          {/* Stats Bar */}
           <div className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100">
             <div className="flex items-center space-x-4">
               <div className="flex items-center space-x-2 text-gray-500">
@@ -110,7 +109,6 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
             </div>
           </div>
 
-          {/* Difficulty Indicator */}
           <div className="mt-4 flex items-center justify-between">
             <div className="flex items-center space-x-2">
               <span className="text-xs font-medium text-gray-500">Poziom:</span>
@@ -136,7 +134,6 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
         </div>
       </div>
 
-      {/* Hover Glow Effect */}
       {!isBlocked && (
         <div className="absolute inset-0 rounded-2xl bg-java-orange/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl transform scale-110" />
       )}

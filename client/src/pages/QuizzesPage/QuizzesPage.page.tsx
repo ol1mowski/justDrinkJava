@@ -1,10 +1,12 @@
 import { memo } from "react";
 import { AcademicCapIcon, TrophyIcon } from "@heroicons/react/24/outline";
 import { useQuizzes } from "./hooks/useQuizzes.hook";
+import { useAuthStatus } from "../../hooks/useAuthStatus.hook";
 import { QuizCard } from "./components";
 
 export const QuizzesPage = memo(() => {
   const { quizzes, loading, error } = useQuizzes();
+  const { isAuthenticated, user } = useAuthStatus();
 
   const handleStartQuiz = (quizId: number) => {
     console.log('Starting quiz:', quizId);
@@ -59,6 +61,13 @@ export const QuizzesPage = memo(() => {
             Sprawdź swoją wiedzę z programowania w Java. Rozwiązuj quizy na
             różnych poziomach trudności i rywalizuj z innymi developerami!
           </p>
+          {isAuthenticated && user && (
+            <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg inline-block">
+              <p className="text-sm text-green-700">
+                👋 Witaj <strong>{user.username}</strong>! Masz dostęp do wszystkich quizów
+              </p>
+            </div>
+          )}
         </div>
 
         {quizzes.length === 0 ? (
@@ -77,7 +86,7 @@ export const QuizzesPage = memo(() => {
               <QuizCard
                 key={quiz.id}
                 quiz={quiz}
-                isBlocked={index > 0} // Pierwszy quiz odblokowany, reszta zablokowana
+                isBlocked={!isAuthenticated && index > 0}
                 onStartQuiz={handleStartQuiz}
               />
             ))}

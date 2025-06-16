@@ -1,27 +1,47 @@
 import { useState, useCallback, useEffect } from 'react'
 import { authApi, type LoginRequest, type RegisterRequest } from '../utils/api'
 
-interface User {
-  id: number
+export interface AuthUser {
+  id: string | number
   email: string
   username: string
+  name?: string
+  avatar?: string
   createdAt: string
+  oauth?: {
+    provider: string
+    authorized: boolean
+    code: string
+    timestamp: string
+  }
 }
 
 interface AuthState {
-  user: User | null
+  user: AuthUser | null
   token: string | null
   isAuthenticated: boolean
   isLoading: boolean
   error: string | null
 }
 
-export const useAuth = () => {
+interface UseAuthReturn {
+  isAuthenticated: boolean
+  user: AuthUser | null
+  isLoading: boolean
+  error: string | null
+  login: (credentials: LoginRequest) => Promise<{ success: boolean; error?: string; errors?: Record<string, string> }>
+  register: (userData: RegisterRequest) => Promise<{ success: boolean; error?: string; errors?: Record<string, string> }>
+  logout: () => void
+  clearError: () => void
+  checkAuthStatus: () => void
+}
+
+export const useAuth = (): UseAuthReturn => {
   const [authState, setAuthState] = useState<AuthState>({
     user: null,
     token: null,
     isAuthenticated: false,
-    isLoading: false,
+    isLoading: true,
     error: null,
   })
 
@@ -31,7 +51,7 @@ export const useAuth = () => {
     
     if (token && userStr) {
       try {
-        const user = JSON.parse(userStr)
+        const user = JSON.parse(userStr) as AuthUser
         setAuthState(prev => ({
           ...prev,
           user,
@@ -146,11 +166,60 @@ export const useAuth = () => {
     setAuthState(prev => ({ ...prev, error: null }))
   }, [])
 
+  const checkAuthStatus = useCallback(() => {
+    try {
+      const token = localStorage.getItem('accessToken')
+      const userData = localStorage.getItem('user')
+
+      if (token && userData) {
+        const parsedUser = JSON.parse(userData) as AuthUser
+        setAuthState(prev => ({
+          ...prev,
+          user: parsedUser,
+          isAuthenticated: true,
+        }))
+        console.log('👤 Użytkownik zalogowany:', parsedUser.username)
+      } else {
+        setAuthState(prev => ({
+          ...prev,
+          user: null,
+          isAuthenticated: false,
+        }))
+        console.log('👤 Użytkownik niezalogowany')
+      }
+    } catch (error) {
+      console.error('❌ Błąd sprawdzania stanu logowania:', error)
+      setAuthState(prev => ({
+        ...prev,
+        user: null,
+        isAuthenticated: false,
+      }))
+    } finally {
+      setAuthState(prev => ({ ...prev, isLoading: false }))
+    }
+  }, [])
+
+  useEffect(() => {
+    checkAuthStatus()
+  }, [checkAuthStatus])
+
+  useEffect(() => {
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === 'accessToken' || e.key === 'user') {
+        checkAuthStatus()
+      }
+    }
+
+    window.addEventListener('storage', handleStorageChange)
+    return () => window.removeEventListener('storage', handleStorageChange)
+  }, [checkAuthStatus])
+
   return {
     ...authState,
     login,
     register,
     logout,
     clearError,
+    checkAuthStatus
   }
 } 
