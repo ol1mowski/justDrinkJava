@@ -23,7 +23,7 @@ export interface RegisterFormProps {
 }
 
 export interface SocialLoginProps {
-  onGoogleLogin: () => void
+  onGoogleLogin: (user: any, token: string) => Promise<void>
   onGithubLogin: () => void
   isLoading?: boolean
 }

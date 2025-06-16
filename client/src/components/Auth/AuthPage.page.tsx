@@ -1,20 +1,10 @@
 import { memo } from 'react'
 import { AuthContainer } from './components/AuthContainer.component'
 import { BenefitsSection } from './components/BenefitsSection.component'
+import { useAuthWithGoogle } from './hooks/useAuthWithGoogle.hook'
 
 export const AuthPage = memo(() => {
-  const handleLogin = () => {
-    // Login logic will be handled by AuthContainer and hooks
-  }
-
-  const handleRegister = () => {
-    // Register logic will be handled by AuthContainer and hooks
-  }
-
-  const handleGoogleLogin = () => {
-    console.log('Google OAuth login')
-    // TODO: Implement Google OAuth
-  }
+  const { handleGoogleLogin, isLoading: isGoogleLoading, error: googleError } = useAuthWithGoogle()
 
   const handleGithubLogin = () => {
     console.log('GitHub OAuth login')
@@ -34,11 +24,11 @@ export const AuthPage = memo(() => {
       
       <div className="w-full lg:w-1/2">
         <AuthContainer
-          onLogin={handleLogin}
-          onRegister={handleRegister}
           onGoogleLogin={handleGoogleLogin}
           onGithubLogin={handleGithubLogin}
           onForgotPassword={handleForgotPassword}
+          isLoading={isGoogleLoading}
+          error={googleError}
         />
       </div>
     </div>

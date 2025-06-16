@@ -9,11 +9,11 @@ import type { LoginFormData, RegisterFormData } from '../types'
 interface AuthContainerProps {
   onLogin?: (data: LoginFormData) => void
   onRegister?: (data: RegisterFormData) => void
-  onGoogleLogin?: () => void
+  onGoogleLogin?: (user: any, token: string) => Promise<void>
   onGithubLogin?: () => void
   onForgotPassword?: () => void
   isLoading?: boolean
-  error?: string
+  error?: string | null
 }
 
 export const AuthContainer = memo<AuthContainerProps>(({
@@ -37,9 +37,9 @@ export const AuthContainer = memo<AuthContainerProps>(({
     onRegister?.(data)
   }
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async (user: any, token: string) => {
     console.log('Google login')
-    onGoogleLogin?.()
+    await onGoogleLogin?.(user, token)
   }
 
   const handleGithubLogin = () => {
@@ -83,7 +83,7 @@ export const AuthContainer = memo<AuthContainerProps>(({
               <LoginForm 
                 onSubmit={handleLogin}
                 isLoading={isLoading}
-                error={error}
+                error={error || undefined}
               />
 
               <div className="mt-6 text-center">
@@ -101,7 +101,7 @@ export const AuthContainer = memo<AuthContainerProps>(({
             <RegisterForm 
               onSubmit={handleRegister}
               isLoading={isLoading}
-              error={error}
+              error={error || undefined}
             />
           )}
         </div>
