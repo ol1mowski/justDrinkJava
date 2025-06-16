@@ -163,6 +163,18 @@ export interface PostData {
   imageUrl?: string;
 }
 
+export interface SearchPostsRequest {
+  query: string;
+  limit?: number;
+  offset?: number;
+}
+
+export interface SearchPostsResponse {
+  posts: PostData[];
+  total: number;
+  hasMore: boolean;
+}
+
 export interface ApiError {
   timestamp: string;
   status: number;
@@ -210,6 +222,20 @@ class ApiService {
   async getLatestPostByCategory(categoryId: number): Promise<PostData> {
     return this.fetchWithErrorHandling<PostData>(
       `${API_BASE_URL}/posts/latest/category/${categoryId}`
+    );
+  }
+
+  async searchPosts(request: SearchPostsRequest): Promise<SearchPostsResponse> {
+    return this.fetchWithErrorHandling<SearchPostsResponse>(
+      `${API_BASE_URL}/posts/search`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          query: request.query,
+          limit: request.limit || 10,
+          offset: request.offset || 0
+        })
+      }
     );
   }
 }

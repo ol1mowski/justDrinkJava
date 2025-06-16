@@ -5,13 +5,18 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.justdrinkjava.JustDrinkJava.dto.PostDTO;
+import pl.justdrinkjava.JustDrinkJava.dto.SearchPostsRequest;
+import pl.justdrinkjava.JustDrinkJava.dto.SearchPostsResponse;
 import pl.justdrinkjava.JustDrinkJava.service.PostService;
 
 @RestController
@@ -48,6 +53,25 @@ public class PostController {
             
         } catch (Exception e) {
             log.error("Błąd podczas pobierania postów: {}", e.getMessage(), e);
+            throw e;
+        }
+    }
+    
+    @PostMapping("/search")
+    public ResponseEntity<SearchPostsResponse> searchPosts(@Valid @RequestBody SearchPostsRequest request) {
+        try {
+            log.info("Żądanie wyszukiwania postów: '{}'", request.getQuery());
+            
+            SearchPostsResponse response = postService.searchPosts(request);
+            
+            log.info("Zwracanie {} wyników wyszukiwania na {} total", 
+                    response.getPosts().size(), response.getTotal());
+            
+            return ResponseEntity.ok(response);
+            
+        } catch (Exception e) {
+            log.error("Błąd podczas wyszukiwania postów: {}", e.getMessage(), e);
+            e.printStackTrace();
             throw e;
         }
     }

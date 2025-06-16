@@ -4,6 +4,7 @@ import { MainLayout } from '../layouts/MainLayout/MainLayout.layout'
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage.page').then(module => ({ default: module.HomePage })))
 const PostsPage = lazy(() => import('../pages/PostsPage/PostsPage.page').then(module => ({ default: module.PostsPage })))
+const SearchPage = lazy(() => import('../pages/SearchPage/SearchPage.page').then(module => ({ default: module.SearchPage })))
 const AboutPage = lazy(() => import('../pages/AboutPage/AboutPage.page').then(module => ({ default: module.AboutPage })))
 const JobsPage = lazy(() => import('../pages/JobsPage/JobsPage.page').then(module => ({ default: module.JobsPage })))
 const QuizzesPage = lazy(() => import('../pages/QuizzesPage/QuizzesPage.page').then(module => ({ default: module.QuizzesPage })))
@@ -24,6 +25,10 @@ export const routes: RouteObject[] = [
       {
         path: 'posts',
         element: <PostsPage />,
+      },
+      {
+        path: 'search',
+        element: <SearchPage />,
       },
       {
         path: 'about',

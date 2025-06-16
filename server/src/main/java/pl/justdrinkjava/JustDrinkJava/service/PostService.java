@@ -4,10 +4,14 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.justdrinkjava.JustDrinkJava.dto.PostDTO;
+import pl.justdrinkjava.JustDrinkJava.dto.SearchPostsRequest;
+import pl.justdrinkjava.JustDrinkJava.dto.SearchPostsResponse;
 import pl.justdrinkjava.JustDrinkJava.entity.Post;
 import pl.justdrinkjava.JustDrinkJava.exception.PostNotFoundException;
 import pl.justdrinkjava.JustDrinkJava.mapper.PostMapper;
@@ -42,5 +46,32 @@ public class PostService {
         return posts.stream()
                 .map(postMapper::toDTO)
                 .toList();
+    }
+    
+    public SearchPostsResponse searchPosts(SearchPostsRequest request) {
+        log.info("Wyszukiwanie postów dla zapytania: '{}', limit: {}, offset: {}", 
+                request.getQuery(), request.getLimit(), request.getOffset());
+        
+        String query = request.getQuery().trim();
+        
+        if (query.isEmpty()) {
+            log.warn("Puste zapytanie wyszukiwania");
+            return SearchPostsResponse.of(List.of(), 0, request.getLimit(), request.getOffset());
+        }
+        
+        int page = request.getOffset() / request.getLimit();
+        Pageable pageable = PageRequest.of(page, request.getLimit());
+        
+        List<Post> posts = postRepository.searchPosts(query, pageable);
+        long totalCount = postRepository.countSearchResults(query);
+        
+        List<PostDTO> postDTOs = posts.stream()
+                .map(postMapper::toDTO)
+                .toList();
+        
+        log.info("Znaleziono {} postów na {} total dla zapytania: '{}'", 
+                posts.size(), totalCount, query);
+        
+        return SearchPostsResponse.of(postDTOs, (int) totalCount, request.getLimit(), request.getOffset());
     }
 } 
