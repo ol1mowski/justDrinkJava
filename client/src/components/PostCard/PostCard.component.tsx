@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { PostCardImage } from './components/PostCardImage.component'
 import { PostCardContent } from './components/PostCardContent.component'
 import { PostCardFooter } from './components/PostCardFooter.component'
@@ -10,8 +11,14 @@ interface PostCardProps {
 }
 
 export const PostCard = memo<PostCardProps>(({ post, onClick }) => {
+  const navigate = useNavigate()
+  
   const handleClick = () => {
-    onClick?.(post)
+    if (onClick) {
+      onClick(post)
+    } else {
+      navigate(`/posts/${post.id}`)
+    }
   }
 
   return (

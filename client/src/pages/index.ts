@@ -1,5 +1,6 @@
 export { HomePage } from './HomePage/HomePage.page'
 export { PostsPage } from './PostsPage/PostsPage.page'
+export { PostDetailPage } from './PostDetailPage'
 export { JobsPage } from './JobsPage/JobsPage.page'
 export { AboutPage } from './AboutPage/AboutPage.page'
 export { CVGuidePage } from './CVGuidePage/CVGuidePage.page'  

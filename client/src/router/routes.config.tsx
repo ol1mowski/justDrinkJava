@@ -12,6 +12,7 @@ const CVGuidePage = lazy(() => import('../pages/CVGuidePage/CVGuidePage.page').t
 const AccountSettingsPage = lazy(() => import('../pages/AccountSettingsPage/AccountSettingsPage.page').then(module => ({ default: module.AccountSettingsPage })))
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage.page').then(module => ({ default: module.LoginPage })))
 const GitHubCallbackPage = lazy(() => import('../pages/GitHubCallbackPage/GitHubCallbackPage.page').then(module => ({ default: module.GitHubCallbackPage })))
+const PostDetailPage = lazy(() => import('../pages/PostDetailPage/PostDetailPage.page').then(module => ({ default: module.PostDetailPage })))
 const NotFoundPage = lazy(() => import('../pages/NotFoundPage/NotFoundPage.page').then(module => ({ default: module.NotFoundPage })))
 
 export const routes: RouteObject[] = [
@@ -26,6 +27,10 @@ export const routes: RouteObject[] = [
       {
         path: 'posts',
         element: <PostsPage />,
+      },
+      {
+        path: 'posts/:id',
+        element: <PostDetailPage />,
       },
       {
         path: 'search',
