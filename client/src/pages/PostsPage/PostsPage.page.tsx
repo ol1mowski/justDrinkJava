@@ -1,9 +1,9 @@
 import { memo, Suspense, useCallback } from 'react'
-import { usePosts } from './hooks/usePosts.hook'
-import { PostsFilter } from './components/PostsFilter.component'
-import { PostsGrid } from './components/PostsGrid.component'
+import { usePosts } from '../../components/PostsFilter/hooks/usePosts.hook'
+import { PostsFilter } from '../../components/PostsFilter/PostsFilter.component'
+import { PostsGrid } from '../../components/PostsGrid/PostsGrid.component'
 import { LoadingSpinner } from '../../components/ui'
-import type { PostDTO } from './hooks/usePosts.hook'
+import type { PostDTO } from '../../components/PostCard/types'
 
 export const PostsPage = memo(() => {
   const {
