@@ -36,6 +36,16 @@ public class PostService {
         return postMapper.toDTO(latestPost);
     }
     
+    public PostDTO getPostById(Integer id) {
+        Post post = postRepository.findById(id)
+                .orElseThrow(() -> {
+                    log.error("Nie znaleziono postu o ID: {}", id);
+                    return new PostNotFoundException("Nie znaleziono postu o ID: " + id);
+                });
+        
+        return postMapper.toDTO(post);
+    }
+    
     public List<PostDTO> getLatestPosts(int limit) {
         log.info("Pobieranie {} ostatnich postów z bazy danych", limit);
         

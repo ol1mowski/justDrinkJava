@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { PostContentContainer } from '../../components/PostContent'
 import { usePost } from '../../hooks/usePost.hook'
+import { useRelatedPosts } from '../../hooks/useRelatedPosts.hook'
+import { PostCard } from '../../components/PostsSection/components/PostCard.component'
 
 export const PostDetailPage = () => {
   const navigate = useNavigate()
@@ -14,6 +16,7 @@ export const PostDetailPage = () => {
 
   const postId = parseInt(id || '1', 10)
   const { post, isLoading: isPostLoading, isError: isPostError, error: postError } = usePost(postId)
+  const { posts: relatedPosts, isLoading: isRelatedLoading } = useRelatedPosts(postId)
 
   const handleBack = () => {
     navigate(-1)
@@ -238,18 +241,38 @@ export const PostDetailPage = () => {
           className="mt-12"
         >
           <h2 className="text-2xl font-bold text-java-dark mb-6">Podobne posty</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200">
-              <div className="text-java-gray text-center py-8">
-                Powiązane posty będą tutaj wyświetlane
+          
+          {isRelatedLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="animate-pulse">
+                <div className="bg-gray-200 rounded-xl h-48 mb-4"></div>
+                <div className="space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </div>
+              </div>
+              <div className="animate-pulse">
+                <div className="bg-gray-200 rounded-xl h-48 mb-4"></div>
+                <div className="space-y-3">
+                  <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+                  <div className="h-4 bg-gray-200 rounded w-1/2"></div>
+                </div>
               </div>
             </div>
-            <div className="bg-white rounded-xl p-6 shadow-lg hover:shadow-xl transition-shadow duration-200">
-              <div className="text-java-gray text-center py-8">
-                Powiązane posty będą tutaj wyświetlane
-              </div>
+          ) : relatedPosts.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {relatedPosts.map((relatedPost) => (
+                <PostCard 
+                  key={relatedPost.id} 
+                  post={relatedPost}
+                />
+              ))}
             </div>
-          </div>
+          ) : (
+            <div className="text-center py-8 text-gray-500">
+              <p>Brak powiązanych postów do wyświetlenia.</p>
+            </div>
+          )}
         </motion.section>
       </div>
     </div>

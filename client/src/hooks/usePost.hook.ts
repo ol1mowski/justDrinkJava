@@ -24,7 +24,7 @@ export const usePost = (
   const query = useQuery({
     queryKey: ['post', postId],
     queryFn: async () => {
-      return await apiService.getLatestPost()
+      return await apiService.getPostById(postId)
     },
     enabled: options.enabled !== false && !!postId,
     staleTime: options.staleTime ?? 5 * 60 * 1000,

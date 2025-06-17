@@ -251,6 +251,12 @@ class ApiService {
     );
   }
 
+  async getPostById(id: number): Promise<PostData> {
+    return this.fetchWithErrorHandling<PostData>(
+      `${API_BASE_URL}/posts/${id}`
+    );
+  }
+
   async getLatestPostByCategory(categoryId: number): Promise<PostData> {
     return this.fetchWithErrorHandling<PostData>(
       `${API_BASE_URL}/posts/latest/category/${categoryId}`
