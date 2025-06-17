@@ -178,6 +178,11 @@ export interface UpdateProfileRequest {
   username: string;
 }
 
+export interface UpdateProfileResponse {
+  user: UserData;
+  newToken?: string;
+}
+
 export interface ChangePasswordRequest {
   currentPassword: string;
   newPassword: string;
@@ -213,10 +218,22 @@ class ApiService {
       });
 
       if (!response.ok) {
-        const errorData: ApiError = await response.json();
-        throw new Error(
-          errorData.message || `HTTP ${response.status}: ${response.statusText}`
-        );
+        let errorMessage = `HTTP ${response.status}: ${response.statusText}`;
+        
+        try {
+          // Próbuj sparsować odpowiedź jako JSON
+          const errorData = await response.json();
+          if (errorData.message) {
+            errorMessage = errorData.message;
+          } else if (errorData.error) {
+            errorMessage = errorData.error;
+          }
+        } catch (jsonError) {
+          // Jeśli nie można sparsować jako JSON, użyj domyślnej wiadomości
+          console.warn('Nie można sparsować odpowiedzi błędu:', jsonError);
+        }
+        
+        throw new Error(errorMessage);
       }
 
       return await response.json();
@@ -261,8 +278,8 @@ class ApiService {
     );
   }
 
-  async updateProfile(request: UpdateProfileRequest): Promise<UserData> {
-    return this.fetchWithErrorHandling<UserData>(
+  async updateProfile(request: UpdateProfileRequest): Promise<UpdateProfileResponse> {
+    return this.fetchWithErrorHandling<UpdateProfileResponse>(
       `${API_BASE_URL}/user/profile`,
       {
         method: 'PUT',

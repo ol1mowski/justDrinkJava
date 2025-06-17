@@ -31,18 +31,26 @@ public class UserController {
     }
 
     @PutMapping("/profile")
-    public ResponseEntity<UserDto> updateProfile(@Valid @RequestBody UpdateProfileRequest request) {
+    public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateProfileRequest request) {
         try {
             log.info("Aktualizacja profilu użytkownika: {}", request.getUsername());
-            UserDto updatedUser = userService.updateProfile(request);
-            log.info("Profil zaktualizowany pomyślnie dla: {}", updatedUser.getUsername());
-            return ResponseEntity.ok(updatedUser);
+            UpdateProfileResponse response = userService.updateProfile(request);
+            log.info("Profil zaktualizowany pomyślnie dla: {}", response.getUser().getUsername());
+            return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             log.error("Błąd podczas aktualizacji profilu: {}", e.getMessage(), e);
-            return ResponseEntity.status(400).body(null);
+            ApiResponse<Void> errorResponse = ApiResponse.<Void>builder()
+                    .status("error")
+                    .message(e.getMessage())
+                    .build();
+            return ResponseEntity.status(400).body(errorResponse);
         } catch (Exception e) {
             log.error("Nieoczekiwany błąd podczas aktualizacji profilu: {}", e.getMessage(), e);
-            return ResponseEntity.status(500).body(null);
+            ApiResponse<Void> errorResponse = ApiResponse.<Void>builder()
+                    .status("error")
+                    .message("Wystąpił nieoczekiwany błąd podczas aktualizacji profilu")
+                    .build();
+            return ResponseEntity.status(500).body(errorResponse);
         }
     }
 

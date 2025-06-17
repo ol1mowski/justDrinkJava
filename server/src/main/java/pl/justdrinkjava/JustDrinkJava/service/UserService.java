@@ -10,9 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.justdrinkjava.JustDrinkJava.dto.ChangePasswordRequest;
 import pl.justdrinkjava.JustDrinkJava.dto.DeleteAccountRequest;
 import pl.justdrinkjava.JustDrinkJava.dto.UpdateProfileRequest;
+import pl.justdrinkjava.JustDrinkJava.dto.UpdateProfileResponse;
 import pl.justdrinkjava.JustDrinkJava.dto.UserDto;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
 import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public UserDto getCurrentUser() {
         try {
@@ -50,7 +53,7 @@ public class UserService {
         }
     }
 
-    public UserDto updateProfile(UpdateProfileRequest request) {
+    public UpdateProfileResponse updateProfile(UpdateProfileRequest request) {
         try {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             String currentUsername = authentication.getName();
@@ -60,21 +63,45 @@ public class UserService {
                     .or(() -> userRepository.findByEmail(currentUsername))
                     .orElseThrow(() -> new RuntimeException("Użytkownik nie został znaleziony"));
 
-            if (!user.getUsername().equals(request.getUsername()) && 
-                userRepository.findByUsername(request.getUsername()).isPresent()) {
-                throw new RuntimeException("Nazwa użytkownika jest już zajęta");
+            boolean usernameChanged = !user.getUsername().equals(request.getUsername());
+            log.info("Sprawdzanie zmiany nazwy: obecna='{}', nowa='{}', zmieniona={}", 
+                    user.getUsername(), request.getUsername(), usernameChanged);
+
+            if (usernameChanged) {
+                userRepository.findByUsername(request.getUsername())
+                    .filter(existingUser -> !existingUser.getId().equals(user.getId()))
+                    .ifPresent(existingUser -> {
+                        log.error("Nazwa użytkownika '{}' jest już zajęta przez użytkownika ID: {}", 
+                                request.getUsername(), existingUser.getId());
+                        throw new RuntimeException("Nazwa użytkownika jest już zajęta");
+                    });
             }
 
             user.setUsername(request.getUsername());
             User savedUser = userRepository.save(user);
             
             log.info("Zaktualizowano profil użytkownika: {}", savedUser.getUsername());
-                
-            return UserDto.builder()
+            
+            UserDto userDto = UserDto.builder()
                     .id(savedUser.getId())
                     .email(savedUser.getEmail())
                     .username(savedUser.getUsername())
                     .createdAt(savedUser.getCreatedAt())
+                    .build();   
+            String newToken = null;
+            if (usernameChanged) {
+                UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
+                        .username(savedUser.getUsername())
+                        .password(savedUser.getPassword())
+                        .authorities("USER")
+                        .build();
+                newToken = jwtService.generateToken(userDetails);
+                log.info("Wygenerowano nowy token dla użytkownika: {}", savedUser.getUsername());
+            }
+                
+            return UpdateProfileResponse.builder()
+                    .user(userDto)
+                    .newToken(newToken)
                     .build();
         } catch (Exception e) {
             log.error("Błąd w updateProfile: {}", e.getMessage(), e);

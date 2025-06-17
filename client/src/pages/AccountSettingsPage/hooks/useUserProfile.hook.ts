@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 import { apiService } from '../../../utils/api'
-import type { UserData, UpdateProfileRequest } from '../../../utils/api'
+import type { UserData, UpdateProfileRequest, UpdateProfileResponse } from '../../../utils/api'
 
 interface UseUserProfileState {
   user: UserData | null
@@ -43,10 +43,16 @@ export const useUserProfile = (): UseUserProfileReturn => {
     setState(prev => ({ ...prev, isLoading: true, error: null }))
     
     try {
-      const updatedUser = await apiService.updateProfile(request)
+      const response: UpdateProfileResponse = await apiService.updateProfile(request)
+      
+      if (response.newToken) {
+        localStorage.setItem('accessToken', response.newToken)
+        console.log('🔄 Token zaktualizowany po zmianie nazwy użytkownika')
+      }
+      
       setState(prev => ({
         ...prev,
-        user: updatedUser,
+        user: response.user,
         isLoading: false
       }))
     } catch (error) {
