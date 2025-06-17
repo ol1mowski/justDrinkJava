@@ -5,11 +5,13 @@ import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
 } from "@heroicons/react/24/outline";
+import { useCurrentUser } from "../../../hooks/useCurrentUser.hook";
 import { useAuth } from "../../../hooks/useAuth.hook";
 import { Link } from "react-router-dom";
 
 export const UserMenu = memo(() => {
-  const { user, logout } = useAuth();
+  const { data: user, isLoading } = useCurrentUser();
+  const { logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -34,6 +36,16 @@ export const UserMenu = memo(() => {
     setIsOpen(false);
   };
 
+  // Pokaż loading spinner gdy dane się ładują
+  if (isLoading) {
+    return (
+      <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse flex items-center justify-center">
+        <UserIcon className="w-4 h-4 text-gray-400" />
+      </div>
+    );
+  }
+
+  // Nie pokazuj menu jeśli nie ma użytkownika
   if (!user) return null;
 
   return (

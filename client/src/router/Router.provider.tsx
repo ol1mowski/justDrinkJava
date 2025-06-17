@@ -2,6 +2,7 @@ import { memo, Suspense } from 'react'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { routes } from './routes.config'
 import { LoadingSpinner } from '../components/ui'
+import { QueryProvider } from '../providers/QueryProvider'
 
 const router = createBrowserRouter(routes)
 
@@ -20,9 +21,11 @@ RouterLoadingFallback.displayName = 'RouterLoadingFallback'
 
 export const AppRouter = memo(() => {
   return (
-    <Suspense fallback={<RouterLoadingFallback />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <QueryProvider>
+      <Suspense fallback={<RouterLoadingFallback />}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </QueryProvider>
   )
 })
 

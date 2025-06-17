@@ -1,77 +1,50 @@
-import { useState, useEffect, useCallback } from 'react'
-import { apiService } from '../../../utils/api'
-import type { UserData, UpdateProfileRequest, UpdateProfileResponse } from '../../../utils/api'
+import { useCurrentUser, useUpdateProfile } from '../../../hooks/useCurrentUser.hook'
+import type { UpdateProfileRequest } from '../../../utils/api'
 
-interface UseUserProfileState {
-  user: UserData | null
+interface UseUserProfileReturn {
+  user: any
   isLoading: boolean
   error: string | null
-}
-
-interface UseUserProfileReturn extends UseUserProfileState {
   updateProfile: (request: UpdateProfileRequest) => Promise<void>
   refetch: () => void
 }
 
 export const useUserProfile = (): UseUserProfileReturn => {
-  const [state, setState] = useState<UseUserProfileState>({
-    user: null,
-    isLoading: true,
-    error: null
-  })
+  const { 
+    data: user, 
+    isLoading: isUserLoading, 
+    error: userError, 
+    refetch 
+  } = useCurrentUser()
 
-  const fetchUser = useCallback(async () => {
-    setState(prev => ({ ...prev, isLoading: true, error: null }))
-    
-    try {
-      const userData = await apiService.getCurrentUser()
-      setState(prev => ({
-        ...prev,
-        user: userData,
-        isLoading: false
-      }))
-    } catch (error) {
-      setState(prev => ({
-        ...prev,
-        error: error instanceof Error ? error.message : 'Błąd podczas pobierania danych użytkownika',
-        isLoading: false
-      }))
-    }
-  }, [])
+  const { 
+    mutate: updateProfileMutation, 
+    isPending: isUpdating,
+    error: updateError
+  } = useUpdateProfile()
 
-  const updateProfile = useCallback(async (request: UpdateProfileRequest) => {
-    setState(prev => ({ ...prev, isLoading: true, error: null }))
-    
-    try {
-      const response: UpdateProfileResponse = await apiService.updateProfile(request)
-      
-      if (response.newToken) {
-        localStorage.setItem('accessToken', response.newToken)
-        console.log('🔄 Token zaktualizowany po zmianie nazwy użytkownika')
-      }
-      
-      setState(prev => ({
-        ...prev,
-        user: response.user,
-        isLoading: false
-      }))
-    } catch (error) {
-      setState(prev => ({
-        ...prev,
-        error: error instanceof Error ? error.message : 'Błąd podczas aktualizacji profilu',
-        isLoading: false
-      }))
-      throw error
-    }
-  }, [])
+  const updateProfile = async (request: UpdateProfileRequest): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      updateProfileMutation(request, {
+        onSuccess: () => {
+          resolve()
+        },
+        onError: (error) => {
+          console.error('❌ Błąd podczas aktualizacji profilu:', error)
+          reject(error)
+        }
+      })
+    })
+  }
 
-  useEffect(() => {
-    fetchUser()
-  }, [fetchUser])
+  const combinedError = userError?.message || updateError?.message || null
+  const combinedLoading = isUserLoading || isUpdating
 
   return {
-    ...state,
+    user: user || null,
+    isLoading: combinedLoading,
+    error: combinedError,
     updateProfile,
-    refetch: fetchUser
+    refetch
   }
 } 

@@ -24,7 +24,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     children,
     ...props
   }, ref) => {
-    const baseClasses = 'inline-flex items-center justify-center rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
+    const baseClasses = 'inline-flex items-center cursor-pointer justify-center rounded-lg font-medium transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed'
     
     const variantClasses = {
       primary: 'bg-java-orange text-white hover:bg-java-orange/90 focus:ring-java-orange',
