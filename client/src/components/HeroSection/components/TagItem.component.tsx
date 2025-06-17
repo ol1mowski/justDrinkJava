@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { ChartBarIcon } from '@heroicons/react/24/outline'
 import type { Tag } from '../hooks/useHashtags.hook'
 import { getTagStyles } from '../../../utils/tagStyles'
@@ -9,11 +10,20 @@ interface TagItemProps {
 }
 
 export const TagItem = memo<TagItemProps>(({ tag, index }) => {
+  const navigate = useNavigate()
+
+  const handleTagClick = () => {
+    navigate(`/search?hashtag=${encodeURIComponent(tag.name)}`)
+  }
+
   return (
-    <div className="flex items-center justify-between group cursor-pointer">
+    <div 
+      onClick={handleTagClick}
+      className="flex items-center justify-between group cursor-pointer hover:bg-java-light-gray/50 p-2 rounded-lg transition-colors duration-200"
+    >
       <div className="flex items-center gap-3 flex-1">
-        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-java-gray/10 dark:bg-java-dark-text/10 
-                       flex items-center justify-center text-xs font-bold text-java-blue/90 dark:text-java-dark-text-secondary">
+        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-java-gray/10 
+                       flex items-center justify-center text-xs font-bold text-java-blue/90">
           {index + 1}
         </div>
         <button className={`
@@ -28,7 +38,7 @@ export const TagItem = memo<TagItemProps>(({ tag, index }) => {
         </button>
       </div>
       <div className="flex-shrink-0 text-right">
-        <span className="text-sm font-medium text-java-blue/90 dark:text-java-dark-text-secondary">
+        <span className="text-sm font-medium text-java-blue/90">
           {tag.count} postów
         </span>
       </div>

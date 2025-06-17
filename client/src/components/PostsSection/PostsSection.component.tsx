@@ -12,7 +12,7 @@ const PostsSectionContent = memo(() => {
 
   if (loading) {
     return (
-      <section className="py-16 lg:py-24 bg-java-white dark:bg-java-dark-bg">
+      <section className="py-16 lg:py-24 bg-java-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <PostsSectionHeader />
           <PostsLoadingState itemsCount={9} />
@@ -23,7 +23,7 @@ const PostsSectionContent = memo(() => {
 
   if (error) {
     return (
-      <section className="py-16 lg:py-24 bg-java-white dark:bg-java-dark-bg">
+      <section className="py-16 lg:py-24 bg-java-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <PostsSectionHeader />
           <PostsErrorState error={error} onRetry={refetch} />
@@ -34,11 +34,11 @@ const PostsSectionContent = memo(() => {
 
   if (!posts || posts.length === 0) {
     return (
-      <section className="py-16 lg:py-24 bg-java-white dark:bg-java-dark-bg">
+      <section className="py-16 lg:py-24 bg-java-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <PostsSectionHeader />
           <div className="text-center py-12">
-            <p className="text-lg text-java-blue/90 dark:text-java-dark-text-secondary">
+            <p className="text-lg text-java-blue/90">
               Brak postów do wyświetlenia.
             </p>
           </div>
@@ -48,7 +48,7 @@ const PostsSectionContent = memo(() => {
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-java-white dark:bg-java-dark-bg">
+    <section className="py-16 lg:py-24 bg-java-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <PostsSectionHeader />
         <PostsGrid posts={posts} />

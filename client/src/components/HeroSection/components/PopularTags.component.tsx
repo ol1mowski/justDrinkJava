@@ -22,8 +22,8 @@ export const PopularTags = memo(() => {
       title="Błąd komponentu hashtagów"
       message="Wystąpił problem podczas wyświetlania popularnych tematów"
     >
-      <div className="bg-java-white dark:bg-java-dark-surface rounded-2xl p-6 sm:p-8 
-                     border border-java-gray/10 dark:border-java-dark-text/10">
+      <div className="bg-java-white rounded-2xl p-6 sm:p-8 
+                     border border-java-gray/10">
         <PopularTagsHeader />
         <TagsList tags={tags} />
       </div>

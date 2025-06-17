@@ -12,7 +12,7 @@ export const HeroSection = memo(() => {
       title="Błąd sekcji głównej"
       message="Wystąpił problem podczas ładowania sekcji głównej strony"
     >
-      <section className="relative py-12 lg:py-20 bg-java-white dark:bg-java-dark-bg">
+      <section className="relative py-12 lg:py-20 bg-java-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12">
             <div className="lg:col-span-8">
@@ -24,7 +24,7 @@ export const HeroSection = memo(() => {
                     <span className="text-java-red">Drink</span>
                     <span className="text-java-orange">Java</span>
                   </h1>
-                  <p className="mt-4 text-lg sm:text-xl text-java-blue/90 dark:text-java-dark-text-secondary max-w-3xl">
+                  <p className="mt-4 text-lg sm:text-xl text-java-blue/90 max-w-3xl">
                     Odkryj świat programowania w Javie. Najnowsze artykuły, tutoriale i najlepsze praktyki 
                     dla developerów na każdym poziomie zaawansowania.
                   </p>
