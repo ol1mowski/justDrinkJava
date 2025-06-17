@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
                         .requestMatchers("/posts/**").permitAll()
+                        .requestMatchers("/post-content/**").permitAll()
                         .requestMatchers("/statistics/**").permitAll()
                         .requestMatchers("/hashtags/**").permitAll()
                         .requestMatchers("/quizzes/**").permitAll()

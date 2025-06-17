@@ -10,11 +10,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.NoHandlerFoundException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import lombok.extern.slf4j.Slf4j;
+
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 @Slf4j
@@ -48,6 +51,56 @@ public class GlobalExceptionHandler {
         );
         
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleNoResourceFoundException(
+            NoResourceFoundException ex, WebRequest request) {
+        
+        log.error("Resource not found: {}", ex.getResourcePath());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.NOT_FOUND,
+            String.format("Zasób '%s' nie został znaleziony", ex.getResourcePath()),
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(NoSuchElementException.class)
+    public ResponseEntity<Map<String, Object>> handleNoSuchElementException(
+            NoSuchElementException ex, WebRequest request) {
+        
+        log.error("Element not found: {}", ex.getMessage());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.NOT_FOUND,
+            ex.getMessage() != null ? ex.getMessage() : "Żądany element nie został znaleziony",
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRuntimeException(
+            RuntimeException ex, WebRequest request) {
+        
+        if (ex.getMessage() != null && ex.getMessage().contains("nie znaleziony")) {
+            log.error("Resource not found: {}", ex.getMessage());
+            
+            Map<String, Object> errorResponse = createErrorResponse(
+                HttpStatus.NOT_FOUND,
+                ex.getMessage(),
+                request
+            );
+            
+            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        }
+        
+        // Jeśli to nie jest błąd 404, przekaż do ogólnej obsługi
+        return handleGeneralException(ex);
     }
     
     @ExceptionHandler(IllegalArgumentException.class)
