@@ -3,6 +3,7 @@ import {
   PostDetailHero,
   PostDetailContent,
   RelatedPostsSection,
+  CommentsSection,
   PostDetailSkeleton,
   PostDetailError
 } from '../../components/PostDetail'
@@ -21,7 +22,9 @@ export const PostDetailPage = () => {
     toggleLike,
     toggleBookmark,
     handleBack,
-    formatDate
+    formatDate,
+    isAuthenticated,
+    currentUser
   } = usePostDetailLogic()
 
   if (isPostLoading) {
@@ -55,6 +58,12 @@ export const PostDetailPage = () => {
         <RelatedPostsSection
           posts={relatedPosts}
           isLoading={isRelatedLoading}
+        />
+
+        <CommentsSection
+          postId={postId}
+          isAuthenticated={isAuthenticated}
+          currentUser={currentUser}
         />
       </div>
     </div>

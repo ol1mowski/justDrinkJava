@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import { usePost } from './usePost.hook'
 import { useRelatedPosts } from './useRelatedPosts.hook'
 import { usePostInteractions } from './usePostInteractions.hook'
+import { useAuth } from './useAuth.hook'
 
 export interface UsePostDetailLogicResult {
   postId: number
@@ -17,11 +18,14 @@ export interface UsePostDetailLogicResult {
   toggleBookmark: () => void
   handleBack: () => void
   formatDate: (dateString: string) => string
+  isAuthenticated: boolean
+  currentUser: ReturnType<typeof useAuth>['user']
 }
 
 export const usePostDetailLogic = (): UsePostDetailLogicResult => {
   const navigate = useNavigate()
   const { id } = useParams<{ id: string }>()
+  const { isAuthenticated, user: currentUser } = useAuth()
   
   const postId = parseInt(id || '1', 10)
   const { post, isLoading: isPostLoading, isError: isPostError, error: postError } = usePost(postId)
@@ -52,6 +56,8 @@ export const usePostDetailLogic = (): UsePostDetailLogicResult => {
     toggleLike,
     toggleBookmark,
     handleBack,
-    formatDate
+    formatDate,
+    isAuthenticated,
+    currentUser
   }
 } 
