@@ -21,7 +21,8 @@ export const AddCommentForm = memo<AddCommentFormProps>(({
     isPending
   } = useAddCommentForm({ onSubmit })
 
-  const isDisabled = isPending || isLoading || !isValid
+  const isTextareaDisabled = isPending || isLoading
+  const isSubmitDisabled = isPending || isLoading || !isValid
 
   return (
     <motion.div
@@ -42,7 +43,7 @@ export const AddCommentForm = memo<AddCommentFormProps>(({
                      dark:bg-java-dark-bg dark:border-java-dark-border dark:text-java-dark-text
                      dark:placeholder-java-dark-text-secondary"
             rows={3}
-            disabled={isDisabled}
+            disabled={isTextareaDisabled}
             maxLength={maxLength}
             aria-label="Napisz komentarz"
           />
@@ -58,7 +59,7 @@ export const AddCommentForm = memo<AddCommentFormProps>(({
             
             <button
               type="submit"
-              disabled={isDisabled}
+              disabled={isSubmitDisabled}
               className="inline-flex items-center space-x-2 px-4 py-2 bg-java-orange hover:bg-java-red 
                        text-white font-medium rounded-lg transition-colors duration-200
                        disabled:opacity-50 disabled:cursor-not-allowed

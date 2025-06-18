@@ -80,6 +80,7 @@ public class CommentService {
                 .content(request.getContent())
                 .post(post)
                 .user(currentUser)
+                .likes(0)
                 .build();
         
         Comment savedComment = commentRepository.save(comment);

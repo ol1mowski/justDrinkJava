@@ -10,8 +10,8 @@ interface PostCardFooterProps {
   }
   createdAt: string
   postId: number
-  likes: number
-  isLikedByCurrentUser: boolean
+  likes?: number
+  isLikedByCurrentUser?: boolean
 }
 
 const formatDate = (dateString: string) => {
@@ -53,8 +53,8 @@ export const PostCardFooter = memo<PostCardFooterProps>(({
         <div className="flex items-center gap-3">
           <PostLikeButton
             postId={postId}
-            initialLikes={likes}
-            initialIsLiked={isLikedByCurrentUser}
+            initialLikes={likes || 0}
+            initialIsLiked={isLikedByCurrentUser || false}
           />
           <span className="text-xs text-java-gray/60 dark:text-java-dark-text-secondary">
             {formatDate(createdAt)}

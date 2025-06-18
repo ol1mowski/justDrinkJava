@@ -12,12 +12,15 @@ export class ApiNetworkError extends Error {
 }
 
 export class ApiValidationError extends Error {
+  public errors: Record<string, string>
+  
   constructor(
     message: string,
-    public errors: Record<string, string> = {}
+    errors: Record<string, string> = {}
   ) {
     super(message)
     this.name = "ApiValidationError"
+    this.errors = errors
   }
 }
 

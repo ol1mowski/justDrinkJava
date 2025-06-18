@@ -14,8 +14,8 @@ export interface PostDTO {
   createdAt: string
   readTime: number
   imageUrl?: string
-  likes: number
-  isLikedByCurrentUser: boolean
+  likes?: number
+  isLikedByCurrentUser?: boolean
   hashtags?: Array<{
     id: number
     name: string

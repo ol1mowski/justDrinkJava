@@ -2,9 +2,12 @@ import type { LoginFormData, RegisterFormData, AuthResponse } from '../types'
 import { API_BASE_URL } from '../../../utils/api'
 
 class ApiError extends Error {
-  constructor(public message: string, public field?: string) {
+  public field?: string
+  
+  constructor(message: string, field?: string) {
     super(message)
     this.name = 'ApiError'
+    this.field = field
   }
 }
 

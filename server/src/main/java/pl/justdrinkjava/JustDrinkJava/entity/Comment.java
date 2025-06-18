@@ -41,8 +41,9 @@ public class Comment {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
     
-    @Column(nullable = false)
-    private Integer likes;
+    @Column(nullable = false, columnDefinition = "INT DEFAULT 0")
+    @Builder.Default
+    private Integer likes = 0;
     
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)

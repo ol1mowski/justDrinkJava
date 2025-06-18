@@ -13,7 +13,7 @@ export const DangerZoneSection = memo(() => {
     if (confirmation !== 'USUŃ KONTO') return
 
     try {
-      await deleteAccount({ confirmation })
+      await deleteAccount()
     } catch (error) {
       console.error('Błąd podczas usuwania konta:', error)
     }

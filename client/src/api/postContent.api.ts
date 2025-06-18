@@ -19,15 +19,24 @@ export interface ApiError {
 
 
 class PostContentApiError extends Error {
+  public status: number
+  public error: string
+  public path: string
+  public timestamp: string
+  
   constructor(
-    public status: number,
-    public error: string,
+    status: number,
+    error: string,
     message: string,
-    public path: string,
-    public timestamp: string
+    path: string,
+    timestamp: string
   ) {
     super(message)
     this.name = 'PostContentApiError'
+    this.status = status
+    this.error = error
+    this.path = path
+    this.timestamp = timestamp
   }
 }
 

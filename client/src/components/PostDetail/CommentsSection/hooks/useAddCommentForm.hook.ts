@@ -11,7 +11,7 @@ export interface UseAddCommentFormResult {
   isValid: boolean;
   characterCount: number;
   maxLength: number;
-  handleSubmit: (e: React.FormEvent) => Promise<void>;
+  handleSubmit: (e: React.FormEvent) => void;
   isPending: boolean;
   reset: () => void;
 }
@@ -32,18 +32,19 @@ export const useAddCommentForm = (
   }, []);
 
   const handleSubmit = useCallback(
-    async (e: React.FormEvent) => {
+    (e: React.FormEvent) => {
       e.preventDefault();
 
       if (!isValid || isPending) return;
 
-      startTransition(async () => {
-        try {
-          await onSubmit(content.trim());
-          reset();
-        } catch (error) {
-          console.error("Błąd podczas dodawania komentarza:", error);
-        }
+      startTransition(() => {
+        onSubmit(content.trim())
+          .then(() => {
+            reset();
+          })
+          .catch((error) => {
+            console.error("Błąd podczas dodawania komentarza:", error);
+          });
       });
     },
     [content, isValid, isPending, onSubmit, reset]
