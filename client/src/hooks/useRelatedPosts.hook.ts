@@ -1,4 +1,5 @@
-import { usePost } from './usePost.hook'
+import { useState, useEffect } from 'react'
+import { API_BASE_URL } from '../utils/api'
 import type { PostData } from '../utils/api'
 
 export interface UseRelatedPostsResult {
@@ -8,20 +9,44 @@ export interface UseRelatedPostsResult {
 }
 
 export const useRelatedPosts = (mainPostId: number): UseRelatedPostsResult => {
-  const nextPostId1 = mainPostId + 1
-  const nextPostId2 = mainPostId + 2
+  const [posts, setPosts] = useState<PostData[]>([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [hasErrors, setHasErrors] = useState(false)
 
-  const { post: post1, isLoading: isLoading1, isError: isError1 } = usePost(nextPostId1, {
-    enabled: !!mainPostId
-  })
-  
-  const { post: post2, isLoading: isLoading2, isError: isError2 } = usePost(nextPostId2, {
-    enabled: !!mainPostId
-  })
+  useEffect(() => {
+    const fetchRelatedPosts = async () => {
+      if (!mainPostId) return
 
-  const posts = [post1, post2].filter(Boolean) as PostData[]
-  const isLoading = isLoading1 || isLoading2
-  const hasErrors = isError1 && isError2
+      setIsLoading(true)
+      setHasErrors(false)
+      
+      try {
+        // Pobierz wszystkie posty
+        const response = await fetch(`${API_BASE_URL}/posts?limit=50`)
+        
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`)
+        }
+        
+        const allPosts: PostData[] = await response.json()
+        
+        // Filtruj posty: usuń główny post i weź maksymalnie 2 najnowsze
+        const relatedPosts = allPosts
+          .filter((post: PostData) => post.id !== mainPostId)
+          .slice(0, 2)
+        
+        setPosts(relatedPosts)
+      } catch (error) {
+        console.error('Błąd podczas pobierania powiązanych postów:', error)
+        setHasErrors(true)
+        setPosts([])
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchRelatedPosts()
+  }, [mainPostId])
 
   return {
     posts,
