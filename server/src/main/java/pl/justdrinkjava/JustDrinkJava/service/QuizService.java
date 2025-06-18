@@ -72,7 +72,7 @@ public class QuizService {
     @Transactional(readOnly = true)
     public QuizResultDTO checkAnswers(QuizAnswerRequest request, User currentUser) {
         log.debug("Sprawdzanie odpowiedzi dla quizu: {} przez użytkownika: {}", 
-                request.getQuizId(), currentUser.getId());
+                request.getQuizId(), currentUser != null ? currentUser.getId() : "anonimowy");
         
         Quiz quiz = quizRepository.findById(request.getQuizId())
                 .orElseThrow(() -> new RuntimeException("Quiz nie został znaleziony: " + request.getQuizId()));

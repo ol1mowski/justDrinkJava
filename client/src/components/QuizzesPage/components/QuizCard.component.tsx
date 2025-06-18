@@ -101,7 +101,7 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
               </div>
               <div className="flex items-center space-x-2 text-gray-500">
                 <UserIcon className="w-4 h-4" />
-                <span className="text-xs font-medium">ID: {quiz.userId}</span>
+                <span className="text-xs font-medium">{quiz.category}</span>
               </div>
             </div>
             <div className="flex items-center space-x-1">
@@ -118,18 +118,25 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
                   <div
                     key={level}
                     className={`w-2 h-2 rounded-full ${
-                      level <= 2 
+                      level <= (quiz.difficulty === 'easy' ? 1 : quiz.difficulty === 'medium' ? 2 : 3)
                         ? 'bg-java-orange' 
                         : 'bg-gray-200'
                     }`}
                   />
                 ))}
               </div>
-              <span className="text-xs font-semibold text-java-orange">Średni</span>
+              <span className="text-xs font-semibold text-java-orange capitalize">
+                {quiz.difficulty === 'easy' ? 'Łatwy' : quiz.difficulty === 'medium' ? 'Średni' : 'Trudny'}
+              </span>
             </div>
-            <div className="flex items-center space-x-1 text-xs text-gray-500">
-              <SparklesIcon className="w-3 h-3" />
-              <span>+50 XP</span>
+            <div className="flex items-center space-x-3 text-xs text-gray-500">
+              <div className="flex items-center space-x-1">
+                <SparklesIcon className="w-3 h-3" />
+                <span>{quiz.questionsCount} pytań</span>
+              </div>
+              <div className="flex items-center space-x-1">
+                <span>{quiz.timeLimit} min</span>
+              </div>
             </div>
           </div>
         </div>

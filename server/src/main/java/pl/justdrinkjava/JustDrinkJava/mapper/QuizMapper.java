@@ -25,7 +25,6 @@ public class QuizMapper {
                 .difficulty(entity.getDifficulty())
                 .timeLimit(entity.getTimeLimit())
                 .createdAt(entity.getCreatedAt())
-                .updatedAt(entity.getUpdatedAt())
                 .questions(mapQuestions(entity.getQuestions()))
                 .build();
     }
@@ -40,7 +39,6 @@ public class QuizMapper {
                 .difficulty(dto.getDifficulty())
                 .timeLimit(dto.getTimeLimit())
                 .createdAt(dto.getCreatedAt())
-                .updatedAt(dto.getUpdatedAt())
                 .build();
     }
     

@@ -57,7 +57,7 @@ export const QuizQuestion = memo<QuizQuestionProps>(({
       </div>
 
       <div className="space-y-3">
-        {question.options.map((option) => (
+        {question.options.map((option, index) => (
           <button
             key={option.id}
             onClick={() => handleOptionClick(option.id)}
@@ -90,7 +90,7 @@ export const QuizQuestion = memo<QuizQuestionProps>(({
                     ? 'text-java-orange' 
                     : 'text-gray-500 dark:text-java-dark-text-secondary'
                 }`}>
-                  {option.id.toUpperCase()}.
+                  {String.fromCharCode(97 + index).toUpperCase()}.
                 </span>
                 <span className="text-sm leading-relaxed">
                   {option.text}
@@ -102,8 +102,8 @@ export const QuizQuestion = memo<QuizQuestionProps>(({
       </div>
 
       {selectedAnswers.length > 0 && (
-        <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
-          <div className="flex items-center space-x-2 text-blue-700 dark:text-blue-300">
+        <div className="mt-6 p-4 bg-emerald-50 rounded-lg border border-emerald-200 shadow-sm">
+          <div className="flex items-center space-x-2 text-emerald-700">
             <CircleStackIcon className="w-5 h-5" />
             <span className="text-sm font-medium">
               Wybrano: {selectedAnswers.length} odpowied{selectedAnswers.length === 1 ? 'ź' : 'zi'}

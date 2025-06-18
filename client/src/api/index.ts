@@ -4,7 +4,7 @@ export * from "./http-client.api";
 export * from "./types.api";
 export * from "./services.api";
         
-import { authService, postService, userService } from "./services.api";
+import { authService, postService, userService, quizService } from "./services.api";
 import type {
   ApiResponse,
   AuthResponse,
@@ -24,6 +24,11 @@ export const apiService = {
   updateProfile: userService.updateProfile,
   changePassword: userService.changePassword,
   deleteAccount: userService.deleteAccount,
+  getAllQuizzes: quizService.getAll,
+  getQuizById: quizService.getById,
+  getQuizQuestions: quizService.getQuestions,
+  checkQuizAnswers: quizService.checkAnswers,
+  getQuizzesByCategory: quizService.getByCategory,
 };
 
 export const authApi = {

@@ -1,9 +1,13 @@
 export interface Quiz {
   id: number
-  userId: number
   title: string
   description: string
+  category: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  questionsCount: number
+  timeLimit: number
   createdAt: string
+  imageUrl?: string
 }
 
 export interface QuizCardProps {

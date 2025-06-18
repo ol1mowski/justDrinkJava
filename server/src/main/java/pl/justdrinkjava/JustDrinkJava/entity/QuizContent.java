@@ -29,7 +29,7 @@ public class QuizContent {
     @Column(name = "question", nullable = false, columnDefinition = "TEXT")
     private String question;
     
-    @Column(name = "options", nullable = false, columnDefinition = "JSON")
+    @Column(name = "options", nullable = false, columnDefinition = "TEXT")
     private String options; 
     
     @Column(name = "correct_answer", nullable = false)

@@ -1,6 +1,7 @@
 import { httpClient } from './http-client.api'
 import { removeAuthToken } from './base.api'
 import type {
+  ApiResponse,
   AuthResponse,
   LoginRequest,
   RegisterRequest,
@@ -13,7 +14,12 @@ import type {
   UpdateProfileRequest,
   UpdateProfileResponse,
   ChangePasswordRequest,
-  StandardResponse
+  StandardResponse,
+  QuizData,
+  QuizContentData,
+  QuizAnswerRequest,
+  QuizResultData,
+  QuizListResponse
 } from './types.api'
 
 export const authService = {
@@ -84,4 +90,26 @@ export const userService = {
   deleteAccount: async (): Promise<StandardResponse> => {
     return httpClient.delete<StandardResponse>("/user/account")
   }
-    } 
+}
+
+export const quizService = {
+  getAll: async (page: number = 0, size: number = 10): Promise<ApiResponse<QuizListResponse>> => {
+    return httpClient.get<ApiResponse<QuizListResponse>>(`/quizzes?page=${page}&size=${size}`)
+  },
+
+  getById: async (id: number): Promise<ApiResponse<QuizData>> => {
+    return httpClient.get<ApiResponse<QuizData>>(`/quizzes/${id}`)
+  },
+
+  getQuestions: async (id: number): Promise<ApiResponse<QuizContentData[]>> => {
+    return httpClient.get<ApiResponse<QuizContentData[]>>(`/quizzes/${id}/questions`)
+  },
+
+  checkAnswers: async (request: QuizAnswerRequest): Promise<ApiResponse<QuizResultData>> => {
+    return httpClient.post<ApiResponse<QuizResultData>>("/quizzes/check-answers", request)
+  },
+
+  getByCategory: async (category: string): Promise<ApiResponse<QuizData[]>> => {
+    return httpClient.get<ApiResponse<QuizData[]>>(`/quizzes/category/${category}`)
+  }
+} 

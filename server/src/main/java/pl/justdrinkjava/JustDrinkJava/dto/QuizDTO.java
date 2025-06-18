@@ -23,6 +23,5 @@ public class QuizDTO {
     private Quiz.Difficulty difficulty;
     private Integer timeLimit;
     private LocalDateTime createdAt;
-    private LocalDateTime updatedAt;
     private List<QuizContentDTO> questions;
 } 

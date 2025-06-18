@@ -57,8 +57,10 @@ export const useRegisterForm = (): UseRegisterFormReturn => {
 
     try {
       const result = await register({
+        username: formData.email.split('@')[0], 
         email: formData.email,
-        password: formData.password
+        password: formData.password,
+        confirmPassword: formData.confirmPassword
       })
 
       if (result.success) {

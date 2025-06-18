@@ -103,51 +103,58 @@ export interface StandardResponse {
 // Quiz types
 export interface QuizContentData {
   id: number
-  quiz_id: number
+  quizId: number
   question: string
-  options: string[] // JSON array parsed
-  correct_answer: string
-  created_at: string
-  updated_at: string
+  options: string[]
+  correctAnswer?: string 
+  createdAt: string
+  updatedAt: string
 }
 
 export interface QuizData {
   id: number
+  userId: number
   title: string
   description: string
   category: string
-  difficulty: 'easy' | 'medium' | 'hard'
-  time_limit: number // minutes
-  created_at: string
-  updated_at: string
-  questions: QuizContentData[]
+  difficulty: 'EASY' | 'MEDIUM' | 'HARD'
+  timeLimit: number 
+  createdAt: string
+  updatedAt: string
+  questions?: QuizContentData[]
 }
 
 export interface QuizAnswerRequest {
-  quiz_id: number
-  answers: Record<number, string[]> // question_id -> selected answers
+  quizId: number
+  answers: Record<number, string[]> 
+  timeSpent: number 
 }
 
 export interface QuizResultData {
-  quiz_id: number
-  score: number
-  total_questions: number
-  correct_answers: number
-  time_spent: number // seconds
+  quizId: number
+  quizTitle: string
+  score: number 
+  totalQuestions: number
+  correctAnswers: number
+  timeSpent: number 
   results: QuizQuestionResult[]
 }
 
 export interface QuizQuestionResult {
-  question_id: number
+  questionId: number
   question: string
-  user_answers: string[]
-  correct_answer: string
-  is_correct: boolean
+  userAnswers: string[]
+  correctAnswer: string
+  isCorrect: boolean
   explanation?: string
 }
 
 export interface QuizListResponse {
-  quizzes: QuizData[]
-  total: number
-  hasMore: boolean
+  content: QuizData[]
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  first: boolean
+  last: boolean
 } 
