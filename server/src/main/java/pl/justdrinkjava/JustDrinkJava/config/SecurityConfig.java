@@ -42,6 +42,8 @@ public class SecurityConfig {
                         .requestMatchers("/statistics/**").permitAll()
                         .requestMatchers("/hashtags/**").permitAll()
                         .requestMatchers("/quizzes/**").permitAll()
+                        .requestMatchers("GET", "/comments/post/*", "/comments/post/*/count").permitAll()
+                        .requestMatchers("/comments/**").authenticated()
                         .requestMatchers("/user/**").authenticated()
                         .anyRequest().permitAll()
                 )

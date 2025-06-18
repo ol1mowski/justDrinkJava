@@ -38,6 +38,21 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
     
+    @ExceptionHandler(CommentNotFoundException.class)
+    public ResponseEntity<Map<String, Object>> handleCommentNotFoundException(
+            CommentNotFoundException ex, WebRequest request) {
+        
+        log.error("Comment not found: {}", ex.getMessage());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.NOT_FOUND, 
+            ex.getMessage(), 
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    
     @ExceptionHandler(NoHandlerFoundException.class)
     public ResponseEntity<Map<String, Object>> handleNotFoundException(
             NoHandlerFoundException ex, WebRequest request) {
@@ -68,6 +83,51 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
     
+    @ExceptionHandler(SecurityException.class)
+    public ResponseEntity<Map<String, Object>> handleSecurityException(
+            SecurityException ex, WebRequest request) {
+        
+        log.error("Security violation: {}", ex.getMessage());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.FORBIDDEN,
+            ex.getMessage(),
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+    
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Map<String, Object>> handleGenericException(
+            Exception ex, WebRequest request) {
+        
+        log.error("Unhandled exception: {}", ex.getMessage(), ex);
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            "Wystąpił nieoczekiwany błąd serwera",
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<Map<String, Object>> handleRuntimeException(
+            RuntimeException ex, WebRequest request) {
+        
+        log.error("Runtime exception: {}", ex.getMessage(), ex);
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.INTERNAL_SERVER_ERROR,
+            ex.getMessage() != null ? ex.getMessage() : "Wystąpił błąd serwera",
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<Map<String, Object>> handleNoSuchElementException(
             NoSuchElementException ex, WebRequest request) {
@@ -76,46 +136,11 @@ public class GlobalExceptionHandler {
         
         Map<String, Object> errorResponse = createErrorResponse(
             HttpStatus.NOT_FOUND,
-            ex.getMessage() != null ? ex.getMessage() : "Żądany element nie został znaleziony",
+            ex.getMessage() != null ? ex.getMessage() : "Nie znaleziono elementu",
             request
         );
         
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-    }
-    
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<Map<String, Object>> handleRuntimeException(
-            RuntimeException ex, WebRequest request) {
-        
-        if (ex.getMessage() != null && ex.getMessage().contains("nie znaleziony")) {
-            log.error("Resource not found: {}", ex.getMessage());
-            
-            Map<String, Object> errorResponse = createErrorResponse(
-                HttpStatus.NOT_FOUND,
-                ex.getMessage(),
-                request
-            );
-            
-            return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
-        }
-        
-        // Jeśli to nie jest błąd 404, przekaż do ogólnej obsługi
-        return handleGeneralException(ex);
-    }
-    
-    @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<Map<String, Object>> handleIllegalArgumentException(
-            IllegalArgumentException ex, WebRequest request) {
-        
-        log.error("Invalid argument: {}", ex.getMessage());
-        
-        Map<String, Object> errorResponse = createErrorResponse(
-            HttpStatus.BAD_REQUEST,
-            "Nieprawidłowy parametr: " + ex.getMessage(),
-            request
-        );
-        
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -157,16 +182,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(response);
     }
     
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<Map<String, Object>> handleGeneralException(Exception ex) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "error");
-        response.put("message", "Wystąpił błąd serwera");
-        
-        log.error("Unexpected error: ", ex);
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-    }
-    
     private Map<String, Object> createErrorResponse(HttpStatus status, String message, WebRequest request) {
         Map<String, Object> errorResponse = new HashMap<>();
         errorResponse.put("timestamp", LocalDateTime.now());
@@ -174,6 +189,7 @@ public class GlobalExceptionHandler {
         errorResponse.put("error", status.getReasonPhrase());
         errorResponse.put("message", message);
         errorResponse.put("path", request.getDescription(false).replace("uri=", ""));
+        
         return errorResponse;
     }
 } 
