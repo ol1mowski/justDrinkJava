@@ -12,8 +12,7 @@ export const QuizzesPage = memo(() => {
   const { isAuthenticated, user } = useAuthStatus()
 
   const handleStartQuiz = (quizId: number) => {
-    console.log('Starting quiz:', quizId)
-    // TODO: Implementacja rozpoczęcia quizu
+    window.location.href = `/quizzes/${quizId}`
   }
 
   if (loading) {

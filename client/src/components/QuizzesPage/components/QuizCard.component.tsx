@@ -1,4 +1,5 @@
 import { memo } from 'react'
+import { Link } from 'react-router-dom'
 import { PlayIcon, LockClosedIcon, CalendarIcon, UserIcon, SparklesIcon } from '@heroicons/react/24/outline'
 import { FireIcon } from '@heroicons/react/24/solid'
 import type { QuizCardProps } from '../types'
@@ -18,7 +19,7 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
     }
   }
 
-  return (
+  const cardContent = (
     <div className={`group relative overflow-hidden rounded-2xl transition-all duration-500 transform ${
       isBlocked 
         ? 'opacity-70 scale-95' 
@@ -138,6 +139,16 @@ export const QuizCard = memo<QuizCardProps>(({ quiz, isBlocked = false, onStartQ
         <div className="absolute inset-0 rounded-2xl bg-java-orange/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10 blur-xl transform scale-110" />
       )}
     </div>
+  )
+
+  if (isBlocked) {
+    return cardContent
+  }
+
+  return (
+    <Link to={`/quizzes/${quiz.id}`} className="block">
+      {cardContent}
+    </Link>
   )
 })
 
