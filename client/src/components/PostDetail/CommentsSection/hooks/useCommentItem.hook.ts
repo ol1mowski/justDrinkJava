@@ -1,4 +1,5 @@
 import { useState, useCallback, useTransition } from 'react'
+import toast from 'react-hot-toast'
 
 export interface UseCommentItemOptions {
   commentId: number
@@ -16,9 +17,9 @@ export interface UseCommentItemResult {
   startEdit: () => void
   cancelEdit: () => void
   
-  handleEdit: () => Promise<void>
-  handleDelete: () => Promise<void>
-  handleLike: () => Promise<void>
+  handleEdit: () => void
+  handleDelete: () => void
+  handleLike: () => void
   
   isPending: boolean
 }
@@ -47,43 +48,49 @@ export const useCommentItem = (options: UseCommentItemOptions): UseCommentItemRe
     setEditContent(initialContent)
   }, [initialContent])
 
-  const handleEdit = useCallback(async () => {
+  const handleEdit = useCallback(() => {
     if (!onEdit || !editContent.trim() || !isOwner) return
 
-    startTransition(async () => {
-      try {
-        await onEdit(commentId, editContent.trim())
-        setIsEditing(false)
-      } catch (error) {
-        console.error('Błąd podczas edycji komentarza:', error)
-      }
+    startTransition(() => {
+      onEdit(commentId, editContent.trim())
+        .then(() => {
+          setIsEditing(false)
+          toast.success('Komentarz został zaktualizowany!')
+        })
+        .catch((error) => {
+          console.error('Błąd podczas edycji komentarza:', error)
+          toast.error('Nie udało się zaktualizować komentarza')
+        })
     })
   }, [onEdit, editContent, commentId, isOwner])
 
-  const handleDelete = useCallback(async () => {
+  const handleDelete = useCallback(() => {
     if (!onDelete || !isOwner) return
-    
-    const confirmed = window.confirm('Czy na pewno chcesz usunąć ten komentarz?')
-    if (!confirmed) return
 
-    startTransition(async () => {
-      try {
-        await onDelete(commentId)
-      } catch (error) {
-        console.error('Błąd podczas usuwania komentarza:', error)
-      }
+    startTransition(() => {
+      onDelete(commentId)
+        .then(() => {
+          toast.success('Komentarz został usunięty!')
+        })
+        .catch((error) => {
+          console.error('Błąd podczas usuwania komentarza:', error)
+          toast.error('Nie udało się usunąć komentarza')
+        })
     })
   }, [onDelete, commentId, isOwner])
 
-  const handleLike = useCallback(async () => {
+  const handleLike = useCallback(() => {
     if (!onLike) return
 
-    startTransition(async () => {
-      try {
-        await onLike(commentId)
-      } catch (error) {
-        console.error('Błąd podczas lajkowania komentarza:', error)
-      }
+    startTransition(() => {
+      onLike(commentId)
+        .then(() => {
+         
+        })
+        .catch((error) => {
+          console.error('Błąd podczas lajkowania komentarza:', error)
+          toast.error('Nie udało się polubić komentarza')
+        })
     })
   }, [onLike, commentId])
 

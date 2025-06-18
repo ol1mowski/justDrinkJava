@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useState } from 'react'
 import { motion } from 'framer-motion'
 import { HeartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
@@ -6,6 +6,7 @@ import type { CommentItemProps } from '../types'
 import { useCommentItem, useCommentUtils } from '../hooks'
 import { UserAvatar } from './UserAvatar.component'
 import { LoadingSpinner } from './LoadingSpinner.component'
+import { ConfirmModal } from '../../../ui'
 
 export const CommentItem = memo<CommentItemProps>(({ 
   comment, 
@@ -16,9 +17,13 @@ export const CommentItem = memo<CommentItemProps>(({
   isAuthenticated 
 }) => {
   const { formatDate } = useCommentUtils()
+  const [showDeleteModal, setShowDeleteModal] = useState(false)
   
   const isOwner = currentUserId === comment.user.id
   const canInteract = isAuthenticated
+  const isEdited = comment.updatedAt && comment.updatedAt !== comment.createdAt
+  
+
 
   const {
     isEditing,
@@ -39,6 +44,19 @@ export const CommentItem = memo<CommentItemProps>(({
     onLike
   })
 
+  const handleDeleteClick = () => {
+    setShowDeleteModal(true)
+  }
+
+  const handleDeleteConfirm = () => {
+    handleDelete()
+    setShowDeleteModal(false)
+  }
+
+  const handleDeleteCancel = () => {
+    setShowDeleteModal(false)
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -57,11 +75,17 @@ export const CommentItem = memo<CommentItemProps>(({
               {formatDate(comment.createdAt)}
             </span>
             
+            {isEdited && (
+              <span className="text-xs bg-java-orange/10 text-java-orange px-2 py-0.5 rounded-full">
+                Edytowano
+              </span>
+            )}
+            
             {isOwner && (
               <div className="flex items-center space-x-1 ml-auto">
                 <button
                   onClick={isEditing ? cancelEdit : startEdit}
-                  className="text-xs text-java-blue hover:text-java-orange transition-colors
+                  className="text-xs text-java-blue hover:text-java-orange transition-colors cursor-pointer
                            disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isPending}
                 >
@@ -69,8 +93,8 @@ export const CommentItem = memo<CommentItemProps>(({
                 </button>
                 <span className="text-xs text-gray-300">•</span>
                 <button
-                  onClick={handleDelete}
-                  className="text-xs text-red-500 hover:text-red-600 transition-colors
+                  onClick={handleDeleteClick}
+                  className="text-xs text-red-500 hover:text-red-600 transition-colors cursor-pointer
                            disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isPending}
                 >
@@ -95,7 +119,7 @@ export const CommentItem = memo<CommentItemProps>(({
               <div className="flex justify-end space-x-2 mt-2">
                 <button
                   onClick={cancelEdit}
-                  className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors
+                  className="px-3 py-1 text-xs bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-md transition-colors cursor-pointer
                            disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={isPending}
                 >
@@ -104,7 +128,7 @@ export const CommentItem = memo<CommentItemProps>(({
                 <button
                   onClick={handleEdit}
                   disabled={!editContent.trim() || isPending}
-                  className="px-3 py-1 text-xs bg-java-orange hover:bg-java-red text-white rounded-md transition-colors
+                  className="px-3 py-1 text-xs bg-java-orange hover:bg-java-red text-white rounded-md transition-colors cursor-pointer
                            disabled:opacity-50 disabled:cursor-not-allowed inline-flex items-center space-x-1"
                 >
                   {isPending && <LoadingSpinner size="sm" className="border-white" />}
@@ -126,8 +150,8 @@ export const CommentItem = memo<CommentItemProps>(({
                          disabled:cursor-not-allowed ${
                 canInteract 
                   ? comment.isLikedByCurrentUser
-                    ? 'text-red-500 hover:text-red-600'
-                    : 'text-java-blue/70 hover:text-red-500'
+                    ? 'text-red-500 hover:text-red-600 cursor-pointer'
+                    : 'text-java-blue/70 hover:text-red-500 cursor-pointer'
                   : 'text-gray-400'
               }`}
               aria-label={comment.isLikedByCurrentUser ? 'Usuń polubienie' : 'Polub komentarz'}
@@ -142,6 +166,17 @@ export const CommentItem = memo<CommentItemProps>(({
           </div>
         </div>
       </div>
+      
+      <ConfirmModal
+        isOpen={showDeleteModal}
+        title="Usuń komentarz"
+        message="Czy na pewno chcesz usunąć ten komentarz? Ta akcja jest nieodwracalna."
+        confirmText="Usuń"
+        cancelText="Anuluj"
+        onConfirm={handleDeleteConfirm}
+        onCancel={handleDeleteCancel}
+        isLoading={isPending}
+      />
     </motion.div>
   )
 })

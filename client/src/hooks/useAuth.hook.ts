@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react'
-import { authApi, type LoginRequest, type RegisterRequest } from '../utils/api'
+import { authApi, userService, type LoginRequest, type RegisterRequest } from '../utils/api'
 import { 
   getUserFromToken, 
   isTokenExpired, 
@@ -52,19 +52,20 @@ export const useAuth = (): UseAuthReturn => {
     error: null,
   })
 
-  const checkAuthStatus = useCallback(() => {
+  const checkAuthStatus = useCallback(async () => {
     try {
       const token = getTokenFromStorage()
 
       if (token && !isTokenExpired(token)) {
-        const userFromToken = getUserFromToken(token)
-        
-        if (userFromToken) {
+        try {
+          // Pobierz pełne dane użytkownika z API
+          const userData = await userService.getCurrent()
+          
           const authUser: AuthUser = {
-            id: '',
-            email: userFromToken.email,
-            username: userFromToken.username,
-            createdAt: ''
+            id: userData.id,
+            email: userData.email,
+            username: userData.username,
+            createdAt: userData.createdAt
           }
           
           setAuthState(prev => ({
@@ -74,8 +75,10 @@ export const useAuth = (): UseAuthReturn => {
             isAuthenticated: true,
             isLoading: false
           }))
-          console.log('👤 Użytkownik zalogowany:', authUser.username)
-        } else {
+          console.log('👤 Użytkownik zalogowany:', authUser.username, 'ID:', authUser.id)
+        } catch (error) {
+          console.error('❌ Błąd pobierania danych użytkownika:', error)
+          // Token może być nieprawidłowy, usuń go
           removeTokenFromStorage()
           setAuthState(prev => ({
             ...prev,

@@ -24,6 +24,7 @@ public class CommentMapper {
                 .content(comment.getContent())
                 .likes(comment.getLikes())
                 .createdAt(comment.getCreatedAt())
+                .updatedAt(comment.getUpdatedAt())
                 .build();
     }
 } 

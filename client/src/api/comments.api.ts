@@ -13,6 +13,7 @@ export interface CommentResponse {
   likes: number
   isLikedByCurrentUser: boolean
   createdAt: string
+  updatedAt?: string
 }
 
 export interface CreateCommentRequest {
