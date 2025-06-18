@@ -160,6 +160,8 @@ export interface PostData {
   readTime: number;
   readTimeFormatted: string;
   imageUrl?: string;
+  likes: number;
+  isLikedByCurrentUser: boolean;
 }
 
 export interface SearchPostsRequest {
@@ -273,6 +275,15 @@ class ApiService {
           limit: request.limit || 10,
           offset: request.offset || 0
         })
+      }
+    );
+  }
+
+  async togglePostLike(postId: number): Promise<PostData> {
+    return this.fetchWithErrorHandling<PostData>(
+      `${API_BASE_URL}/posts/${postId}/like`,
+      {
+        method: 'POST'
       }
     );
   }

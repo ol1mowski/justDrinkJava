@@ -1,9 +1,16 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { usePost } from './usePost.hook'
 import { useRelatedPosts } from './useRelatedPosts.hook'
-import { usePostInteractions } from './usePostInteractions.hook'
+import { usePostLike } from './usePostLike.hook'
 import { useAuth } from './useAuth.hook'
+
+export interface PostInteractions {
+  isLiked: boolean
+  isBookmarked: boolean
+  likeCount: number
+  bookmarkCount: number
+}
 
 export interface UsePostDetailLogicResult {
   postId: number
@@ -13,7 +20,7 @@ export interface UsePostDetailLogicResult {
   postError: Error | null
   relatedPosts: ReturnType<typeof useRelatedPosts>['posts']
   isRelatedLoading: boolean
-  interactions: ReturnType<typeof usePostInteractions>['interactions']
+  interactions: PostInteractions
   toggleLike: () => void
   toggleBookmark: () => void
   handleBack: () => void
@@ -28,9 +35,33 @@ export const usePostDetailLogic = (): UsePostDetailLogicResult => {
   const { isAuthenticated, user: currentUser } = useAuth()
   
   const postId = parseInt(id || '1', 10)
-  const { post, isLoading: isPostLoading, isError: isPostError, error: postError } = usePost(postId)
+  const { post, isLoading: isPostLoading, isError: isPostError, error: postError, refetch } = usePost(postId)
   const { posts: relatedPosts, isLoading: isRelatedLoading } = useRelatedPosts(postId)
-  const { interactions, toggleLike, toggleBookmark } = usePostInteractions()
+  const { toggleLike: togglePostLike } = usePostLike()
+
+  const [isBookmarked, setIsBookmarked] = useState(false)
+
+  const interactions: PostInteractions = {
+    isLiked: post?.isLikedByCurrentUser || false,
+    isBookmarked,
+    likeCount: post?.likes || 0,
+    bookmarkCount: 0
+  }
+
+  const toggleLike = useCallback(async () => {
+    if (!isAuthenticated || !post) {
+      return
+    }
+
+    const result = await togglePostLike(postId)
+    if (result) {
+      refetch()
+    }
+  }, [postId, togglePostLike, isAuthenticated, post, refetch])
+
+  const toggleBookmark = useCallback(() => {      
+    setIsBookmarked(prev => !prev)
+  }, [])
 
   const handleBack = useCallback(() => {
     navigate(-1)

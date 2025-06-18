@@ -87,4 +87,22 @@ public class PostController {
             throw e;
         }
     }
+    
+    @PostMapping("/{id}/like")
+    public ResponseEntity<PostDTO> toggleLike(@PathVariable Integer id) {
+        try {
+            log.info("Żądanie przełączenia polubienia posta o ID: {}", id);
+            
+            PostDTO post = postService.toggleLike(id);
+            
+            log.info("Przełączono polubienie posta o ID: {}, aktualne lajki: {}", 
+                    id, post.getLikes());
+            
+            return ResponseEntity.ok(post);
+            
+        } catch (Exception e) {
+            log.error("Błąd podczas przełączania polubienia posta o ID {}: {}", id, e.getMessage(), e);
+            throw e;
+        }
+    }
 } 

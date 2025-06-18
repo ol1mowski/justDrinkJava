@@ -26,6 +26,8 @@ public class PostDTO {
     
     private Integer readTime;
     private String imageUrl;
+    private Integer likes;
+    private Boolean isLikedByCurrentUser;
     
     public String getReadTimeFormatted() {
         if (readTime == null) return null;

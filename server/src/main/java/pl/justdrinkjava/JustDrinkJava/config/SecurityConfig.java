@@ -37,7 +37,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/posts/**").permitAll()
+                        .requestMatchers("GET", "/posts/**").permitAll()
+                        .requestMatchers("POST", "/posts/search").permitAll()
+                        .requestMatchers("POST", "/posts/*/like").authenticated()
                         .requestMatchers("/post-content/**").permitAll()
                         .requestMatchers("/statistics/**").permitAll()
                         .requestMatchers("/hashtags/**").permitAll()

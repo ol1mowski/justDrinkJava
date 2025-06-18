@@ -20,6 +20,7 @@ public class CommentDTO {
     private UserDto user;
     private String content;
     private Integer likes;
+    private Boolean isLikedByCurrentUser;
     
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime createdAt;

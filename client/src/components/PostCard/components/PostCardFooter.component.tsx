@@ -1,5 +1,6 @@
 import { memo } from 'react'
 import { UserIcon } from '@heroicons/react/24/outline'
+import { PostLikeButton } from './PostLikeButton.component'
 
 interface PostCardFooterProps {
   user: {
@@ -8,6 +9,9 @@ interface PostCardFooterProps {
     avatarUrl?: string
   }
   createdAt: string
+  postId: number
+  likes: number
+  isLikedByCurrentUser: boolean
 }
 
 const formatDate = (dateString: string) => {
@@ -19,7 +23,13 @@ const formatDate = (dateString: string) => {
   })
 }
 
-export const PostCardFooter = memo<PostCardFooterProps>(({ user, createdAt }) => {
+export const PostCardFooter = memo<PostCardFooterProps>(({ 
+  user, 
+  createdAt, 
+  postId, 
+  likes, 
+  isLikedByCurrentUser 
+}) => {
   return (
     <div className="px-6 pb-6">
       <div className="flex items-center justify-between pt-4 border-t border-java-light-gray/20 dark:border-java-dark-surface/50">
@@ -40,9 +50,16 @@ export const PostCardFooter = memo<PostCardFooterProps>(({ user, createdAt }) =>
           </span>
         </div>
 
-        <span className="text-xs text-java-gray/60 dark:text-java-dark-text-secondary">
-          {formatDate(createdAt)}
-        </span>
+        <div className="flex items-center gap-3">
+          <PostLikeButton
+            postId={postId}
+            initialLikes={likes}
+            initialIsLiked={isLikedByCurrentUser}
+          />
+          <span className="text-xs text-java-gray/60 dark:text-java-dark-text-secondary">
+            {formatDate(createdAt)}
+          </span>
+        </div>
       </div>
     </div>
   )

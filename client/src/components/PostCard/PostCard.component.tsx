@@ -42,6 +42,9 @@ export const PostCard = memo<PostCardProps>(({ post, onClick }) => {
       <PostCardFooter
         user={post.user}
         createdAt={post.createdAt}
+        postId={post.id}
+        likes={post.likes}
+        isLikedByCurrentUser={post.isLikedByCurrentUser}
       />
 
       <div className="absolute inset-0 bg-gradient-to-t from-java-orange/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
