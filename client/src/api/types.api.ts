@@ -98,4 +98,56 @@ export interface DeleteAccountRequest {
 export interface StandardResponse {
   status: string
   message: string
+}
+
+// Quiz types
+export interface QuizContentData {
+  id: number
+  quiz_id: number
+  question: string
+  options: string[] // JSON array parsed
+  correct_answer: string
+  created_at: string
+  updated_at: string
+}
+
+export interface QuizData {
+  id: number
+  title: string
+  description: string
+  category: string
+  difficulty: 'easy' | 'medium' | 'hard'
+  time_limit: number // minutes
+  created_at: string
+  updated_at: string
+  questions: QuizContentData[]
+}
+
+export interface QuizAnswerRequest {
+  quiz_id: number
+  answers: Record<number, string[]> // question_id -> selected answers
+}
+
+export interface QuizResultData {
+  quiz_id: number
+  score: number
+  total_questions: number
+  correct_answers: number
+  time_spent: number // seconds
+  results: QuizQuestionResult[]
+}
+
+export interface QuizQuestionResult {
+  question_id: number
+  question: string
+  user_answers: string[]
+  correct_answer: string
+  is_correct: boolean
+  explanation?: string
+}
+
+export interface QuizListResponse {
+  quizzes: QuizData[]
+  total: number
+  hasMore: boolean
 } 
