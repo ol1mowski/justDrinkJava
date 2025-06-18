@@ -7,7 +7,7 @@ export const StatisticsHeader = memo(() => {
         Nasza społeczność
       </h3>
       <p className="text-sm text-java-blue/90 dark:text-java-dark-text-secondary">
-        Dołącz do developerów Java
+        Najlepsi użytkownicy tego miesiąca
       </p>
     </div>
   )
