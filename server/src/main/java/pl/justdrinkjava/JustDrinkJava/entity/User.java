@@ -52,6 +52,10 @@ public class User implements UserDetails {
     
     @Override
     public String getUsername() {
+        return this.email;
+    }
+    
+    public String getDisplayUsername() {
         return username != null ? username : email;
     }
     

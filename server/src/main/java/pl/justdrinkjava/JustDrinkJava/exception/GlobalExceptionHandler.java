@@ -163,13 +163,35 @@ public class GlobalExceptionHandler {
     }
     
     @ExceptionHandler(UserAlreadyExistsException.class)
-    public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(UserAlreadyExistsException ex) {
-        Map<String, Object> response = new HashMap<>();
-        response.put("status", "error");
-        response.put("message", ex.getMessage());
+    public ResponseEntity<Map<String, Object>> handleUserAlreadyExistsException(
+            UserAlreadyExistsException ex, WebRequest request) {
         
         log.warn("User already exists: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(response);
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            ex.getHttpStatus(),
+            ex.getMessage(),
+            request
+        );
+        errorResponse.put("errorCode", ex.getErrorCode());
+        
+        return ResponseEntity.status(ex.getHttpStatus()).body(errorResponse);
+    }
+    
+    @ExceptionHandler(BaseApplicationException.class)
+    public ResponseEntity<Map<String, Object>> handleBaseApplicationException(
+            BaseApplicationException ex, WebRequest request) {
+        
+        log.error("Application exception: {} - {}", ex.getErrorCode(), ex.getMessage());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            ex.getHttpStatus(),
+            ex.getMessage(),
+            request
+        );
+        errorResponse.put("errorCode", ex.getErrorCode());
+        
+        return ResponseEntity.status(ex.getHttpStatus()).body(errorResponse);
     }
     
     @ExceptionHandler(BadCredentialsException.class)
