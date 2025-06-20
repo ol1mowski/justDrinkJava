@@ -5,15 +5,16 @@ import type { UserRankingDto } from '../../../../api/ranking.api'
 
 interface UserRankingListProps {
   users: UserRankingDto[]
+  isAuthenticated: boolean
 }
 
-export const UserRankingList = memo<UserRankingListProps>(({ users }) => {
+export const UserRankingList = memo<UserRankingListProps>(({ users, isAuthenticated }) => {
   return (
     <div className="space-y-3">
       {users.map((user) => (
         <UserRankingItem key={user.userId} user={user} />
       ))}
-      <UserRankingFooter />
+      <UserRankingFooter isAuthenticated={isAuthenticated} />
     </div>
   )
 })
