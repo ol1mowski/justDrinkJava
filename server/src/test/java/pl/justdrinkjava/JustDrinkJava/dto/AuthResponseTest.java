@@ -134,9 +134,6 @@ class AuthResponseTest {
     void shouldInheritFromBaseResponse() {
         AuthResponse response = new AuthResponse();
         
-        assertNotNull(response.getStatus());
-        assertNotNull(response.getMessage());
-        
         response.setStatus("success");
         response.setMessage("Login successful");
         

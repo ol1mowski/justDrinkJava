@@ -85,7 +85,7 @@ class RegisterRequestTest {
 
         assertFalse(violations.isEmpty());
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Email is required")));
+                .anyMatch(v -> v.getMessage().contains("Email jest wymagany")));
     }
 
     @Test
@@ -97,7 +97,7 @@ class RegisterRequestTest {
 
         assertFalse(violations.isEmpty());
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Email is required")));
+                .anyMatch(v -> v.getMessage().contains("Email jest wymagany")));
     }
 
     @Test
@@ -105,13 +105,11 @@ class RegisterRequestTest {
     void shouldFailValidationForInvalidEmail() {
         RegisterRequest request = new RegisterRequest("not-an-email", "password123");
 
-        // When
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(request);
 
-        // Then
         assertFalse(violations.isEmpty());
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Email must be a valid email address")));
+                .anyMatch(v -> v.getMessage().contains("Email musi mieć poprawny format")));
     }
 
     @Test
@@ -123,7 +121,7 @@ class RegisterRequestTest {
 
         assertFalse(violations.isEmpty());
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Password is required")));
+                .anyMatch(v -> v.getMessage().contains("Hasło jest wymagane")));
     }
 
     @Test
@@ -135,7 +133,7 @@ class RegisterRequestTest {
 
         assertFalse(violations.isEmpty());
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Password is required")));
+                .anyMatch(v -> v.getMessage().contains("Hasło jest wymagane")));
     }
 
     @Test
@@ -236,7 +234,6 @@ class RegisterRequestTest {
         assertNotNull(toString);
         assertTrue(toString.contains("RegisterRequest"));
         assertTrue(toString.contains("test@example.com"));
-        // Password should be included in toString (but in production, you might want to mask it)
         assertTrue(toString.contains("password123"));
     }
 
@@ -322,8 +319,8 @@ class RegisterRequestTest {
 
         assertEquals(2, violations.size());
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Email must be a valid email address")));
+                .anyMatch(v -> v.getMessage().contains("Email musi mieć poprawny format")));
         assertTrue(violations.stream()
-                .anyMatch(v -> v.getMessage().contains("Password must be at least 8 characters long")));
+                .anyMatch(v -> v.getMessage().contains("Hasło musi mieć minimum 8 znaków")));
     }
 } 
