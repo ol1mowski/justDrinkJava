@@ -25,20 +25,23 @@ export const UserRankingItem = memo<UserRankingItemProps>(({ user }) => {
     <div
       className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:shadow-md ${getRankColor(user.ranking)}`}
     >
-      <div className="flex items-center space-x-3">
-        <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-3 min-w-0 flex-1">
+        <div className="flex items-center space-x-2 flex-shrink-0">
           <RankIcon rank={user.ranking} />
           <span className="font-semibold text-gray-700 text-sm">
             #{user.ranking}
           </span>
         </div>
         
-        <div className="w-8 h-8 bg-java-orange rounded-full flex items-center justify-center">
+        <div className="w-8 h-8 bg-java-orange rounded-full flex items-center justify-center flex-shrink-0">
           <UserIcon className="w-4 h-4 text-white" />
         </div>
         
-        <div>
-          <div className="font-medium text-gray-800 text-sm">
+        <div className="min-w-0 flex-1">
+          <div 
+            className="font-medium text-gray-800 text-sm truncate"
+            title={user.username || 'Użytkownik'}
+          >
             {user.username || 'Użytkownik'}
           </div>
           <div className="text-xs text-gray-500">
@@ -47,7 +50,7 @@ export const UserRankingItem = memo<UserRankingItemProps>(({ user }) => {
         </div>
       </div>
       
-      <div className="text-right">
+      <div className="text-right flex-shrink-0 ml-3">
         <div className="font-bold text-java-orange text-sm">
           {user.totalScore.toLocaleString()}
         </div>
