@@ -1,28 +1,28 @@
 import { memo } from 'react'
-import { HashtagIcon, ChartBarIcon } from '@heroicons/react/24/outline'
+import { FolderIcon, ChartBarIcon } from '@heroicons/react/24/outline'
 import { LoadingState } from '../../ui'
 
-interface HashtagsLoadingStateProps {
+interface CategoriesLoadingStateProps {
   itemsCount?: number
 }
 
-export const HashtagsLoadingState = memo<HashtagsLoadingStateProps>(({ itemsCount = 10 }) => {
+export const CategoriesLoadingState = memo<CategoriesLoadingStateProps>(({ itemsCount = 10 }) => {
   return (
     <div className="bg-java-white dark:bg-java-dark-surface rounded-2xl p-6 sm:p-8 
                    border border-java-gray/10 dark:border-java-dark-text/10">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-3">
           <div className="p-2 bg-java-orange/10 rounded-lg">
-            <HashtagIcon className="w-5 h-5 text-java-orange" />
+            <FolderIcon className="w-5 h-5 text-java-orange" />
           </div>
           <h3 className="text-xl font-bold text-java-gray dark:text-java-dark-text">
-            Popularne tematy
+            Popularne kategorie
           </h3>
         </div>
         <ChartBarIcon className="w-5 h-5 text-java-orange animate-pulse" />
       </div>
       
-      <LoadingState message="Ładowanie hashtagów...">
+      <LoadingState message="Ładowanie kategorii...">
         <div className="space-y-4">
           {[...Array(itemsCount)].map((_, index) => (
             <div key={index} className="flex items-center justify-between">
@@ -39,4 +39,4 @@ export const HashtagsLoadingState = memo<HashtagsLoadingStateProps>(({ itemsCoun
   )
 })
 
-HashtagsLoadingState.displayName = 'HashtagsLoadingState' 
+CategoriesLoadingState.displayName = 'CategoriesLoadingState' 

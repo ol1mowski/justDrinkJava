@@ -3,11 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { PostCardImage } from './components/PostCardImage.component'
 import { PostCardContent } from './components/PostCardContent.component'
 import { PostCardFooter } from './components/PostCardFooter.component'
-import type { PostDTO } from './types'
+import type { PostCardProps as PostCardData } from './types'
 
 interface PostCardProps {
-  post: PostDTO
-  onClick?: (post: PostDTO) => void
+  post: PostCardData
+  onClick?: (post: PostCardData) => void
 }
 
 export const PostCard = memo<PostCardProps>(({ post, onClick }) => {
@@ -36,7 +36,6 @@ export const PostCard = memo<PostCardProps>(({ post, onClick }) => {
       <PostCardContent
         title={post.title}
         description={post.description}
-        hashtags={post.hashtags}
       />
 
       <PostCardFooter

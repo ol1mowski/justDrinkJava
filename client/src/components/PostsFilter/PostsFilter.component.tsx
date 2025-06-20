@@ -4,12 +4,11 @@ import { FilterButton } from './components/FilterButton.component'
 import { SortSelect } from './components/SortSelect.component'
 import { FilterStats } from './components/FilterStats.component'
 import { FilterPanel } from './components/FilterPanel.component'
-import type { FilterOptions, SortOption, HashtagDto } from './types'
+import type { FilterOptions, SortOption } from './types'
 
 interface PostsFilterProps {
   filters: FilterOptions
   sortBy: SortOption
-  hashtags: HashtagDto[]
   categories: Array<{ id: number; name: string }>
   onFiltersChange: (filters: Partial<FilterOptions>) => void
   onSortChange: (sort: SortOption) => void
@@ -19,7 +18,6 @@ interface PostsFilterProps {
 export const PostsFilter = memo<PostsFilterProps>(({
   filters,
   sortBy,
-  hashtags,
   categories,
   onFiltersChange,
   onSortChange,
@@ -37,12 +35,11 @@ export const PostsFilter = memo<PostsFilterProps>(({
     setSearchQuery('')
     onFiltersChange({
       searchQuery: '',
-      hashtags: [],
       category: undefined
     })
   }
 
-  const activeFiltersCount = filters.hashtags.length + (filters.category ? 1 : 0)
+  const activeFiltersCount = (filters.category ? 1 : 0)
 
   return (
     <div className="sticky top-0 z-20 bg-java-white/80 dark:bg-java-dark-bg/80 backdrop-blur-lg border-b border-java-light-gray/20 dark:border-java-dark-surface/50">
@@ -75,7 +72,6 @@ export const PostsFilter = memo<PostsFilterProps>(({
         {isFilterOpen && (
           <FilterPanel
             filters={filters}
-            hashtags={hashtags}
             categories={categories}
             onFiltersChange={onFiltersChange}
           />

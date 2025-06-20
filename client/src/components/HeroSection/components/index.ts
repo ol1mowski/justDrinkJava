@@ -1,12 +1,12 @@
-export { PopularTags } from './PopularTags.component'
+export { PopularCategories } from './PopularCategories.component'
 export { LatestPost } from './LatestPost.component'
 
-export { TagItem } from './TagItem.component'
-export { TagsList } from './TagsList.component'
-export { PopularTagsHeader } from './PopularTagsHeader.component'
+export { CategoryItem } from './CategoryItem.component'
+export { CategoriesList } from './CategoriesList.component'
+export { PopularCategoriesHeader } from './PopularCategoriesHeader.component'
 
-export { HashtagsLoadingState } from './HashtagsLoadingState.component'
-export { HashtagsErrorState } from './HashtagsErrorState.component'
+export { CategoriesLoadingState } from './CategoriesLoadingState.component'
+export { CategoriesErrorState } from './CategoriesErrorState.component'
 
 export { PostLoadingSkeleton } from './PostLoadingSkeleton.component'
 export { PostErrorState } from './PostErrorState.component'

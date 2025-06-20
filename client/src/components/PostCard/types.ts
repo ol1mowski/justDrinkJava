@@ -1,4 +1,4 @@
-export interface PostDTO {
+export interface PostCardProps {
   id: number
   user: {
     id: number
@@ -16,9 +16,4 @@ export interface PostDTO {
   imageUrl?: string
   likes?: number
   isLikedByCurrentUser?: boolean
-  hashtags?: Array<{
-    id: number
-    name: string
-    postCount: number
-  }>
 } 

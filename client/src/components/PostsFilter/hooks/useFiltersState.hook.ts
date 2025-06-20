@@ -1,21 +1,23 @@
-import { useState, useCallback } from 'react'
-import type { FilterOptions, SortOption } from '../types'
+import { useState } from 'react'
+import type { SortOption, FilterOptions } from '../types'
+
+const initialFilters: FilterOptions = {
+  searchQuery: '',
+  category: undefined
+}
 
 export const useFiltersState = () => {
   const [sortBy, setSortBy] = useState<SortOption>('newest')
-  const [filters, setFiltersState] = useState<FilterOptions>({
-    hashtags: [],
-    searchQuery: ''
-  })
+  const [filters, setFilters] = useState<FilterOptions>(initialFilters)
 
-  const setFilters = useCallback((newFilters: Partial<FilterOptions>) => {
-    setFiltersState(prev => ({ ...prev, ...newFilters }))
-  }, [])
+  const updateFilters = (newFilters: Partial<FilterOptions>) => {
+    setFilters(prev => ({ ...prev, ...newFilters }))
+  }
 
   return {
     sortBy,
     setSortBy,
     filters,
-    setFilters
+    setFilters: updateFilters
   }
 } 

@@ -1,24 +1,24 @@
 import { memo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChartBarIcon } from '@heroicons/react/24/outline'
-import type { Tag } from '../hooks/useHashtags.hook'
+import type { CategoryTag } from '../hooks/useCategories.hook'
 import { getTagStyles } from '../../../utils/tagStyles'
 
-interface TagItemProps {
-  tag: Tag
+interface CategoryItemProps {
+  tag: CategoryTag
   index: number
 }
 
-export const TagItem = memo<TagItemProps>(({ tag, index }) => {
+export const CategoryItem = memo<CategoryItemProps>(({ tag, index }) => {
   const navigate = useNavigate()
 
-  const handleTagClick = () => {
-    navigate(`/search?hashtag=${encodeURIComponent(tag.name)}`)
+  const handleCategoryClick = () => {
+    navigate(`/search?category=${encodeURIComponent(tag.name)}`)
   }
 
   return (
     <div 
-      onClick={handleTagClick}
+      onClick={handleCategoryClick}
       className="flex items-center justify-between group cursor-pointer hover:bg-java-light-gray/50 p-2 rounded-lg transition-colors duration-200"
     >
       <div className="flex items-center gap-3 flex-1">
@@ -32,7 +32,6 @@ export const TagItem = memo<TagItemProps>(({ tag, index }) => {
           cursor-pointer
           ${getTagStyles(tag.color)}
         `}>
-          <span>#</span>
           <span>{tag.name}</span>
           {tag.trending && <ChartBarIcon className="w-3 h-3 text-current" />}
         </button>
@@ -46,4 +45,4 @@ export const TagItem = memo<TagItemProps>(({ tag, index }) => {
   )
 })
 
-TagItem.displayName = 'TagItem' 
+CategoryItem.displayName = 'CategoryItem' 

@@ -49,7 +49,6 @@ export const useTokenManager = (options: UseTokenManagerOptions): UseTokenManage
           removeTokenFromStorage()
         }
         onTokenInvalid()
-        console.log('👤 Użytkownik niezalogowany')
       }
     } catch (error) {
       console.error('❌ Błąd sprawdzania stanu logowania:', error)

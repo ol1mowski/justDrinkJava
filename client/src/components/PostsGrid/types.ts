@@ -16,9 +16,9 @@ export interface PostDTO {
   imageUrl?: string
   likes?: number
   isLikedByCurrentUser?: boolean
-  hashtags?: Array<{
-    id: number
-    name: string
-    postCount: number
-  }>
+}
+
+export interface PostsGridProps {
+  posts: PostDTO[]
+  isLoading?: boolean
 } 

@@ -42,7 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("POST", "/posts/*/like").authenticated()
                         .requestMatchers("/post-content/**").permitAll()
                         .requestMatchers("/statistics/**").permitAll()
-                        .requestMatchers("/hashtags/**").permitAll()
+                        .requestMatchers("/categories/**").permitAll()
                         .requestMatchers("/quizzes/**").permitAll()
                         .requestMatchers("/rankings/**").permitAll()
                         .requestMatchers("GET", "/comments/post/*", "/comments/post/*/count").permitAll()

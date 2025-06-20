@@ -1,15 +1,14 @@
 import { memo, Suspense, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { usePosts } from '../../components/PostsFilter/hooks/usePosts.hook'
+import { usePostsMain } from '../../components/PostsFilter/hooks/usePostsMain.hook'
 import { PostsFilter } from '../../components/PostsFilter/PostsFilter.component'
 import { PostsGrid } from '../../components/PostsGrid/PostsGrid.component'
 import { LoadingSpinner } from '../../components/ui'
-import type { PostDTO } from '../../components/PostCard/types'
+import type { PostCardProps } from '../../components/PostCard/types'
 
 export const PostsPage = memo(() => {
   const navigate = useNavigate()
   const {
-    hashtags,
     categories,
     isLoading,
     error,
@@ -19,9 +18,9 @@ export const PostsPage = memo(() => {
     setSortBy,
     setFilters,
     refreshPosts
-  } = usePosts()
+  } = usePostsMain()
 
-  const handlePostClick = useCallback((post: PostDTO) => {
+  const handlePostClick = useCallback((post: PostCardProps) => {
     navigate(`/posts/${post.id}`)
   }, [navigate])
 
@@ -66,7 +65,6 @@ export const PostsPage = memo(() => {
         <PostsFilter
           filters={filters}
           sortBy={sortBy}
-          hashtags={hashtags}
           categories={categories}
           onFiltersChange={setFilters}
           onSortChange={setSortBy}
@@ -103,7 +101,7 @@ export const PostsPage = memo(() => {
                 Odśwież posty
               </button>
               <button
-                onClick={() => setFilters({ searchQuery: '', hashtags: [], category: undefined })}
+                onClick={() => setFilters({ searchQuery: '', category: undefined })}
                 className="inline-flex items-center justify-center px-8 py-3 bg-java-white text-java-gray font-medium rounded-lg hover:bg-java-light-gray transition-all duration-200 shadow-lg hover:shadow-xl border border-java-light-gray/30"
               >
                 Wyczyść filtry

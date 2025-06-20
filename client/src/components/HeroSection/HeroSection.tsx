@@ -3,7 +3,7 @@ import { ErrorBoundaryWrapper } from '../ui'
 import { LatestPost } from './components/LatestPost.component'
 import { CallToAction } from './components/CallToAction.components'
 import { StatisticsGrid } from './components/StatisticsGrid.components'
-import { PopularTags } from './components/PopularTags.component'
+import { PopularCategories } from './components/PopularCategories.component'
 import { QuizBanner } from './components/QuizBanner.component'
 
 export const HeroSection = memo(() => {
@@ -61,7 +61,7 @@ export const HeroSection = memo(() => {
                   <StatisticsGrid />
                 </ErrorBoundaryWrapper>
                 
-                <PopularTags />
+                <PopularCategories />
               </div>
             </div>
           </div>
