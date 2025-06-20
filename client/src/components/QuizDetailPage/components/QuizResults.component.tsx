@@ -1,4 +1,4 @@
-import { memo } from "react";
+import { memo, useEffect, useState } from "react";
 import {
   TrophyIcon,
   ClockIcon,
@@ -7,6 +7,8 @@ import {
   ArrowPathIcon,
 } from "@heroicons/react/24/outline";
 import { StarIcon } from "@heroicons/react/24/solid";
+import { useRanking } from "../../../hooks/useRanking.hook";
+import { useAuth } from "../../../hooks/auth/useAuth.hook";
 
 interface QuizResultsProps {
   quiz: {
@@ -24,6 +26,10 @@ interface QuizResultsProps {
 
 export const QuizResults = memo<QuizResultsProps>(
   ({ quiz, score, totalQuestions, correctAnswers, timeSpent, onRestart }) => {
+    const { isAuthenticated } = useAuth()
+    const { updateUserScore, userRanking } = useRanking()
+    const [rankingUpdated, setRankingUpdated] = useState(false)
+    const [showRankingUpdate, setShowRankingUpdate] = useState(false)
     const formatTime = (seconds: number) => {
       const minutes = Math.floor(seconds / 60);
       const remainingSeconds = seconds % 60;
@@ -54,9 +60,55 @@ export const QuizResults = memo<QuizResultsProps>(
 
     const stars = getStars(score);
 
+    useEffect(() => {
+      const updateRanking = async () => {
+        if (isAuthenticated && !rankingUpdated) {
+          try {
+            const earnedPoints = Math.floor((score / 100) * correctAnswers * 5) // 5 points per correct answer, scaled by score
+            const updatedRanking = await updateUserScore(earnedPoints)
+            
+            if (updatedRanking) {
+              setRankingUpdated(true)
+              setShowRankingUpdate(true)
+              
+              setTimeout(() => {
+                setShowRankingUpdate(false)
+              }, 5000)
+            }
+          } catch (error) {
+            console.error('Błąd aktualizacji rankingu:', error)
+          }
+        }
+      }
+
+      updateRanking()
+    }, [isAuthenticated, score, correctAnswers, rankingUpdated, updateUserScore])
+
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          {showRankingUpdate && userRanking && (
+            <div className="mb-8 mx-auto max-w-2xl">
+              <div className="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-2xl p-6 shadow-lg">
+                <div className="flex items-center space-x-4">
+                  <div className="bg-green-500 rounded-full p-3">
+                    <TrophyIcon className="w-8 h-8 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-lg font-bold text-green-800 mb-1">
+                      🎉 Ranking zaktualizowany!
+                    </h3>
+                    <p className="text-green-700">
+                      Twoja pozycja: <span className="font-bold">#{userRanking.ranking}</span>
+                      {' • '}
+                      Łącznie punktów: <span className="font-bold">{userRanking.totalScore}</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-r from-java-orange to-java-red rounded-full mb-6 shadow-lg">
               <TrophyIcon className="w-10 h-10 text-white" />

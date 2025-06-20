@@ -3,6 +3,7 @@ import { QuizzesHeader } from './components/QuizzesHeader.component'
 import { QuizzesGrid } from './components/QuizzesGrid.component'
 import { QuizzesLoading } from './components/QuizzesLoading.component'
 import { QuizzesError } from './components/QuizzesError.component'
+import { RankingSection } from '../RankingSection/RankingSection.component'
 import { useQuizzes } from './hooks/useQuizzes.hook'
 import { useAuthStatus } from '../../hooks/useAuthStatus.hook'
 import { ErrorBoundaryWrapper } from '../ui'
@@ -40,6 +41,14 @@ export const QuizzesPage = memo(() => {
             isAuthenticated={isAuthenticated}
             onStartQuiz={handleStartQuiz}
           />
+
+          <div className="mt-16">
+            <RankingSection 
+              showUserRanking={true}
+              topLimit={10}
+              className="mx-auto"
+            />
+          </div>
         </div>
       </div>
     </ErrorBoundaryWrapper>

@@ -18,8 +18,8 @@ public interface UserRankingRepository extends JpaRepository<UserRanking, Long> 
     @Query("SELECT ur FROM UserRanking ur ORDER BY ur.totalScore DESC, ur.updatedAt ASC")
     List<UserRanking> findAllOrderByTotalScoreDesc();
     
-    @Query("SELECT ur FROM UserRanking ur ORDER BY ur.ranking ASC")
-    List<UserRanking> findTopRankings(@Param("limit") int limit);
+    @Query("SELECT ur FROM UserRanking ur ORDER BY ur.totalScore DESC, ur.updatedAt ASC")
+    List<UserRanking> findTopRankings();
     
     @Modifying
     @Query("UPDATE UserRanking ur SET ur.ranking = ur.ranking + 1 WHERE ur.ranking >= :ranking")

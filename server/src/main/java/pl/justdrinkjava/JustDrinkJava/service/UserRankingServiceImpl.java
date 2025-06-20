@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.validation.annotation.Validated;
 import pl.justdrinkjava.JustDrinkJava.dto.UpdateScoreRequest;
 import pl.justdrinkjava.JustDrinkJava.dto.UserRankingDto;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
@@ -12,7 +11,6 @@ import pl.justdrinkjava.JustDrinkJava.entity.UserRanking;
 import pl.justdrinkjava.JustDrinkJava.repository.UserRankingRepository;
 import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
 
-import jakarta.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.IntStream;
@@ -20,7 +18,6 @@ import java.util.stream.IntStream;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Validated
 public class UserRankingServiceImpl implements UserRankingService {
     
     private final UserRankingRepository userRankingRepository;
@@ -28,7 +25,7 @@ public class UserRankingServiceImpl implements UserRankingService {
     
     @Override
     @Transactional
-    public UserRankingDto updateUserScore(@Valid UpdateScoreRequest request) {
+    public UserRankingDto updateUserScore(UpdateScoreRequest request) {
         log.info("Updating score for user ID: {} to: {}", request.getUserId(), request.getTotalScore());
         
         User user = userRepository.findById(request.getUserId())
@@ -87,7 +84,7 @@ public class UserRankingServiceImpl implements UserRankingService {
     public List<UserRankingDto> getTopRankings(int limit) {
         log.debug("Getting top {} rankings", limit);
         
-        List<UserRanking> rankings = userRankingRepository.findTopRankings(limit);
+        List<UserRanking> rankings = userRankingRepository.findTopRankings();
         
         return rankings.stream()
                 .limit(limit)

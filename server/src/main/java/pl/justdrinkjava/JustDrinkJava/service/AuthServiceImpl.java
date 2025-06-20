@@ -6,19 +6,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 import pl.justdrinkjava.JustDrinkJava.dto.*;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
 import pl.justdrinkjava.JustDrinkJava.exception.UserAlreadyExistsException;
 import pl.justdrinkjava.JustDrinkJava.mapper.UserMapper;
 import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
 
-import jakarta.validation.Valid;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
-@Validated
 public class AuthServiceImpl implements AuthService {
     
     private final UserRepository userRepository;
@@ -28,7 +24,7 @@ public class AuthServiceImpl implements AuthService {
     private final UserMapper userMapper;
     
     @Override
-    public AuthResponse register(@Valid RegisterRequest request) {
+    public AuthResponse register(RegisterRequest request) {
         log.info("Attempting to register user with email: {}", request.getEmail());
         
         if (userRepository.existsByEmail(request.getEmail())) {
@@ -57,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
     }
     
     @Override
-    public AuthResponse login(@Valid LoginRequest request) {
+    public AuthResponse login(LoginRequest request) {
         log.info("Attempting to authenticate user with email: {}", request.getEmail());
         
         authenticationManager.authenticate(
