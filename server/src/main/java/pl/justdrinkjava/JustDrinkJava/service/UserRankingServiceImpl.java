@@ -38,17 +38,25 @@ public class UserRankingServiceImpl implements UserRankingService {
                         .ranking(1)
                         .build());
         
+        int oldRanking = userRanking.getRanking();
+        int oldScore = userRanking.getTotalScore();
+        
         userRanking.setTotalScore(request.getTotalScore());
         userRanking.setUpdatedAt(LocalDateTime.now());
         
         long betterScoreCount = userRankingRepository.countUsersWithScoreHigherThan(request.getTotalScore());
-        userRanking.setRanking((int) betterScoreCount + 1);
+        int newRanking = (int) betterScoreCount + 1;
+        userRanking.setRanking(newRanking);
         
         UserRanking savedRanking = userRankingRepository.save(userRanking);
         
-        recalculateAllRankings();
+        if (shouldRecalculateRankings(oldScore, request.getTotalScore(), oldRanking, newRanking)) {
+            recalculateAllRankings();
+            log.info("Recalculated all rankings due to significant position change");
+        }
         
-        log.info("Updated user {} ranking to position: {}", request.getUserId(), savedRanking.getRanking());
+        log.info("Updated user {} ranking from position {} to {} (score: {} -> {})", 
+                request.getUserId(), oldRanking, newRanking, oldScore, request.getTotalScore());
         
         return mapToDto(savedRanking, user);
     }
@@ -112,6 +120,14 @@ public class UserRankingServiceImpl implements UserRankingService {
         userRankingRepository.saveAll(allRankings);
         
         log.info("Recalculated rankings for {} users", allRankings.size());
+    }
+    
+        
+    private boolean shouldRecalculateRankings(int oldScore, int newScore, int oldRanking, int newRanking) {
+        int rankingChange = Math.abs(newRanking - oldRanking);
+        int scoreChange = Math.abs(newScore - oldScore);
+        
+        return rankingChange > 1 || scoreChange > 50;
     }
     
     private UserRankingDto mapToDto(UserRanking ranking, User user) {

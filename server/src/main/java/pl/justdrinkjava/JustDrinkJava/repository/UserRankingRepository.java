@@ -28,5 +28,11 @@ public interface UserRankingRepository extends JpaRepository<UserRanking, Long> 
     @Query("SELECT COUNT(ur) FROM UserRanking ur WHERE ur.totalScore > :score")
     long countUsersWithScoreHigherThan(@Param("score") int score);
     
+    @Query("SELECT ur FROM UserRanking ur WHERE ur.totalScore = :score AND ur.userId != :excludeUserId ORDER BY ur.updatedAt ASC")
+    List<UserRanking> findUsersWithSameScore(@Param("score") int score, @Param("excludeUserId") Long excludeUserId);
+    
+    @Query("SELECT ur FROM UserRanking ur WHERE ur.totalScore BETWEEN :minScore AND :maxScore ORDER BY ur.totalScore DESC, ur.updatedAt ASC")
+    List<UserRanking> findUsersInScoreRange(@Param("minScore") int minScore, @Param("maxScore") int maxScore);
+    
     boolean existsByUserId(Long userId);
 } 
