@@ -1,57 +1,13 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { TrophyIcon, StarIcon, FireIcon } from '@heroicons/react/24/solid'
 import { UserIcon } from '@heroicons/react/24/outline'
-
-interface RankingUser {
-  id: number
-  username: string
-  points: number
-  quizzesCompleted: number
-  avatar?: string
-  rank: number
-}
+import { useNavigate } from 'react-router-dom'
+import { useRanking } from '../../../hooks/useRanking.hook'
+import type { UserRankingDto } from '../../../api/ranking.api'
 
 interface UserRankingProps {
-  users?: RankingUser[]
+  limit?: number
 }
-
-const defaultUsers: RankingUser[] = [
-  {
-    id: 1,
-    username: "JavaMaster",
-    points: 2850,
-    quizzesCompleted: 45,
-    rank: 1
-  },
-  {
-    id: 2,
-    username: "SpringDev",
-    points: 2340,
-    quizzesCompleted: 38,
-    rank: 2
-  },
-  {
-    id: 3,
-    username: "CodeNinja",
-    points: 1920,
-    quizzesCompleted: 32,
-    rank: 3
-  },
-  {
-    id: 4,
-    username: "ByteHunter",
-    points: 1650,
-    quizzesCompleted: 28,
-    rank: 4
-  },
-  {
-    id: 5,
-    username: "DevGuru",
-    points: 1420,
-    quizzesCompleted: 24,
-    rank: 5
-  }
-]
 
 const getRankIcon = (rank: number) => {
   switch (rank) {
@@ -83,47 +39,91 @@ const getRankColor = (rank: number) => {
   }
 }
 
-export const UserRanking = memo<UserRankingProps>(({ users = defaultUsers }) => {
+export const UserRanking = memo<UserRankingProps>(({ limit = 5 }) => {
+  const navigate = useNavigate()
+  const { topRankings, loading, error, getTopRankings } = useRanking()
+
+  useEffect(() => {
+    getTopRankings(limit)
+  }, [getTopRankings, limit])
+
+  if (loading) {
+    return (
+      <div className="space-y-3">
+        {Array.from({ length: limit }).map((_, index) => (
+          <div key={index} className="flex items-center justify-between p-3 rounded-lg border bg-gray-50 animate-pulse">
+            <div className="flex items-center space-x-3">
+              <div className="w-5 h-5 bg-gray-300 rounded"></div>
+              <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+              <div className="space-y-1">
+                <div className="w-20 h-3 bg-gray-300 rounded"></div>
+                <div className="w-16 h-2 bg-gray-300 rounded"></div>
+              </div>
+            </div>
+            <div className="text-right space-y-1">
+              <div className="w-12 h-3 bg-gray-300 rounded"></div>
+              <div className="w-10 h-2 bg-gray-300 rounded"></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-6">
+        <p className="text-gray-500 text-sm mb-2">Nie udało się załadować rankingu</p>
+        <button 
+          onClick={() => getTopRankings(limit)}
+          className="text-xs text-java-orange hover:text-java-red font-medium transition-colors"
+        >
+          Spróbuj ponownie
+        </button>
+      </div>
+    )
+  }
+
+  if (!topRankings || topRankings.length === 0) {
+    return (
+      <div className="text-center py-6">
+        <p className="text-gray-500 text-sm">Brak danych rankingu</p>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-3">
-      {users.map((user) => (
+      {topRankings.map((user: UserRankingDto) => (
         <div
-          key={user.id}
-          className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:shadow-md ${getRankColor(user.rank)}`}
+          key={user.userId}
+          className={`flex items-center justify-between p-3 rounded-lg border transition-all duration-200 hover:shadow-md ${getRankColor(user.ranking)}`}
         >
           <div className="flex items-center space-x-3">
             <div className="flex items-center space-x-2">
-              {getRankIcon(user.rank)}
+              {getRankIcon(user.ranking)}
               <span className="font-semibold text-gray-700 text-sm">
-                #{user.rank}
+                #{user.ranking}
               </span>
             </div>
             
             <div className="w-8 h-8 bg-java-orange rounded-full flex items-center justify-center">
-              {user.avatar ? (
-                <img 
-                  src={user.avatar} 
-                  alt={user.username}
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-              ) : (
-                <UserIcon className="w-4 h-4 text-white" />
-              )}
+              <UserIcon className="w-4 h-4 text-white" />
             </div>
             
             <div>
               <div className="font-medium text-gray-800 text-sm">
-                {user.username}
+                {user.username || 'Użytkownik'}
               </div>
               <div className="text-xs text-gray-500">
-                {user.quizzesCompleted} quizów
+                {user.totalScore} pkt
               </div>
             </div>
           </div>
           
           <div className="text-right">
             <div className="font-bold text-java-orange text-sm">
-              {user.points.toLocaleString()}
+              {user.totalScore.toLocaleString()}
             </div>
             <div className="text-xs text-gray-500">
               punktów
@@ -134,7 +134,10 @@ export const UserRanking = memo<UserRankingProps>(({ users = defaultUsers }) => 
       
       <div className="mt-4 pt-3 border-t border-gray-200">
         <div className="text-center">
-          <button className="text-xs text-java-orange hover:text-java-red font-medium transition-colors">
+          <button 
+            onClick={() => navigate('/ranking')}
+            className="text-xs text-java-orange hover:text-java-red font-medium transition-colors"
+          >
             Zobacz pełny ranking →
           </button>
         </div>
