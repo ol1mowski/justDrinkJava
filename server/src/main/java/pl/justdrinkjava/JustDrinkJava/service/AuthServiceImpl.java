@@ -8,9 +8,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.justdrinkjava.JustDrinkJava.dto.*;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
+import pl.justdrinkjava.JustDrinkJava.entity.UserRanking;
 import pl.justdrinkjava.JustDrinkJava.exception.UserAlreadyExistsException;
 import pl.justdrinkjava.JustDrinkJava.mapper.UserMapper;
 import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
+import pl.justdrinkjava.JustDrinkJava.repository.UserRankingRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +20,7 @@ import pl.justdrinkjava.JustDrinkJava.repository.UserRepository;
 public class AuthServiceImpl implements AuthService {
     
     private final UserRepository userRepository;
+    private final UserRankingRepository userRankingRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
@@ -38,9 +41,12 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         
         User savedUser = userRepository.save(user);
+        
+        createInitialUserRanking(savedUser);
+        
         String token = jwtService.generateToken(savedUser);
         
-        log.info("User registered successfully: {}", request.getEmail());
+        log.info("User registered successfully with initial ranking: {}", request.getEmail());
         
         return AuthResponse.builder()
                 .token(token)
@@ -72,5 +78,29 @@ public class AuthServiceImpl implements AuthService {
         UserDto userDto = userMapper.toDto(user);
         
         return new AuthResponse(jwtToken, userDto);
+    }
+    
+    private void createInitialUserRanking(User user) {
+        try {
+            if (userRankingRepository.existsByUserId(user.getId())) {
+                log.warn("Ranking już istnieje dla użytkownika: {}", user.getId());
+                return;
+            }
+            
+            long totalUsers = userRankingRepository.count();
+            
+            UserRanking initialRanking = UserRanking.builder()
+                    .userId(user.getId())
+                    .totalScore(0)
+                    .ranking((int) totalUsers + 1)
+                    .build();
+            
+            userRankingRepository.save(initialRanking);
+            
+            log.info("Created initial ranking for user {} at position {}", user.getId(), totalUsers + 1);
+            
+        } catch (Exception e) {
+            log.error("Failed to create initial ranking for user {}: {}", user.getId(), e.getMessage());
+        }
     }
 } 
