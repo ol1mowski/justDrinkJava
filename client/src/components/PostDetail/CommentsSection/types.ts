@@ -1,4 +1,4 @@
-import type { AuthUser } from "../../../hooks/useAuth.hook";
+import type { AuthUser } from "../../../hooks/auth/useAuth.hook";
 import type { CommentResponse } from "../../../api/comments.api";
 
 export interface CommentsSectionProps {

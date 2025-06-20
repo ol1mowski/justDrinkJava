@@ -39,7 +39,6 @@ export const useTokenManager = (options: UseTokenManagerOptions): UseTokenManage
           }
           
           onUserLoaded(authUser)
-          console.log('👤 Użytkownik zalogowany:', authUser.username, 'ID:', authUser.id)
         } catch (error) {
           console.error('❌ Błąd pobierania danych użytkownika:', error)
           removeTokenFromStorage()

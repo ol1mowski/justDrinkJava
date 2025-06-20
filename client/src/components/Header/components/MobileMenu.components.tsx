@@ -5,7 +5,7 @@ import { LoginButton } from './LoginButton.components'
 import { UserMenu } from './UserMenu.component'
 import { NavigationItem } from './NavigationItem.components'
 import { navigationItems } from '../config/navigation.config'
-import { useAuth } from '../../../hooks/useAuth.hook'
+import { useAuth } from '../../../hooks/auth/useAuth.hook'
 
 interface MobileMenuProps {
   isOpen: boolean

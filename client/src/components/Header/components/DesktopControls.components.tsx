@@ -4,7 +4,7 @@ import { ThemeSwitcher } from './ThemeSwitcher.components'
 import { LanguageSwitcher } from './LanguageSwitcher.components'
 import { LoginButton } from './LoginButton.components'
 import { UserMenu } from './UserMenu.component'
-import { useAuth } from '../../../hooks/useAuth.hook'
+import { useAuth } from '../../../hooks/auth/useAuth.hook'
 
 export const DesktopControls = memo(() => {
   const { isAuthenticated } = useAuth()

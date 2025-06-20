@@ -52,7 +52,7 @@ const SearchResultItem = memo<{ post: PostData }>(({ post }) => (
           
           <button 
             onClick={() => window.location.href = `/posts/${post.id}`}
-            className="text-java-orange hover:text-java-orange/80 text-sm font-medium transition-colors"
+            className="text-java-orange hover:text-java-orange/80 text-sm font-medium transition-colors cursor-pointer"
           >
             Czytaj więcej →
           </button>
@@ -147,7 +147,7 @@ export const SearchResults = memo<SearchResultsProps>(({
         <div className="text-center pt-6">
           <button
             onClick={onLoadMore}
-            className="bg-java-orange hover:bg-java-orange/90 text-white font-medium px-6 py-3 rounded-lg transition-colors"
+            className="bg-java-orange hover:bg-java-orange/90 text-white font-medium px-6 py-3 rounded-lg transition-colors cursor-pointer"
           >
             Załaduj więcej wyników
           </button>

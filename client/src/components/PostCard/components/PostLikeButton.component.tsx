@@ -2,7 +2,7 @@ import { memo, useState } from 'react'
 import { HeartIcon } from '@heroicons/react/24/outline'
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid'
 import { usePostLike } from '../../../hooks/usePostLike.hook'
-import { useAuth } from '../../../hooks/useAuth.hook'
+import { useAuth } from '../../../hooks/auth/useAuth.hook'
 
 interface PostLikeButtonProps {
   postId: number

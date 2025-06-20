@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react'
 import { usePost } from './usePost.hook'
 import { useRelatedPosts } from './useRelatedPosts.hook'
 import { usePostLike } from './usePostLike.hook'
-import { useAuth } from './useAuth.hook'
+import { useAuth } from './auth/useAuth.hook'
 
 export interface PostInteractions {
   isLiked: boolean

@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react'
-import { useAuth } from '../../../hooks/useAuth.hook'
+import { useAuth } from '../../../hooks/auth/useAuth.hook'
 import { validateLoginForm } from '../utils/validation.util'
 import type { LoginFormData } from '../types'
 
