@@ -166,12 +166,12 @@ class AuthControllerTest {
         mockMvc.perform(post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(""))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
 
         mockMvc.perform(post("/auth/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(""))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
 
         verify(authService, never()).register(any(RegisterRequest.class));
         verify(authService, never()).login(any(LoginRequest.class));
@@ -183,7 +183,7 @@ class AuthControllerTest {
         mockMvc.perform(post("/auth/register")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{invalid json}"))
-                .andExpect(status().isInternalServerError());
+                .andExpect(status().isBadRequest());
 
         verify(authService, never()).register(any(RegisterRequest.class));
     }

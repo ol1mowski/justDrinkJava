@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
@@ -51,6 +53,36 @@ public class GlobalExceptionHandler {
         );
         
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+    
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Map<String, Object>> handleAccessDeniedException(
+            AccessDeniedException ex, WebRequest request) {
+        
+        log.error("Access denied: {}", ex.getMessage());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.FORBIDDEN,
+            ex.getMessage(),
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
+    
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<Map<String, Object>> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException ex, WebRequest request) {
+        
+        log.error("Malformed JSON request: {}", ex.getMessage());
+        
+        Map<String, Object> errorResponse = createErrorResponse(
+            HttpStatus.BAD_REQUEST,
+            "Nieprawidłowy format JSON",
+            request
+        );
+        
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
     
     @ExceptionHandler(NoHandlerFoundException.class)
