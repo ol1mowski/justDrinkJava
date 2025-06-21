@@ -4,9 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
 
 import pl.justdrinkjava.JustDrinkJava.entity.PostContent;
 
@@ -16,13 +17,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
-@DisplayName("PostContentRepository Tests")
+@SpringBootTest
+@Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
+@DisplayName("PostContentRepository Tests")
 class PostContentRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
 
     @Autowired
     private PostContentRepository postContentRepository;
@@ -64,7 +66,8 @@ class PostContentRepositoryTest {
     @Test
     @DisplayName("should find post content by post ID successfully")
     void shouldFindPostContentByPostIdSuccessfully() {
-        entityManager.persistAndFlush(postContent1);
+        entityManager.persist(postContent1);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(1);
 
@@ -85,9 +88,12 @@ class PostContentRepositoryTest {
     @Test
     @DisplayName("should find post content by category ID successfully")
     void shouldFindPostContentByCategoryIdSuccessfully() {
-        entityManager.persistAndFlush(postContent1);
-        entityManager.persistAndFlush(postContent2);
-        entityManager.persistAndFlush(postContent3);
+        entityManager.persist(postContent1);
+        entityManager.flush();
+        entityManager.persist(postContent2);
+        entityManager.flush();
+        entityManager.persist(postContent3);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findByCategoryId(1);
 
@@ -108,9 +114,12 @@ class PostContentRepositoryTest {
     @Test
     @DisplayName("should find all post content ordered by created date desc")
     void shouldFindAllPostContentOrderedByCreatedDateDesc() {
-        entityManager.persistAndFlush(postContent1);
-        entityManager.persistAndFlush(postContent2);
-        entityManager.persistAndFlush(postContent3);
+        entityManager.persist(postContent1);
+        entityManager.flush();
+        entityManager.persist(postContent2);
+        entityManager.flush();
+        entityManager.persist(postContent3);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findAllOrderByCreatedAtDesc();
 
@@ -140,7 +149,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithNullCategory);
+        entityManager.persist(postContentWithNullCategory);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(4);
 
@@ -160,7 +170,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithEmptyContent);
+        entityManager.persist(postContentWithEmptyContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(5);
 
@@ -180,7 +191,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithLongContent);
+        entityManager.persist(postContentWithLongContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(6);
 
@@ -201,7 +213,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithSpecialContent);
+        entityManager.persist(postContentWithSpecialContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(7);
 
@@ -221,7 +234,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithUnicodeContent);
+        entityManager.persist(postContentWithUnicodeContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(8);
 
@@ -241,7 +255,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithMultilineContent);
+        entityManager.persist(postContentWithMultilineContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(9);
 
@@ -262,7 +277,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithHtmlContent);
+        entityManager.persist(postContentWithHtmlContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(10);
 
@@ -282,7 +298,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithMarkdownContent);
+        entityManager.persist(postContentWithMarkdownContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(11);
 
@@ -302,7 +319,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithJsonContent);
+        entityManager.persist(postContentWithJsonContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(12);
 
@@ -321,7 +339,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithNegativeId);
+        entityManager.persist(postContentWithNegativeId);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(-1);
 
@@ -341,7 +360,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithZeroId);
+        entityManager.persist(postContentWithZeroId);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(0);
 
@@ -361,7 +381,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithLargeId);
+        entityManager.persist(postContentWithLargeId);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(Integer.MAX_VALUE);
 
@@ -381,7 +402,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithNegativeCategoryId);
+        entityManager.persist(postContentWithNegativeCategoryId);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findByCategoryId(-1);
 
@@ -402,7 +424,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithZeroCategoryId);
+        entityManager.persist(postContentWithZeroCategoryId);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findByCategoryId(0);
 
@@ -423,7 +446,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithLargeCategoryId);
+        entityManager.persist(postContentWithLargeCategoryId);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findByCategoryId(Integer.MAX_VALUE);
 
@@ -444,7 +468,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithNullCategory);
+        entityManager.persist(postContentWithNullCategory);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findByCategoryId(null);
 
@@ -461,7 +486,8 @@ class PostContentRepositoryTest {
                 .categoryId(1)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithDifferentTimestamps);
+        entityManager.persist(postContentWithDifferentTimestamps);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(17);
 
@@ -484,7 +510,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithWhitespaceContent);
+        entityManager.persist(postContentWithWhitespaceContent);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(18);
 
@@ -504,7 +531,8 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime)
                 .build();
 
-        entityManager.persistAndFlush(postContentWithTabs);
+        entityManager.persist(postContentWithTabs);
+        entityManager.flush();
 
         Optional<PostContent> result = postContentRepository.findByPostId(19);
 
@@ -540,9 +568,12 @@ class PostContentRepositoryTest {
                 .updatedAt(testDateTime.plusHours(2))
                 .build();
 
-        entityManager.persistAndFlush(pc1);
-        entityManager.persistAndFlush(pc2);
-        entityManager.persistAndFlush(pc3);
+        entityManager.persist(pc1);
+        entityManager.flush();
+        entityManager.persist(pc2);
+        entityManager.flush();
+        entityManager.persist(pc3);
+        entityManager.flush();
 
         List<PostContent> result = postContentRepository.findByCategoryId(5);
 

@@ -4,11 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.transaction.annotation.Transactional;
+import jakarta.persistence.EntityManager;
 import pl.justdrinkjava.JustDrinkJava.entity.Category;
 import pl.justdrinkjava.JustDrinkJava.entity.Post;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
@@ -19,13 +20,14 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DataJpaTest
+@SpringBootTest
+@Transactional
 @TestPropertySource(locations = "classpath:application-test.properties")
 @DisplayName("PostRepository Tests")
 class PostRepositoryTest {
 
     @Autowired
-    private TestEntityManager entityManager;
+    private EntityManager entityManager;
 
     @Autowired
     private PostRepository postRepository;
@@ -46,7 +48,8 @@ class PostRepositoryTest {
                 .password("password123")
                 .createdAt(LocalDateTime.now())
                 .build();
-        user1 = entityManager.persistAndFlush(user1);
+        entityManager.persist(user1);
+        entityManager.flush();
 
         user2 = User.builder()
                 .email("user2@example.com")
@@ -54,17 +57,20 @@ class PostRepositoryTest {
                 .password("password123")
                 .createdAt(LocalDateTime.now())
                 .build();
-        user2 = entityManager.persistAndFlush(user2);
+        entityManager.persist(user2);
+        entityManager.flush();
 
         category1 = Category.builder()
                 .name("Java")
                 .build();
-        category1 = entityManager.persistAndFlush(category1);
+        entityManager.persist(category1);
+        entityManager.flush();
 
         category2 = Category.builder()
                 .name("Spring")
                 .build();
-        category2 = entityManager.persistAndFlush(category2);
+        entityManager.persist(category2);
+        entityManager.flush();
 
         post1 = Post.builder()
                 .title("Java Basics")
@@ -74,7 +80,8 @@ class PostRepositoryTest {
                 .readTime(5)
                 .imageUrl("http://example.com/image1.jpg")
                 .build();
-        post1 = entityManager.persistAndFlush(post1);
+        entityManager.persist(post1);
+        entityManager.flush();
 
         post2 = Post.builder()
                 .title("Spring Boot Tutorial")
@@ -84,7 +91,8 @@ class PostRepositoryTest {
                 .readTime(10)
                 .imageUrl("http://example.com/image2.jpg")
                 .build();
-        post2 = entityManager.persistAndFlush(post2);
+        entityManager.persist(post2);
+        entityManager.flush();
 
         post3 = Post.builder()
                 .title("Advanced Java")
@@ -94,7 +102,8 @@ class PostRepositoryTest {
                 .readTime(15)
                 .imageUrl("http://example.com/image3.jpg")
                 .build();
-        post3 = entityManager.persistAndFlush(post3);
+        entityManager.persist(post3);
+        entityManager.flush();
 
         entityManager.clear();
     }
@@ -406,7 +415,8 @@ class PostRepositoryTest {
                 .category(category1)
                 .readTime(20)
                 .build();
-        entityManager.persistAndFlush(multiMatch);
+        entityManager.persist(multiMatch);
+        entityManager.flush();
 
         Pageable pageable = PageRequest.of(0, 10);
         List<Post> result = postRepository.searchPosts("Spring", pageable);
@@ -436,7 +446,8 @@ class PostRepositoryTest {
                 .category(category1)
                 .readTime(8)
                 .build();
-        entityManager.persistAndFlush(unicodePost);
+        entityManager.persist(unicodePost);
+        entityManager.flush();
 
         Pageable pageable = PageRequest.of(0, 10);
         List<Post> result = postRepository.searchPosts("Programowanie", pageable);
@@ -456,7 +467,8 @@ class PostRepositoryTest {
                 .readTime(5)
                 .imageUrl(null)
                 .build();
-        entityManager.persistAndFlush(postWithNulls);
+        entityManager.persist(postWithNulls);
+        entityManager.flush();
 
         Pageable pageable = PageRequest.of(0, 10);
         List<Post> result = postRepository.searchPosts("Test", pageable);
@@ -475,7 +487,8 @@ class PostRepositoryTest {
                 .category(null)
                 .readTime(5)
                 .build();
-        entityManager.persistAndFlush(postWithNulls);
+        entityManager.persist(postWithNulls);
+        entityManager.flush();
 
         long count = postRepository.countSearchResults("Test");
 
