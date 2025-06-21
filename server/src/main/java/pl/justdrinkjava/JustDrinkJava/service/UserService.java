@@ -41,7 +41,7 @@ public class UserService {
             UserDto userDto = UserDto.builder()
                     .id(user.getId())
                     .email(user.getEmail())
-                    .username(user.getUsername())
+                    .username(user.getDisplayUsername())
                     .createdAt(user.getCreatedAt())
                     .build();
                     
@@ -63,9 +63,9 @@ public class UserService {
                     .or(() -> userRepository.findByEmail(currentUsername))
                     .orElseThrow(() -> new RuntimeException("Użytkownik nie został znaleziony"));
 
-            boolean usernameChanged = !user.getUsername().equals(request.getUsername());
+            boolean usernameChanged = !user.getDisplayUsername().equals(request.getUsername());
             log.info("Sprawdzanie zmiany nazwy: obecna='{}', nowa='{}', zmieniona={}", 
-                    user.getUsername(), request.getUsername(), usernameChanged);
+                    user.getDisplayUsername(), request.getUsername(), usernameChanged);
 
             if (usernameChanged) {
                 userRepository.findByUsername(request.getUsername())
@@ -77,15 +77,15 @@ public class UserService {
                     });
             }
 
-            user.setUsername(request.getUsername());
+            user.setDisplayUsername(request.getUsername());
             User savedUser = userRepository.save(user);
             
-            log.info("Zaktualizowano profil użytkownika: {}", savedUser.getUsername());
+            log.info("Zaktualizowano profil użytkownika: {}", savedUser.getDisplayUsername());
             
             UserDto userDto = UserDto.builder()
                     .id(savedUser.getId())
                     .email(savedUser.getEmail())
-                    .username(savedUser.getUsername())
+                    .username(savedUser.getDisplayUsername())
                     .createdAt(savedUser.getCreatedAt())
                     .build();   
             String newToken = null;
@@ -96,7 +96,7 @@ public class UserService {
                         .authorities("USER")
                         .build();
                 newToken = jwtService.generateToken(userDetails);
-                log.info("Wygenerowano nowy token dla użytkownika: {}", savedUser.getUsername());
+                log.info("Wygenerowano nowy token dla użytkownika: {}", savedUser.getDisplayUsername());
             }
                 
             return UpdateProfileResponse.builder()
@@ -128,7 +128,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
         
-        log.info("Zmieniono hasło dla użytkownika: {}", user.getUsername());
+        log.info("Zmieniono hasło dla użytkownika: {}", user.getDisplayUsername());
     }
 
     public void deleteAccount(DeleteAccountRequest request) {
@@ -144,6 +144,6 @@ public class UserService {
         }
 
         userRepository.delete(user);
-        log.info("Usunięto konto użytkownika: {}", user.getUsername());
+        log.info("Usunięto konto użytkownika: {}", user.getDisplayUsername());
     }
 } 

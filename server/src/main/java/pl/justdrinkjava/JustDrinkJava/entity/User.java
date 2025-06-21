@@ -59,6 +59,10 @@ public class User implements UserDetails {
         return username != null ? username : email;
     }
     
+    public void setDisplayUsername(String username) {
+        this.username = username;
+    }
+    
     @Override
     public String getPassword() {
         return password;
