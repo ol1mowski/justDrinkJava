@@ -1,24 +1,26 @@
-import type { LoginFormData, RegisterFormData, AuthResponse } from '../types'
-import { API_BASE_URL } from '../../../utils/api'
+import type { LoginFormData, RegisterFormData, AuthResponse } from '../types';
+import { API_BASE_URL } from '../../../utils/api';
 
 class ApiError extends Error {
-  public field?: string
-  
+  public field?: string;
+
   constructor(message: string, field?: string) {
-    super(message)
-    this.name = 'ApiError'
-    this.field = field
+    super(message);
+    this.name = 'ApiError';
+    this.field = field;
   }
 }
 
 const handleResponse = async <T>(response: Response): Promise<T> => {
   if (!response.ok) {
-    const errorData = await response.json().catch(() => ({ message: 'Wystąpił błąd serwera' }))
-    throw new ApiError(errorData.message || 'Wystąpił błąd', errorData.field)
+    const errorData = await response
+      .json()
+      .catch(() => ({ message: 'Wystąpił błąd serwera' }));
+    throw new ApiError(errorData.message || 'Wystąpił błąd', errorData.field);
   }
-  
-  return response.json()
-}
+
+  return response.json();
+};
 
 export const authApi = {
   login: async (data: LoginFormData): Promise<AuthResponse> => {
@@ -29,11 +31,11 @@ export const authApi = {
       },
       body: JSON.stringify({
         email: data.email,
-        password: data.password
+        password: data.password,
       }),
-    })
-    
-    return handleResponse<AuthResponse>(response)
+    });
+
+    return handleResponse<AuthResponse>(response);
   },
 
   register: async (data: RegisterFormData): Promise<AuthResponse> => {
@@ -44,24 +46,24 @@ export const authApi = {
       },
       body: JSON.stringify({
         email: data.email,
-        password: data.password
+        password: data.password,
       }),
-    })
-    
-    return handleResponse<AuthResponse>(response)
-  }
-}
+    });
+
+    return handleResponse<AuthResponse>(response);
+  },
+};
 
 export const tokenStorage = {
   get: (): string | null => {
-    return localStorage.getItem('auth_token')
+    return localStorage.getItem('auth_token');
   },
-  
+
   set: (token: string): void => {
-    localStorage.setItem('auth_token', token)
+    localStorage.setItem('auth_token', token);
   },
-  
+
   remove: (): void => {
-    localStorage.removeItem('auth_token')
-  }
-} 
+    localStorage.removeItem('auth_token');
+  },
+};

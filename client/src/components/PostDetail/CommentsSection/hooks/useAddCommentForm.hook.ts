@@ -1,4 +1,4 @@
-import { useState, useCallback, useTransition } from "react";
+import { useState, useCallback, useTransition } from 'react';
 import toast from 'react-hot-toast';
 
 export interface UseAddCommentFormOptions {
@@ -22,14 +22,14 @@ export const useAddCommentForm = (
 ): UseAddCommentFormResult => {
   const { onSubmit, maxLength = 2000 } = options;
 
-  const [content, setContent] = useState("");
+  const [content, setContent] = useState('');
   const [isPending, startTransition] = useTransition();
 
   const isValid = content.trim().length > 0 && content.length <= maxLength;
   const characterCount = content.length;
 
   const reset = useCallback(() => {
-    setContent("");
+    setContent('');
   }, []);
 
   const handleSubmit = useCallback(
@@ -44,8 +44,8 @@ export const useAddCommentForm = (
             reset();
             toast.success('Komentarz został dodany!');
           })
-          .catch((error) => {
-            console.error("Błąd podczas dodawania komentarza:", error);
+          .catch(error => {
+            console.error('Błąd podczas dodawania komentarza:', error);
             toast.error('Nie udało się dodać komentarza');
           });
       });

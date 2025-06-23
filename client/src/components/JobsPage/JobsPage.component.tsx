@@ -1,9 +1,9 @@
-import { memo } from 'react'
-import { HeroSection } from './components/HeroSection.component'
-import { JobBoardsRanking } from './components/JobBoardsRanking.component'
-import { JavaCareerTips } from './components/JavaCareerTips.component'
-import { CTASection } from './components/CTASection.component'
-import { ErrorBoundaryWrapper } from '../ui'
+import { memo } from 'react';
+import { HeroSection } from './components/HeroSection.component';
+import { JobBoardsRanking } from './components/JobBoardsRanking.component';
+import { JavaCareerTips } from './components/JavaCareerTips.component';
+import { CTASection } from './components/CTASection.component';
+import { ErrorBoundaryWrapper } from '../ui';
 
 export const JobsPage = memo(() => {
   return (
@@ -18,7 +18,7 @@ export const JobsPage = memo(() => {
         <CTASection />
       </div>
     </ErrorBoundaryWrapper>
-  )
-})
+  );
+});
 
-JobsPage.displayName = 'JobsPage' 
+JobsPage.displayName = 'JobsPage';

@@ -1,14 +1,14 @@
-import { memo } from "react";
-import type { UserAvatarProps } from "../types";
+import { memo } from 'react';
+import type { UserAvatarProps } from '../types';
 
 const sizeClasses = {
-  sm: "w-6 h-6 text-xs",
-  md: "w-8 h-8 text-sm",
-  lg: "w-10 h-10 text-base",
+  sm: 'w-6 h-6 text-xs',
+  md: 'w-8 h-8 text-sm',
+  lg: 'w-10 h-10 text-base',
 } as const;
 
-export const UserAvatar = memo<UserAvatarProps>(({ username, size = "md" }) => {
-  const initial = username?.charAt(0).toUpperCase() || "U";
+export const UserAvatar = memo<UserAvatarProps>(({ username, size = 'md' }) => {
+  const initial = username?.charAt(0).toUpperCase() || 'U';
 
   return (
     <div
@@ -20,4 +20,4 @@ export const UserAvatar = memo<UserAvatarProps>(({ username, size = "md" }) => {
   );
 });
 
-UserAvatar.displayName = "UserAvatar";
+UserAvatar.displayName = 'UserAvatar';

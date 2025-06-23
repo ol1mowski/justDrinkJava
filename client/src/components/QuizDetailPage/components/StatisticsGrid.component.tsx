@@ -1,5 +1,9 @@
 import { memo } from 'react';
-import { CheckCircleIcon, XCircleIcon, ClockIcon } from '@heroicons/react/24/outline';
+import {
+  CheckCircleIcon,
+  XCircleIcon,
+  ClockIcon,
+} from '@heroicons/react/24/outline';
 import { formatTime } from '../utils/quizResults.utils';
 
 interface StatisticsGridProps {
@@ -52,4 +56,4 @@ export const StatisticsGrid = memo<StatisticsGridProps>(
   }
 );
 
-StatisticsGrid.displayName = 'StatisticsGrid'; 
+StatisticsGrid.displayName = 'StatisticsGrid';

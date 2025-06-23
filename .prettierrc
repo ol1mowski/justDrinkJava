@@ -1,0 +1,40 @@
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 80,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": true,
+  "arrowParens": "avoid",
+  "endOfLine": "lf",
+  "overrides": [
+    {
+      "files": "*.java",
+      "options": {
+        "tabWidth": 4,
+        "printWidth": 120
+      }
+    },
+    {
+      "files": ["*.yml", "*.yaml"],
+      "options": {
+        "tabWidth": 2,
+        "singleQuote": false
+      }
+    },
+    {
+      "files": "*.xml",
+      "options": {
+        "tabWidth": 4,
+        "printWidth": 120
+      }
+    },
+    {
+      "files": "*.properties",
+      "options": {
+        "printWidth": 120
+      }
+    }
+  ]
+}

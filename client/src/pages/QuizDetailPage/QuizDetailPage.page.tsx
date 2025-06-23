@@ -1,3 +1,3 @@
-import { QuizDetailPage } from '../../components/QuizDetailPage/QuizDetailPage.component'
+import { QuizDetailPage } from '../../components/QuizDetailPage/QuizDetailPage.component';
 
-export { QuizDetailPage } 
+export { QuizDetailPage };

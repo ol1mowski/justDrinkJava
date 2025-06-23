@@ -1,10 +1,14 @@
+export * from './base.api';
+export * from './http-client.api';
+export * from './types.api';
+export * from './services.api';
 
-export * from "./base.api";
-export * from "./http-client.api";
-export * from "./types.api";
-export * from "./services.api";
-        
-import { authService, postService, userService, quizService } from "./services.api";
+import {
+  authService,
+  postService,
+  userService,
+  quizService,
+} from './services.api';
 import type {
   ApiResponse,
   AuthResponse,
@@ -12,7 +16,7 @@ import type {
   RegisterRequest,
   GoogleAuthRequest,
   GitHubAuthRequest,
-} from "./types.api";
+} from './types.api';
 
 export const apiService = {
   getLatestPost: postService.getLatest,
@@ -37,11 +41,11 @@ export const authApi = {
   ): Promise<ApiResponse<AuthResponse>> => {
     try {
       const data = await authService.login(credentials);
-      return { status: "success" as const, data };
+      return { status: 'success' as const, data };
     } catch (error) {
       return {
-        status: "error" as const,
-        message: error instanceof Error ? error.message : "Unknown error",
+        status: 'error' as const,
+        message: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   },
@@ -51,11 +55,11 @@ export const authApi = {
   ): Promise<ApiResponse<AuthResponse>> => {
     try {
       const data = await authService.register(userData);
-      return { status: "success" as const, data };
+      return { status: 'success' as const, data };
     } catch (error) {
       return {
-        status: "error" as const,
-        message: error instanceof Error ? error.message : "Unknown error",
+        status: 'error' as const,
+        message: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   },
@@ -65,11 +69,11 @@ export const authApi = {
   ): Promise<ApiResponse<AuthResponse>> => {
     try {
       const data = await authService.googleAuth(googleData);
-      return { status: "success" as const, data };
+      return { status: 'success' as const, data };
     } catch (error) {
       return {
-        status: "error" as const,
-        message: error instanceof Error ? error.message : "Unknown error",
+        status: 'error' as const,
+        message: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   },
@@ -79,11 +83,11 @@ export const authApi = {
   ): Promise<ApiResponse<AuthResponse>> => {
     try {
       const data = await authService.githubAuth(githubData);
-      return { status: "success" as const, data };
+      return { status: 'success' as const, data };
     } catch (error) {
       return {
-        status: "error" as const,
-        message: error instanceof Error ? error.message : "Unknown error",
+        status: 'error' as const,
+        message: error instanceof Error ? error.message : 'Unknown error',
       };
     }
   },
@@ -91,4 +95,4 @@ export const authApi = {
   logout: authService.logout,
 };
 
-export const API_BASE_URL = "http://localhost:8080/api";
+export const API_BASE_URL = 'http://localhost:8080/api';

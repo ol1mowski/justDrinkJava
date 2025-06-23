@@ -1,5 +1,5 @@
-import type { AuthUser } from "../../../hooks/auth/useAuth.hook";
-import type { CommentResponse } from "../../../api/comments.api";
+import type { AuthUser } from '../../../hooks/auth/useAuth.hook';
+import type { CommentResponse } from '../../../api/comments.api';
 
 export interface CommentsSectionProps {
   postId: number;
@@ -33,10 +33,10 @@ export interface ErrorStateProps {
 
 export interface UserAvatarProps {
   username: string;
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
 }
 
 export interface LoadingSpinnerProps {
-  size?: "sm" | "md" | "lg";
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
 }

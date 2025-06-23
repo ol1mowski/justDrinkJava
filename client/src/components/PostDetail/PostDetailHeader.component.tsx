@@ -1,8 +1,8 @@
-import { motion } from 'framer-motion'
-import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { motion } from 'framer-motion';
+import { ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 interface PostDetailHeaderProps {
-  onBack: () => void
+  onBack: () => void;
 }
 
 export const PostDetailHeader = ({ onBack }: PostDetailHeaderProps) => {
@@ -17,5 +17,5 @@ export const PostDetailHeader = ({ onBack }: PostDetailHeaderProps) => {
       <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-200" />
       <span className="font-medium">Powrót do postów</span>
     </motion.button>
-  )
-} 
+  );
+};

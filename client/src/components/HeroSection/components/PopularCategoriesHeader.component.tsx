@@ -1,5 +1,5 @@
-import { memo } from 'react'
-import { FolderIcon, ChartBarIcon } from '@heroicons/react/24/outline'
+import { memo } from 'react';
+import { FolderIcon, ChartBarIcon } from '@heroicons/react/24/outline';
 
 export const PopularCategoriesHeader = memo(() => {
   return (
@@ -14,7 +14,7 @@ export const PopularCategoriesHeader = memo(() => {
       </div>
       <ChartBarIcon className="w-5 h-5 text-java-orange" />
     </div>
-  )
-})
+  );
+});
 
-PopularCategoriesHeader.displayName = 'PopularCategoriesHeader' 
+PopularCategoriesHeader.displayName = 'PopularCategoriesHeader';

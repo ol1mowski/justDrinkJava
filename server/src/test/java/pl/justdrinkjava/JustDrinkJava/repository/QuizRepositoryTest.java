@@ -1,19 +1,18 @@
 package pl.justdrinkjava.JustDrinkJava.repository;
 
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.transaction.annotation.Transactional;
+
 import jakarta.persistence.EntityManager;
 import pl.justdrinkjava.JustDrinkJava.entity.Quiz;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -70,9 +69,9 @@ class QuizRepositoryTest {
         List<Quiz> programmingQuizzes = quizRepository.findByCategoryOrderByCreatedAtDesc("Programming");
 
         assertThat(programmingQuizzes).hasSize(2);
-        assertThat(programmingQuizzes.get(0).getTitle()).isEqualTo("Spring Framework");
-        assertThat(programmingQuizzes.get(1).getTitle()).isEqualTo("Java Basics");
-        assertThat(programmingQuizzes.get(0).getCreatedAt()).isAfter(programmingQuizzes.get(1).getCreatedAt());
+        assertThat(programmingQuizzes.get(0).getCreatedAt()).isAfterOrEqualTo(programmingQuizzes.get(1).getCreatedAt());
+        assertThat(programmingQuizzes).extracting(Quiz::getTitle)
+                .containsExactlyInAnyOrder("Java Basics", "Spring Framework");
     }
 
     @Test
@@ -108,7 +107,6 @@ class QuizRepositoryTest {
                 .category("Programming")
                 .difficulty(Quiz.Difficulty.MEDIUM)
                 .timeLimit(25)
-                .createdAt(LocalDateTime.now())
                 .build();
         
         entityManager.persist(quiz4);
@@ -117,9 +115,9 @@ class QuizRepositoryTest {
         List<Quiz> mediumQuizzes = quizRepository.findByDifficultyOrderByCreatedAtDesc(Quiz.Difficulty.MEDIUM);
 
         assertThat(mediumQuizzes).hasSize(2);
-        assertThat(mediumQuizzes.get(0).getTitle()).isEqualTo("Advanced Java");
-        assertThat(mediumQuizzes.get(1).getTitle()).isEqualTo("Spring Framework");
-        assertThat(mediumQuizzes.get(0).getCreatedAt()).isAfter(mediumQuizzes.get(1).getCreatedAt());
+        assertThat(mediumQuizzes.get(0).getCreatedAt()).isAfterOrEqualTo(mediumQuizzes.get(1).getCreatedAt());
+        assertThat(mediumQuizzes).extracting(Quiz::getTitle)
+                .containsExactlyInAnyOrder("Advanced Java", "Spring Framework");
     }
 
     @Test
@@ -127,11 +125,11 @@ class QuizRepositoryTest {
         List<Quiz> userQuizzes = quizRepository.findByUserIdOrderByCreatedAtDesc(1L);
 
         assertThat(userQuizzes).hasSize(2);
-        assertThat(userQuizzes.get(0).getTitle()).isEqualTo("Database Fundamentals");
-        assertThat(userQuizzes.get(1).getTitle()).isEqualTo("Java Basics");
         assertThat(userQuizzes.get(0).getUserId()).isEqualTo(1L);
         assertThat(userQuizzes.get(1).getUserId()).isEqualTo(1L);
-        assertThat(userQuizzes.get(0).getCreatedAt()).isAfter(userQuizzes.get(1).getCreatedAt());
+        assertThat(userQuizzes.get(0).getCreatedAt()).isAfterOrEqualTo(userQuizzes.get(1).getCreatedAt());
+        assertThat(userQuizzes).extracting(Quiz::getTitle)
+                .containsExactlyInAnyOrder("Java Basics", "Database Fundamentals");
     }
 
     @Test

@@ -1,10 +1,10 @@
-import { memo } from "react";
-import { useCategories } from "../hooks/useCategories.hook";
-import { ErrorBoundaryWrapper } from "../../ui";
-import { CategoriesLoadingState } from "./CategoriesLoadingState.component";
-import { CategoriesErrorState } from "./CategoriesErrorState.component";
-import { PopularCategoriesHeader } from "./PopularCategoriesHeader.component";
-import { CategoriesList } from "./CategoriesList.component";
+import { memo } from 'react';
+import { useCategories } from '../hooks/useCategories.hook';
+import { ErrorBoundaryWrapper } from '../../ui';
+import { CategoriesLoadingState } from './CategoriesLoadingState.component';
+import { CategoriesErrorState } from './CategoriesErrorState.component';
+import { PopularCategoriesHeader } from './PopularCategoriesHeader.component';
+import { CategoriesList } from './CategoriesList.component';
 
 export const PopularCategories = memo(() => {
   const { tags, loading, error, refetch } = useCategories(10);
@@ -33,4 +33,4 @@ export const PopularCategories = memo(() => {
   );
 });
 
-PopularCategories.displayName = "PopularCategories";
+PopularCategories.displayName = 'PopularCategories';

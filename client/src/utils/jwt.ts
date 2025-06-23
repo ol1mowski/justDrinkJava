@@ -17,11 +17,11 @@ export const decodeJWT = (token: string): JWTPayload | null => {
     }
 
     const payload = parts[1];
-    
-    const paddedPayload = payload + '='.repeat((4 - payload.length % 4) % 4);
-    
+
+    const paddedPayload = payload + '='.repeat((4 - (payload.length % 4)) % 4);
+
     const decodedPayload = atob(paddedPayload);
-    
+
     return JSON.parse(decodedPayload);
   } catch (error) {
     console.error('Błąd podczas dekodowania JWT:', error);
@@ -36,12 +36,12 @@ export const getUserFromToken = (token: string): UserFromToken | null => {
   }
 
   const emailOrUsername = payload.sub;
-  
+
   const isEmail = emailOrUsername.includes('@');
-  
+
   return {
     email: isEmail ? emailOrUsername : '',
-    username: isEmail ? emailOrUsername.split('@')[0] : emailOrUsername
+    username: isEmail ? emailOrUsername.split('@')[0] : emailOrUsername,
   };
 };
 
@@ -64,4 +64,4 @@ export const setTokenToStorage = (token: string): void => {
 
 export const removeTokenFromStorage = (): void => {
   localStorage.removeItem('accessToken');
-}; 
+};

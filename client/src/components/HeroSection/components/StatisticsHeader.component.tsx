@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
 export const StatisticsHeader = memo(() => {
   return (
@@ -10,7 +10,7 @@ export const StatisticsHeader = memo(() => {
         Najlepsi użytkownicy tego miesiąca
       </p>
     </div>
-  )
-})
+  );
+});
 
-StatisticsHeader.displayName = 'StatisticsHeader' 
+StatisticsHeader.displayName = 'StatisticsHeader';

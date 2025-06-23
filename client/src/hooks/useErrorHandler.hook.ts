@@ -1,48 +1,48 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback } from 'react';
 
 export interface AppError {
-  message: string
-  code?: string
-  details?: unknown
-  timestamp: number
+  message: string;
+  code?: string;
+  details?: unknown;
+  timestamp: number;
 }
 
 export const useErrorHandler = () => {
-  const [error, setError] = useState<AppError | null>(null)
+  const [error, setError] = useState<AppError | null>(null);
 
   const handleError = useCallback((error: unknown, code?: string) => {
     const appError: AppError = {
       message: error instanceof Error ? error.message : 'Nieznany błąd',
       code,
       details: error,
-      timestamp: Date.now()
-    }
-    
-    console.error('Error handled:', appError)
-    setError(appError)
-  }, [])
+      timestamp: Date.now(),
+    };
+
+    console.error('Error handled:', appError);
+    setError(appError);
+  }, []);
 
   const clearError = useCallback(() => {
-    setError(null)
-  }, [])
+    setError(null);
+  }, []);
 
   const resetError = useCallback(() => {
-    setError(null)
-  }, [])
+    setError(null);
+  }, []);
 
   const withErrorHandling = useCallback(
     <T extends unknown[], R>(fn: (...args: T) => Promise<R>) => {
       return async (...args: T): Promise<R | undefined> => {
         try {
-          return await fn(...args)
+          return await fn(...args);
         } catch (err) {
-          handleError(err)
-          return undefined
+          handleError(err);
+          return undefined;
         }
-      }
+      };
     },
     [handleError]
-  )
+  );
 
   return {
     error,
@@ -50,6 +50,6 @@ export const useErrorHandler = () => {
     handleError,
     clearError,
     resetError,
-    withErrorHandling
-  }
-} 
+    withErrorHandling,
+  };
+};

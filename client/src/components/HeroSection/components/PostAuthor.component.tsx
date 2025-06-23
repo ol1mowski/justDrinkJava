@@ -1,16 +1,18 @@
-import { memo } from 'react'
-import { UserIcon } from '@heroicons/react/24/outline'
-import type { UserData } from '../../../utils/api'
+import { memo } from 'react';
+import { UserIcon } from '@heroicons/react/24/outline';
+import type { UserData } from '../../../utils/api';
 
 interface PostAuthorProps {
-  user: UserData
+  user: UserData;
 }
 
 export const PostAuthor = memo<PostAuthorProps>(({ user }) => {
   return (
     <div className="flex items-center gap-3">
-      <div className="w-10 h-10 rounded-full bg-gradient-to-r from-java-orange to-java-red 
-                     flex items-center justify-center text-white font-medium text-sm">
+      <div
+        className="w-10 h-10 rounded-full bg-gradient-to-r from-java-orange to-java-red 
+                     flex items-center justify-center text-white font-medium text-sm"
+      >
         {user.username.charAt(0).toUpperCase()}
       </div>
       <div>
@@ -20,7 +22,7 @@ export const PostAuthor = memo<PostAuthorProps>(({ user }) => {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-PostAuthor.displayName = 'PostAuthor' 
+PostAuthor.displayName = 'PostAuthor';

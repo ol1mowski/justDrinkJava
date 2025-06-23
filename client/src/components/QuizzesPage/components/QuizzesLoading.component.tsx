@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
 export const QuizzesLoading = memo(() => {
   return (
@@ -6,11 +6,13 @@ export const QuizzesLoading = memo(() => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-java-orange mx-auto"></div>
-          <p className="mt-4 text-java-gray dark:text-java-dark-text">Ładowanie quizów...</p>
+          <p className="mt-4 text-java-gray dark:text-java-dark-text">
+            Ładowanie quizów...
+          </p>
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-QuizzesLoading.displayName = 'QuizzesLoading' 
+QuizzesLoading.displayName = 'QuizzesLoading';

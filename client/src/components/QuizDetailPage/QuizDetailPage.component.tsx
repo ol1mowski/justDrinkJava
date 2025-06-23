@@ -1,14 +1,14 @@
-import { memo } from 'react'
-import { 
+import { memo } from 'react';
+import {
   QuizPremiumGuard,
   QuizLoadingState,
   QuizErrorState,
   QuizNotFoundState,
   QuizActiveView,
-  QuizResults
-} from './components'
-import { ErrorBoundaryWrapper } from '../ui'
-import { useQuizDetailLogic } from './hooks'
+  QuizResults,
+} from './components';
+import { ErrorBoundaryWrapper } from '../ui';
+import { useQuizDetailLogic } from './hooks';
 
 export const QuizDetailPage = memo(() => {
   const {
@@ -25,7 +25,7 @@ export const QuizDetailPage = memo(() => {
     selectedAnswers,
     timeRemaining,
     progress,
-    
+
     handleAnswerSelect,
     handleNextQuestion,
     handlePreviousQuestion,
@@ -33,8 +33,8 @@ export const QuizDetailPage = memo(() => {
     handleRestartQuiz,
     navigateToQuizzes,
     navigateToLogin,
-    hasAnswered
-  } = useQuizDetailLogic()
+    hasAnswered,
+  } = useQuizDetailLogic();
 
   if (!hasAccess) {
     return (
@@ -42,11 +42,11 @@ export const QuizDetailPage = memo(() => {
         onNavigateToLogin={navigateToLogin}
         onNavigateToQuizzes={navigateToQuizzes}
       />
-    )
+    );
   }
 
   if (loading || questionsLoading) {
-    return <QuizLoadingState />
+    return <QuizLoadingState />;
   }
 
   if (error || questionsError) {
@@ -55,15 +55,11 @@ export const QuizDetailPage = memo(() => {
         error={error || questionsError || 'Nieznany błąd'}
         onNavigateToQuizzes={navigateToQuizzes}
       />
-    )
+    );
   }
 
   if (!quiz || questions.length === 0) {
-    return (
-      <QuizNotFoundState
-        onNavigateToQuizzes={navigateToQuizzes}
-      />
-    )
+    return <QuizNotFoundState onNavigateToQuizzes={navigateToQuizzes} />;
   }
 
   if (isCompleted && results) {
@@ -82,7 +78,7 @@ export const QuizDetailPage = memo(() => {
           onRestart={handleRestartQuiz}
         />
       </ErrorBoundaryWrapper>
-    )
+    );
   }
 
   return (
@@ -104,7 +100,7 @@ export const QuizDetailPage = memo(() => {
         hasAnswered={hasAnswered}
       />
     </ErrorBoundaryWrapper>
-  )
-})
+  );
+});
 
-QuizDetailPage.displayName = 'QuizDetailPage' 
+QuizDetailPage.displayName = 'QuizDetailPage';

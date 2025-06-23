@@ -1,10 +1,10 @@
-import { motion } from 'framer-motion'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import { PostDetailHeader } from './PostDetailHeader.component'
+import { motion } from 'framer-motion';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { PostDetailHeader } from './PostDetailHeader.component';
 
 interface PostDetailErrorProps {
-  onBack: () => void
-  error?: Error | null
+  onBack: () => void;
+  error?: Error | null;
 }
 
 export const PostDetailError = ({ onBack, error }: PostDetailErrorProps) => {
@@ -21,15 +21,16 @@ export const PostDetailError = ({ onBack, error }: PostDetailErrorProps) => {
           <div className="flex items-center justify-center w-16 h-16 mb-4 bg-red-100 rounded-full mx-auto">
             <ExclamationTriangleIcon className="w-8 h-8 text-red-600" />
           </div>
-          
+
           <h1 className="text-2xl font-bold text-gray-900 mb-4">
             Nie można załadować posta
           </h1>
-          
+
           <p className="text-gray-600 mb-6">
-            {error?.message || 'Post o podanym ID nie istnieje lub wystąpił błąd podczas ładowania.'}
+            {error?.message ||
+              'Post o podanym ID nie istnieje lub wystąpił błąd podczas ładowania.'}
           </p>
-          
+
           <button
             onClick={onBack}
             className="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-java-orange hover:bg-java-orange/90 border border-transparent rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-java-orange transition-colors duration-200"
@@ -39,5 +40,5 @@ export const PostDetailError = ({ onBack, error }: PostDetailErrorProps) => {
         </motion.div>
       </div>
     </div>
-  )
-} 
+  );
+};

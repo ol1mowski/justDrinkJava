@@ -1,1 +1,1 @@
-export { QuizCard } from './QuizCard.component' 
+export { QuizCard } from './QuizCard.component';

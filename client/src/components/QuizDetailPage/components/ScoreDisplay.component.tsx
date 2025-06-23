@@ -1,6 +1,10 @@
 import { memo } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
-import { getScoreColor, getScoreMessage, getStars } from '../utils/quizResults.utils';
+import {
+  getScoreColor,
+  getScoreMessage,
+  getStars,
+} from '../utils/quizResults.utils';
 
 interface ScoreDisplayProps {
   score: number;
@@ -14,18 +18,20 @@ export const ScoreDisplay = memo<ScoreDisplayProps>(
 
     return (
       <div className="text-center mb-10">
-        <div className={`text-7xl font-bold mb-6 ${getScoreColor(score)} drop-shadow-sm`}>
+        <div
+          className={`text-7xl font-bold mb-6 ${getScoreColor(score)} drop-shadow-sm`}
+        >
           {score}%
         </div>
 
         <div className="flex justify-center space-x-2 mb-6">
-          {[1, 2, 3, 4, 5].map((star) => (
+          {[1, 2, 3, 4, 5].map(star => (
             <StarIcon
               key={star}
               className={`w-10 h-10 ${
                 star <= stars
-                  ? "text-yellow-400 drop-shadow-sm"
-                  : "text-gray-300"
+                  ? 'text-yellow-400 drop-shadow-sm'
+                  : 'text-gray-300'
               }`}
             />
           ))}
@@ -43,4 +49,4 @@ export const ScoreDisplay = memo<ScoreDisplayProps>(
   }
 );
 
-ScoreDisplay.displayName = 'ScoreDisplay'; 
+ScoreDisplay.displayName = 'ScoreDisplay';

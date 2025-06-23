@@ -1,7 +1,7 @@
-import { PostDetailHeader } from './PostDetailHeader.component'
+import { PostDetailHeader } from './PostDetailHeader.component';
 
 interface PostDetailSkeletonProps {
-  onBack: () => void
+  onBack: () => void;
 }
 
 export const PostDetailSkeleton = ({ onBack }: PostDetailSkeletonProps) => {
@@ -24,5 +24,5 @@ export const PostDetailSkeleton = ({ onBack }: PostDetailSkeletonProps) => {
         </div>
       </div>
     </div>
-  )
-} 
+  );
+};

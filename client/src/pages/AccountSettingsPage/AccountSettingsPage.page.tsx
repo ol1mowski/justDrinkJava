@@ -1,8 +1,8 @@
-import { memo } from 'react'
-import { AccountSettingsPage as AccountSettingsPageComponent } from '../../components/AccountSettingsPage/AccountSettingsPage.component'
+import { memo } from 'react';
+import { AccountSettingsPage as AccountSettingsPageComponent } from '../../components/AccountSettingsPage/AccountSettingsPage.component';
 
 export const AccountSettingsPage = memo(() => {
-  return <AccountSettingsPageComponent />
-})
+  return <AccountSettingsPageComponent />;
+});
 
-AccountSettingsPage.displayName = 'AccountSettingsPage' 
+AccountSettingsPage.displayName = 'AccountSettingsPage';

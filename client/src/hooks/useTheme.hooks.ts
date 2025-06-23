@@ -1,56 +1,60 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback } from 'react';
 
-export type ThemeMode = 'light' | 'dark' | 'system'
+export type ThemeMode = 'light' | 'dark' | 'system';
 
 export const useTheme = () => {
-  const [theme, setTheme] = useState<ThemeMode>('system')
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light')
+  const [theme, setTheme] = useState<ThemeMode>('system');
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') as ThemeMode
+    const savedTheme = localStorage.getItem('theme') as ThemeMode;
     if (savedTheme && ['light', 'dark', 'system'].includes(savedTheme)) {
-      setTheme(savedTheme)
+      setTheme(savedTheme);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     const updateResolvedTheme = () => {
       if (theme === 'system') {
-        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-        setResolvedTheme(systemTheme)
+        const systemTheme = window.matchMedia('(prefers-color-scheme: dark)')
+          .matches
+          ? 'dark'
+          : 'light';
+        setResolvedTheme(systemTheme);
       } else {
-        setResolvedTheme(theme)
+        setResolvedTheme(theme);
       }
-    }
+    };
 
-    updateResolvedTheme()
+    updateResolvedTheme();
 
     if (theme === 'system') {
-      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-      mediaQuery.addEventListener('change', updateResolvedTheme)
-      return () => mediaQuery.removeEventListener('change', updateResolvedTheme)
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', updateResolvedTheme);
+      return () =>
+        mediaQuery.removeEventListener('change', updateResolvedTheme);
     }
-  }, [theme])
+  }, [theme]);
 
   useEffect(() => {
-    const root = document.documentElement
+    const root = document.documentElement;
     if (resolvedTheme === 'dark') {
-      root.classList.add('dark')
+      root.classList.add('dark');
     } else {
-      root.classList.remove('dark')
+      root.classList.remove('dark');
     }
-  }, [resolvedTheme])
+  }, [resolvedTheme]);
 
   const changeTheme = useCallback((newTheme: ThemeMode) => {
-    setTheme(newTheme)
-    localStorage.setItem('theme', newTheme)
-  }, [])
+    setTheme(newTheme);
+    localStorage.setItem('theme', newTheme);
+  }, []);
 
   return {
     theme,
     resolvedTheme,
     changeTheme,
     isDark: resolvedTheme === 'dark',
-    isLight: resolvedTheme === 'light'
-  }
-} 
+    isLight: resolvedTheme === 'light',
+  };
+};

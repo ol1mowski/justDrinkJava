@@ -1,19 +1,20 @@
-import { motion } from 'framer-motion'
-import { usePostContentByPostId } from '../../hooks/usePostContent.hook'
-import { PostContentRenderer } from './PostContentRenderer.component'
-import { PostContentSkeleton } from './PostContentSkeleton.component'
-import { PostContentError } from './PostContentError.component'
+import { motion } from 'framer-motion';
+import { usePostContentByPostId } from '../../hooks/usePostContent.hook';
+import { PostContentRenderer } from './PostContentRenderer.component';
+import { PostContentSkeleton } from './PostContentSkeleton.component';
+import { PostContentError } from './PostContentError.component';
 
 interface PostContentContainerProps {
-  postId: number
-  className?: string
+  postId: number;
+  className?: string;
 }
 
-export const PostContentContainer = ({ 
-  postId, 
+export const PostContentContainer = ({
+  postId,
   className = '',
 }: PostContentContainerProps) => {
-  const { content, isLoading, isError, error, refetch } = usePostContentByPostId(postId)
+  const { content, isLoading, isError, error, refetch } =
+    usePostContentByPostId(postId);
 
   if (isLoading) {
     return (
@@ -24,7 +25,7 @@ export const PostContentContainer = ({
       >
         <PostContentSkeleton />
       </motion.div>
-    )
+    );
   }
 
   if (isError) {
@@ -34,15 +35,9 @@ export const PostContentContainer = ({
         animate={{ opacity: 1, scale: 1 }}
         className={className}
       >
-        <PostContentError 
-          error={error} 
-          onRetry={refetch}
-          className="my-8"
-        />
-        
-
+        <PostContentError error={error} onRetry={refetch} className="my-8" />
       </motion.div>
-    )
+    );
   }
 
   if (!content) {
@@ -56,7 +51,7 @@ export const PostContentContainer = ({
           <p>Brak zawartości dla tego posta.</p>
         </div>
       </motion.div>
-    )
+    );
   }
 
   return (
@@ -68,5 +63,5 @@ export const PostContentContainer = ({
     >
       <PostContentRenderer content={content.content} />
     </motion.div>
-  )
-} 
+  );
+};

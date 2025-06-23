@@ -1,4 +1,4 @@
-export * from "../api";
+export * from '../api';
 
 export interface UserData {
   id: number;

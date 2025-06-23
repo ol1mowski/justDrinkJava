@@ -1,0 +1,83 @@
+{
+  "name": "justdrinkjava",
+  "version": "1.0.0",
+  "description": "JustDrinkJava - Full Stack Application with Java Spring Boot and React",
+  "private": true,
+  "workspaces": [
+    "client"
+  ],
+  "scripts": {
+    "prepare": "husky install",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
+    "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
+    "format:client": "prettier --write \"client/**/*.{js,jsx,ts,tsx,json,css,md}\"",
+    "lint": "npm run lint --workspace=client",
+    "build": "npm run build --workspace=client",
+    "test": "npm run test --workspace=client",
+    "dev:client": "npm run dev --workspace=client",
+    "postinstall": "npm install --workspace=client"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1"
+  },
+  "lint-staged": {
+    "client/**/*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write"
+    ],
+    "*.{js,jsx,ts,tsx,json,css,md}": [
+      "prettier --write"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "type-enum": [
+        2,
+        "always",
+        [
+          "feat",
+          "fix",
+          "refactor",
+          "docs",
+          "style",
+          "test",
+          "chore",
+          "perf",
+          "ci",
+          "build",
+          "revert"
+        ]
+      ],
+      "subject-case": [
+        2,
+        "never",
+        [
+          "sentence-case",
+          "start-case",
+          "pascal-case",
+          "upper-case"
+        ]
+      ],
+      "subject-empty": [
+        2,
+        "never"
+      ],
+      "subject-full-stop": [
+        2,
+        "never",
+        "."
+      ],
+      "header-max-length": [
+        2,
+        "always",
+        100
+      ]
+    }
+  }
+}

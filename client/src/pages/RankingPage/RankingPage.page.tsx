@@ -1,6 +1,10 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { LockClosedIcon, HomeIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
+import {
+  LockClosedIcon,
+  HomeIcon,
+  ArrowRightIcon,
+} from '@heroicons/react/24/outline';
 import { useAuth } from '../../hooks/auth/useAuth.hook';
 import { RankingSection } from '../../components/RankingSection';
 import { Button } from '../../components/ui';
@@ -23,15 +27,16 @@ export const RankingPage = memo(() => {
                   <span className="text-white text-xs font-bold">!</span>
                 </div>
               </div>
-              
+
               <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent mb-3">
                 Dostęp ograniczony
               </h1>
               <p className="text-gray-600 leading-relaxed">
-                Aby zobaczyć pełny ranking użytkowników i zdobywać punkty, musisz się zalogować do swojego konta.
+                Aby zobaczyć pełny ranking użytkowników i zdobywać punkty,
+                musisz się zalogować do swojego konta.
               </p>
             </div>
-            
+
             <div className="space-y-4 mb-8">
               <Button
                 variant="primary"
@@ -43,7 +48,7 @@ export const RankingPage = memo(() => {
               >
                 Zaloguj się
               </Button>
-              
+
               <Button
                 variant="outline"
                 size="lg"
@@ -55,7 +60,7 @@ export const RankingPage = memo(() => {
                 Powrót do strony głównej
               </Button>
             </div>
-            
+
             <div className="pt-6 border-t border-gray-200/60">
               <div className="flex items-center justify-center space-x-2 text-sm text-gray-500">
                 <div className="flex items-center space-x-1">
@@ -80,14 +85,15 @@ export const RankingPage = memo(() => {
             🏆 Ranking Użytkowników
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Sprawdź najlepszych użytkowników naszej platformy. Zdobywaj punkty rozwiązując quizy i wspinaj się na szczyt rankingu!
+            Sprawdź najlepszych użytkowników naszej platformy. Zdobywaj punkty
+            rozwiązując quizy i wspinaj się na szczyt rankingu!
           </p>
         </div>
-        
+
         <RankingSection />
       </div>
     </div>
   );
 });
 
-RankingPage.displayName = 'RankingPage'; 
+RankingPage.displayName = 'RankingPage';

@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import HeroSection from '../../components/HeroSection/HeroSection'
-import { PostsSection } from '../../components/PostsSection'
+import { memo } from 'react';
+import HeroSection from '../../components/HeroSection/HeroSection';
+import { PostsSection } from '../../components/PostsSection';
 
 export const HomePage = memo(() => {
   return (
@@ -8,7 +8,7 @@ export const HomePage = memo(() => {
       <HeroSection />
       <PostsSection />
     </>
-  )
-})
+  );
+});
 
-HomePage.displayName = 'HomePage' 
+HomePage.displayName = 'HomePage';

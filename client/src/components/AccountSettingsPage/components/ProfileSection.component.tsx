@@ -1,32 +1,32 @@
-import { memo, useState, useEffect } from 'react'
-import { Input } from '../../../components/ui/Input/Input.component'
-import { Button } from '../../../components/ui/Button/Button.component'
-import { UserIcon } from '@heroicons/react/24/outline'
-import { useUserProfile } from '../hooks/useUserProfile.hook'
+import { memo, useState, useEffect } from 'react';
+import { Input } from '../../../components/ui/Input/Input.component';
+import { Button } from '../../../components/ui/Button/Button.component';
+import { UserIcon } from '@heroicons/react/24/outline';
+import { useUserProfile } from '../hooks/useUserProfile.hook';
 
 export const ProfileSection = memo(() => {
-  const { user, isLoading, error, updateProfile } = useUserProfile()
-  const [username, setUsername] = useState('')
-  const [isUpdating, setIsUpdating] = useState(false)
+  const { user, isLoading, error, updateProfile } = useUserProfile();
+  const [username, setUsername] = useState('');
+  const [isUpdating, setIsUpdating] = useState(false);
 
   useEffect(() => {
     if (user) {
-      setUsername(user.username)
+      setUsername(user.username);
     }
-  }, [user])
+  }, [user]);
 
   const handleUpdateProfile = async () => {
-    if (!username.trim()) return
+    if (!username.trim()) return;
 
-    setIsUpdating(true)
+    setIsUpdating(true);
     try {
-      await updateProfile({ username: username.trim() })
+      await updateProfile({ username: username.trim() });
     } catch (error) {
-      console.error('Błąd podczas aktualizacji profilu:', error)
+      console.error('Błąd podczas aktualizacji profilu:', error);
     } finally {
-      setIsUpdating(false)
+      setIsUpdating(false);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -39,7 +39,7 @@ export const ProfileSection = memo(() => {
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -50,7 +50,9 @@ export const ProfileSection = memo(() => {
         </div>
         <div>
           <h2 className="text-xl font-semibold text-gray-900">Profil</h2>
-          <p className="text-sm text-gray-600">Zarządzaj informacjami o swoim profilu</p>
+          <p className="text-sm text-gray-600">
+            Zarządzaj informacjami o swoim profilu
+          </p>
         </div>
       </div>
 
@@ -66,7 +68,7 @@ export const ProfileSection = memo(() => {
             label="Nazwa użytkownika"
             placeholder="Wprowadź nową nazwę użytkownika"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={e => setUsername(e.target.value)}
           />
           <Input
             label="Email"
@@ -78,7 +80,7 @@ export const ProfileSection = memo(() => {
         </div>
 
         <div className="flex justify-end">
-          <Button 
+          <Button
             variant="primary"
             onClick={handleUpdateProfile}
             isLoading={isUpdating}
@@ -89,7 +91,7 @@ export const ProfileSection = memo(() => {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-ProfileSection.displayName = 'ProfileSection' 
+ProfileSection.displayName = 'ProfileSection';

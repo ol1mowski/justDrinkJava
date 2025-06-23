@@ -1,13 +1,13 @@
-import { 
+import {
   PostDetailHeader,
   PostDetailHero,
   PostDetailContent,
   RelatedPostsSection,
   CommentsSection,
   PostDetailSkeleton,
-  PostDetailError
-} from '../../components/PostDetail'
-import { usePostDetailLogic } from '../../hooks/usePostDetailLogic.hook'
+  PostDetailError,
+} from '../../components/PostDetail';
+import { usePostDetailLogic } from '../../hooks/usePostDetailLogic.hook';
 
 export const PostDetailPage = () => {
   const {
@@ -24,22 +24,22 @@ export const PostDetailPage = () => {
     handleBack,
     formatDate,
     isAuthenticated,
-    currentUser
-  } = usePostDetailLogic()
+    currentUser,
+  } = usePostDetailLogic();
 
   if (isPostLoading) {
-    return <PostDetailSkeleton onBack={handleBack} />
+    return <PostDetailSkeleton onBack={handleBack} />;
   }
-  
+
   if (isPostError || !post) {
-    return <PostDetailError onBack={handleBack} error={postError} />
+    return <PostDetailError onBack={handleBack} error={postError} />;
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-java-light-blue to-java-white">
       <div className="max-w-4xl mx-auto px-4 py-8">
         <PostDetailHeader onBack={handleBack} />
-        
+
         <PostDetailHero
           imageUrl={post.imageUrl}
           title={post.title}
@@ -67,5 +67,5 @@ export const PostDetailPage = () => {
         />
       </div>
     </div>
-  )
-} 
+  );
+};

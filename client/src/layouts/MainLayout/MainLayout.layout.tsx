@@ -1,13 +1,15 @@
-import { memo } from 'react'
-import { Outlet } from 'react-router-dom'
-import Header from '../../components/Header/Header'
-import Footer from '../../components/Footer/Footer'
-import { ErrorBoundaryWrapper, ScrollToTop } from '../../components/ui'
+import { memo } from 'react';
+import { Outlet } from 'react-router-dom';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import { ErrorBoundaryWrapper, ScrollToTop } from '../../components/ui';
 
 export const MainLayout = memo(() => {
   return (
-    <div className="min-h-screen bg-java-white dark:bg-java-dark-bg 
-                   text-java-gray dark:text-java-dark-text transition-colors duration-300">
+    <div
+      className="min-h-screen bg-java-white dark:bg-java-dark-bg 
+                   text-java-gray dark:text-java-dark-text transition-colors duration-300"
+    >
       <ScrollToTop />
       <ErrorBoundaryWrapper
         title="Błąd aplikacji"
@@ -20,7 +22,7 @@ export const MainLayout = memo(() => {
         <Footer />
       </ErrorBoundaryWrapper>
     </div>
-  )
-})
+  );
+});
 
-MainLayout.displayName = 'MainLayout' 
+MainLayout.displayName = 'MainLayout';

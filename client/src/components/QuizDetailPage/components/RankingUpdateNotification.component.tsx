@@ -23,9 +23,11 @@ export const RankingUpdateNotification = memo<RankingUpdateNotificationProps>(
                 🎉 Ranking zaktualizowany!
               </h3>
               <p className="text-green-700">
-                Twoja pozycja: <span className="font-bold">#{userRanking.ranking}</span>
+                Twoja pozycja:{' '}
+                <span className="font-bold">#{userRanking.ranking}</span>
                 {' • '}
-                Łącznie punktów: <span className="font-bold">{userRanking.totalScore}</span>
+                Łącznie punktów:{' '}
+                <span className="font-bold">{userRanking.totalScore}</span>
               </p>
             </div>
           </div>
@@ -35,4 +37,4 @@ export const RankingUpdateNotification = memo<RankingUpdateNotificationProps>(
   }
 );
 
-RankingUpdateNotification.displayName = 'RankingUpdateNotification'; 
+RankingUpdateNotification.displayName = 'RankingUpdateNotification';

@@ -7,7 +7,10 @@ interface UseQuizRankingProps {
   correctAnswers: number;
 }
 
-export const useQuizRanking = ({ score, correctAnswers }: UseQuizRankingProps) => {
+export const useQuizRanking = ({
+  score,
+  correctAnswers,
+}: UseQuizRankingProps) => {
   const { isAuthenticated } = useAuth();
   const { updateUserScore, userRanking } = useRanking();
   const [rankingUpdated, setRankingUpdated] = useState(false);
@@ -19,11 +22,11 @@ export const useQuizRanking = ({ score, correctAnswers }: UseQuizRankingProps) =
         try {
           const earnedPoints = Math.floor((score / 100) * correctAnswers * 5); // 5 points per correct answer, scaled by score
           const updatedRanking = await updateUserScore(earnedPoints);
-          
+
           if (updatedRanking) {
             setRankingUpdated(true);
             setShowRankingUpdate(true);
-            
+
             setTimeout(() => {
               setShowRankingUpdate(false);
             }, 5000);
@@ -41,4 +44,4 @@ export const useQuizRanking = ({ score, correctAnswers }: UseQuizRankingProps) =
     userRanking,
     showRankingUpdate,
   };
-}; 
+};

@@ -1,7 +1,7 @@
-import { memo } from 'react'
-import { ProfileSection } from './ProfileSection.component'
-import { SecuritySection } from './SecuritySection.component'
-import { DangerZoneSection } from './DangerZoneSection.component'
+import { memo } from 'react';
+import { ProfileSection } from './ProfileSection.component';
+import { SecuritySection } from './SecuritySection.component';
+import { DangerZoneSection } from './DangerZoneSection.component';
 
 export const AccountSettingsContainer = memo(() => {
   return (
@@ -10,7 +10,7 @@ export const AccountSettingsContainer = memo(() => {
       <SecuritySection />
       <DangerZoneSection />
     </div>
-  )
-})
+  );
+});
 
-AccountSettingsContainer.displayName = 'AccountSettingsContainer' 
+AccountSettingsContainer.displayName = 'AccountSettingsContainer';

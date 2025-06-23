@@ -1,8 +1,8 @@
-import { memo } from 'react'
-import { SearchPage as SearchPageComponent } from '../../components/SearchPage/SearchPage.component'
+import { memo } from 'react';
+import { SearchPage as SearchPageComponent } from '../../components/SearchPage/SearchPage.component';
 
 export const SearchPage = memo(() => {
-  return <SearchPageComponent />
-})
+  return <SearchPageComponent />;
+});
 
-SearchPage.displayName = 'SearchPage' 
+SearchPage.displayName = 'SearchPage';

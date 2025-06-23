@@ -1,1 +1,1 @@
-export { RankingSection } from './RankingSection.component' 
+export { RankingSection } from './RankingSection.component';

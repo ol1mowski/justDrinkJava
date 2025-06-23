@@ -1,6 +1,6 @@
 export interface NavigationItem {
-  name: string
-  href: string
+  name: string;
+  href: string;
 }
 
 export const navigationItems: NavigationItem[] = [
@@ -10,4 +10,4 @@ export const navigationItems: NavigationItem[] = [
   { name: 'Ranking', href: '/ranking' },
   { name: 'Jobs', href: '/jobs' },
   { name: 'CV Guide', href: '/cv-guide' },
-] 
+];

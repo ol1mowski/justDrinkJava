@@ -20,7 +20,7 @@ export const ActionButtons = memo<ActionButtonsProps>(({ onRestart }) => {
       </button>
 
       <button
-        onClick={() => (window.location.href = "/quizzes")}
+        onClick={() => (window.location.href = '/quizzes')}
         className="inline-flex items-center justify-center space-x-3 px-10 py-4 bg-white hover:bg-gray-50 
                    text-gray-700 font-semibold rounded-xl transition-all duration-200 cursor-pointer
                    shadow-lg hover:shadow-xl transform hover:scale-105 border-2 border-gray-200 hover:border-gray-300
@@ -32,4 +32,4 @@ export const ActionButtons = memo<ActionButtonsProps>(({ onRestart }) => {
   );
 });
 
-ActionButtons.displayName = 'ActionButtons'; 
+ActionButtons.displayName = 'ActionButtons';

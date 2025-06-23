@@ -1,11 +1,11 @@
-import { memo } from 'react'
-import { NavigationItem } from './NavigationItem.components'
-import { useLanguage } from '../../../hooks/useLanguage.hooks'
-import { useTranslations } from '../../../translations'
+import { memo } from 'react';
+import { NavigationItem } from './NavigationItem.components';
+import { useLanguage } from '../../../hooks/useLanguage.hooks';
+import { useTranslations } from '../../../translations';
 
 export const DesktopNavigation = memo(() => {
-  const { currentLanguage } = useLanguage()
-  const t = useTranslations(currentLanguage)
+  const { currentLanguage } = useLanguage();
+  const t = useTranslations(currentLanguage);
 
   const navigationItems = [
     { name: t.navigation.posts, href: '/posts' },
@@ -13,19 +13,15 @@ export const DesktopNavigation = memo(() => {
     { name: t.navigation.quizzes, href: '/quizzes' },
     { name: t.navigation.jobs, href: '/jobs' },
     { name: t.navigation.cvGuide, href: '/cv-guide' },
-  ]
+  ];
 
   return (
     <nav className="hidden lg:flex items-center space-x-1 flex-1 justify-center max-w-md">
-      {navigationItems.map((item) => (
-        <NavigationItem
-          key={item.name}
-          name={item.name}
-          href={item.href}
-        />
+      {navigationItems.map(item => (
+        <NavigationItem key={item.name} name={item.name} href={item.href} />
       ))}
     </nav>
-  )
-})
+  );
+});
 
-DesktopNavigation.displayName = 'DesktopNavigation' 
+DesktopNavigation.displayName = 'DesktopNavigation';

@@ -147,6 +147,7 @@ mysql -h localhost -P 3306 -u root -p justdrinkjava
 ### Problemy z uruchomieniem
 
 1. **Port już zajęty:**
+
    ```bash
    # Zmień port w docker-compose.yml
    ports:
@@ -154,6 +155,7 @@ mysql -h localhost -P 3306 -u root -p justdrinkjava
    ```
 
 2. **Brak pamięci:**
+
    ```bash
    # Zwiększ pamięć dla Docker Desktop
    # Lub zmniejsz heap size dla JVM
@@ -161,10 +163,11 @@ mysql -h localhost -P 3306 -u root -p justdrinkjava
    ```
 
 3. **Problemy z bazą danych:**
+
    ```bash
    # Sprawdź logi MySQL
    docker-compose logs mysql
-   
+
    # Wyczyść volumes i uruchom ponownie
    docker-compose down -v
    docker-compose up -d
@@ -198,4 +201,4 @@ docker-compose logs --tail=100 app
 - Dane MySQL są persystowane w volume `mysql_data`
 - Aplikacja automatycznie czeka na uruchomienie MySQL
 - Health check jest dostępny pod `/api/actuator/health`
-- Kontener uruchamia się jako non-root user dla bezpieczeństwa 
+- Kontener uruchamia się jako non-root user dla bezpieczeństwa

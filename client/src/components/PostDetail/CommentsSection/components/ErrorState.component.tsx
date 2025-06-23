@@ -1,7 +1,7 @@
-import { memo } from 'react'
-import { motion } from 'framer-motion'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import type { ErrorStateProps } from '../types'
+import { memo } from 'react';
+import { motion } from 'framer-motion';
+import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import type { ErrorStateProps } from '../types';
 
 export const ErrorState = memo<ErrorStateProps>(({ error, onRetry }) => {
   return (
@@ -28,7 +28,7 @@ export const ErrorState = memo<ErrorStateProps>(({ error, onRetry }) => {
         Spróbuj ponownie
       </button>
     </motion.div>
-  )
-})
+  );
+});
 
-ErrorState.displayName = 'ErrorState' 
+ErrorState.displayName = 'ErrorState';

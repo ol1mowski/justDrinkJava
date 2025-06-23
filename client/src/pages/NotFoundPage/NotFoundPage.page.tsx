@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import { Link } from 'react-router-dom'
-import { HomeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
+import { HomeIcon, ArrowLeftIcon } from '@heroicons/react/24/outline';
 
 export const NotFoundPage = memo(() => {
   return (
@@ -12,12 +12,13 @@ export const NotFoundPage = memo(() => {
             Strona nie została znaleziona
           </h1>
           <p className="text-lg text-java-blue/90 dark:text-java-dark-text-secondary max-w-md mx-auto">
-            Ups! Wygląda na to, że strona, której szukasz, nie istnieje lub została przeniesiona.
+            Ups! Wygląda na to, że strona, której szukasz, nie istnieje lub
+            została przeniesiona.
           </p>
         </div>
-        
+
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <Link 
+          <Link
             to="/"
             className="inline-flex items-center gap-2 px-6 py-3 bg-java-orange hover:bg-java-red 
                      text-white font-semibold rounded-lg transition-all duration-300 
@@ -27,8 +28,8 @@ export const NotFoundPage = memo(() => {
             <HomeIcon className="w-5 h-5" />
             Strona główna
           </Link>
-          
-          <button 
+
+          <button
             onClick={() => window.history.back()}
             className="inline-flex items-center gap-2 px-6 py-3 border-2 border-java-orange 
                      text-java-orange hover:bg-java-orange hover:text-white
@@ -39,7 +40,7 @@ export const NotFoundPage = memo(() => {
             Wróć
           </button>
         </div>
-        
+
         <div className="mt-12">
           <div className="text-6xl mb-4">☕</div>
           <p className="text-sm text-java-gray/70 dark:text-java-dark-text-secondary">
@@ -48,7 +49,7 @@ export const NotFoundPage = memo(() => {
         </div>
       </div>
     </div>
-  )
-})
+  );
+});
 
-NotFoundPage.displayName = 'NotFoundPage' 
+NotFoundPage.displayName = 'NotFoundPage';

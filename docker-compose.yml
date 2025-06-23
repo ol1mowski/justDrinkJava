@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   # MySQL Database
@@ -38,7 +38,7 @@ services:
       SPRING_DATASOURCE_USERNAME: root
       SPRING_DATASOURCE_PASSWORD: root
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-      
+
       # JPA Configuration
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: true
@@ -46,15 +46,15 @@ services:
       SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
       SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
       SPRING_SQL_INIT_MODE: always
-      
+
       # Server Configuration
       SERVER_SERVLET_CONTEXT_PATH: /api
       SERVER_PORT: 8080
-      
+
       # Security Configuration
       APP_JWT_SECRET: tajny_klucz_jwt_zmien_na_produkcji_bardzo_dluga_wartosc_dla_bezpieczenstwa_docker
       APP_JWT_EXPIRATION: 86400000
-      
+
       # Active Profile
       SPRING_PROFILES_ACTIVE: prod
     depends_on:
@@ -68,4 +68,4 @@ volumes:
 
 networks:
   justdrinkjava-network:
-    driver: bridge 
+    driver: bridge

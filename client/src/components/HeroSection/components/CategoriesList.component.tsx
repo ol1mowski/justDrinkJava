@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { CategoryItem } from "./CategoryItem.component";
-import type { CategoryTag } from "../hooks/useCategories.hook";
+import { memo } from 'react';
+import { CategoryItem } from './CategoryItem.component';
+import type { CategoryTag } from '../hooks/useCategories.hook';
 
 interface CategoriesListProps {
   tags: CategoryTag[];
@@ -16,4 +16,4 @@ export const CategoriesList = memo<CategoriesListProps>(({ tags }) => {
   );
 });
 
-CategoriesList.displayName = "CategoriesList";
+CategoriesList.displayName = 'CategoriesList';

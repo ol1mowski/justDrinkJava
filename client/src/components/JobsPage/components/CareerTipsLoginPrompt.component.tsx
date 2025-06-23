@@ -1,21 +1,21 @@
-import { memo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { 
-  UserPlusIcon, 
-  BriefcaseIcon, 
+import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  UserPlusIcon,
+  BriefcaseIcon,
   ArrowRightIcon,
   StarIcon,
   ChartBarIcon,
-  UserGroupIcon
-} from '@heroicons/react/24/outline'
-import { Button } from '../../ui'
+  UserGroupIcon,
+} from '@heroicons/react/24/outline';
+import { Button } from '../../ui';
 
 export const CareerTipsLoginPrompt = memo(() => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleNavigateToLogin = () => {
-    navigate('/login')
-  }
+    navigate('/login');
+  };
 
   return (
     <div className="bg-gradient-to-br from-java-orange/5 via-white to-java-orange/10 rounded-3xl shadow-xl border border-java-orange/20 p-8">
@@ -28,39 +28,55 @@ export const CareerTipsLoginPrompt = memo(() => {
             <StarIcon className="w-4 h-4 text-white" />
           </div>
         </div>
-        
+
         <h3 className="text-3xl font-bold bg-gradient-to-r from-java-orange to-java-red bg-clip-text text-transparent mb-4">
           Ekskluzywne Porady Kariery 🚀
         </h3>
-        
+
         <p className="text-lg text-gray-600 leading-relaxed mb-8 max-w-2xl mx-auto">
-          Odkryj szczegółowy przewodnik <span className="font-bold text-java-orange">6 kroków do pierwszej pracy</span> jako Java Developer. 
-          Praktyczne porady od doświadczonych programistów, które pomogą Ci zdobyć wymarzoną pozycję w IT.
+          Odkryj szczegółowy przewodnik{' '}
+          <span className="font-bold text-java-orange">
+            6 kroków do pierwszej pracy
+          </span>{' '}
+          jako Java Developer. Praktyczne porady od doświadczonych programistów,
+          które pomogą Ci zdobyć wymarzoną pozycję w IT.
         </p>
-        
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
           <div className="text-center p-6 bg-white/80 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="w-12 h-12 bg-java-orange/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <BriefcaseIcon className="w-6 h-6 text-java-orange" />
             </div>
-            <div className="text-lg font-bold text-java-gray mb-2">Portfolio & Projekty</div>
-            <div className="text-sm text-gray-600">Jak stworzyć portfolio, które przyciągnie pracodawców</div>
+            <div className="text-lg font-bold text-java-gray mb-2">
+              Portfolio & Projekty
+            </div>
+            <div className="text-sm text-gray-600">
+              Jak stworzyć portfolio, które przyciągnie pracodawców
+            </div>
           </div>
-          
+
           <div className="text-center p-6 bg-white/80 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="w-12 h-12 bg-java-orange/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <ChartBarIcon className="w-6 h-6 text-java-orange" />
             </div>
-            <div className="text-lg font-bold text-java-gray mb-2">Umiejętności Techniczne</div>
-            <div className="text-sm text-gray-600">Jakie technologie opanować i w jakiej kolejności</div>
+            <div className="text-lg font-bold text-java-gray mb-2">
+              Umiejętności Techniczne
+            </div>
+            <div className="text-sm text-gray-600">
+              Jakie technologie opanować i w jakiej kolejności
+            </div>
           </div>
-          
+
           <div className="text-center p-6 bg-white/80 rounded-xl border border-gray-100 hover:shadow-lg transition-shadow">
             <div className="w-12 h-12 bg-java-orange/10 rounded-full flex items-center justify-center mx-auto mb-3">
               <UserGroupIcon className="w-6 h-6 text-java-orange" />
             </div>
-            <div className="text-lg font-bold text-java-gray mb-2">Networking & Społeczność</div>
-            <div className="text-sm text-gray-600">Jak budować kontakty w branży IT</div>
+            <div className="text-lg font-bold text-java-gray mb-2">
+              Networking & Społeczność
+            </div>
+            <div className="text-sm text-gray-600">
+              Jak budować kontakty w branży IT
+            </div>
           </div>
         </div>
 
@@ -98,13 +114,13 @@ export const CareerTipsLoginPrompt = memo(() => {
           <UserPlusIcon className="w-5 h-5 mr-2" />
           Zaloguj się i odkryj porady
         </Button>
-        
+
         <p className="text-xs text-gray-500 mt-4">
           Darmowe konto • Bez opłat • Natychmiastowy dostęp do wszystkich treści
         </p>
       </div>
     </div>
-  )
-})
+  );
+});
 
-CareerTipsLoginPrompt.displayName = 'CareerTipsLoginPrompt' 
+CareerTipsLoginPrompt.displayName = 'CareerTipsLoginPrompt';

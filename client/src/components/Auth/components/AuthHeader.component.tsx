@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import { LockClosedIcon, UserPlusIcon } from '@heroicons/react/24/outline'
-import type { AuthHeaderProps } from '../types'
+import { memo } from 'react';
+import { LockClosedIcon, UserPlusIcon } from '@heroicons/react/24/outline';
+import type { AuthHeaderProps } from '../types';
 
 export const AuthHeader = memo<AuthHeaderProps>(({ isRegisterMode }) => (
   <div className="text-center mb-8">
@@ -15,12 +15,11 @@ export const AuthHeader = memo<AuthHeaderProps>(({ isRegisterMode }) => (
       {isRegisterMode ? 'Dołącz do nas!' : 'Witaj ponownie!'}
     </h2>
     <p className="text-gray-600">
-      {isRegisterMode 
-        ? 'Stwórz swoje konto w Just Drink Java' 
-        : 'Zaloguj się do swojego konta'
-      }
+      {isRegisterMode
+        ? 'Stwórz swoje konto w Just Drink Java'
+        : 'Zaloguj się do swojego konta'}
     </p>
   </div>
-))
+));
 
-AuthHeader.displayName = 'AuthHeader' 
+AuthHeader.displayName = 'AuthHeader';

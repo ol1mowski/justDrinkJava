@@ -1,74 +1,80 @@
-import { useState, useEffect } from 'react'
-import { apiService } from '../../../utils/api'
-import type { PostData } from '../../../utils/api'
+import { useState, useEffect } from 'react';
+import { apiService } from '../../../utils/api';
+import type { PostData } from '../../../utils/api';
 
 interface UseLatestPostState {
-  data: PostData | null
-  loading: boolean
-  error: string | null
+  data: PostData | null;
+  loading: boolean;
+  error: string | null;
 }
 
 export const useLatestPost = () => {
   const [state, setState] = useState<UseLatestPostState>({
     data: null,
     loading: true,
-    error: null
-  })
+    error: null,
+  });
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
 
     const fetchLatestPost = async () => {
       try {
-        setState(prev => ({ ...prev, loading: true, error: null }))
-        
-        const data = await apiService.getLatestPost()
-        
+        setState(prev => ({ ...prev, loading: true, error: null }));
+
+        const data = await apiService.getLatestPost();
+
         if (isMounted) {
           setState({
             data,
             loading: false,
-            error: null
-          })
+            error: null,
+          });
         }
       } catch (error) {
         if (isMounted) {
           setState({
             data: null,
             loading: false,
-            error: error instanceof Error ? error.message : 'Wystąpił nieoczekiwany błąd'
-          })
+            error:
+              error instanceof Error
+                ? error.message
+                : 'Wystąpił nieoczekiwany błąd',
+          });
         }
       }
-    }
+    };
 
-    fetchLatestPost()
+    fetchLatestPost();
 
     return () => {
-      isMounted = false
-    }
-  }, [])
+      isMounted = false;
+    };
+  }, []);
 
   const refetch = async () => {
     try {
-      setState(prev => ({ ...prev, loading: true, error: null }))
-      const data = await apiService.getLatestPost()
+      setState(prev => ({ ...prev, loading: true, error: null }));
+      const data = await apiService.getLatestPost();
       setState({
         data,
         loading: false,
-        error: null
-      })
+        error: null,
+      });
     } catch (error) {
       setState({
         data: null,
         loading: false,
-        error: error instanceof Error ? error.message : 'Wystąpił nieoczekiwany błąd'
-      })
+        error:
+          error instanceof Error
+            ? error.message
+            : 'Wystąpił nieoczekiwany błąd',
+      });
     }
-  }
+  };
 
   return {
     ...state,
-    refetch
-  }
-} 
+    refetch,
+  };
+};

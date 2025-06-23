@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
 export const SearchHeader = memo(() => {
   return (
@@ -10,7 +10,7 @@ export const SearchHeader = memo(() => {
         Znajdź interesujące Cię artykuły i porady
       </p>
     </div>
-  )
-})
+  );
+});
 
-SearchHeader.displayName = 'SearchHeader' 
+SearchHeader.displayName = 'SearchHeader';

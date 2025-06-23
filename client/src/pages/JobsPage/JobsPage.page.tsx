@@ -1,8 +1,8 @@
-import { memo } from 'react'
-import { JobsPage as JobsPageComponent } from '../../components/JobsPage/JobsPage.component'
+import { memo } from 'react';
+import { JobsPage as JobsPageComponent } from '../../components/JobsPage/JobsPage.component';
 
 export const JobsPage = memo(() => {
-  return <JobsPageComponent />
-})
+  return <JobsPageComponent />;
+});
 
-JobsPage.displayName = 'JobsPage' 
+JobsPage.displayName = 'JobsPage';

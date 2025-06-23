@@ -1,15 +1,17 @@
-import { memo } from 'react'
+import { memo } from 'react';
 
 interface PostContentProps {
-  title: string
-  description: string
+  title: string;
+  description: string;
 }
 
 export const PostContent = memo<PostContentProps>(({ title, description }) => {
   return (
     <>
-      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-java-gray dark:text-java-dark-text 
-                    mb-4 group-hover:text-java-orange transition-colors duration-300 line-clamp-2">
+      <h2
+        className="text-xl sm:text-2xl lg:text-3xl font-bold text-java-gray dark:text-java-dark-text 
+                    mb-4 group-hover:text-java-orange transition-colors duration-300 line-clamp-2"
+      >
         {title}
       </h2>
 
@@ -17,7 +19,7 @@ export const PostContent = memo<PostContentProps>(({ title, description }) => {
         {description}
       </p>
     </>
-  )
-})
+  );
+});
 
-PostContent.displayName = 'PostContent' 
+PostContent.displayName = 'PostContent';

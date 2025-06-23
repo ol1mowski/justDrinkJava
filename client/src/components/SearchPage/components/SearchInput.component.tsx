@@ -1,9 +1,9 @@
-import { memo } from 'react'
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
+import { memo } from 'react';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 
 interface SearchInputProps {
-  value: string
-  onChange: (value: string) => void
+  value: string;
+  onChange: (value: string) => void;
 }
 
 export const SearchInput = memo<SearchInputProps>(({ value, onChange }) => {
@@ -13,7 +13,7 @@ export const SearchInput = memo<SearchInputProps>(({ value, onChange }) => {
         <input
           type="text"
           value={value}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={e => onChange(e.target.value)}
           placeholder="Wpisz frazę do wyszukania..."
           className="w-full pl-12 pr-4 py-4 text-lg border-2 rounded-xl border-java-gray/20
                      bg-white dark:bg-java-dark-surface backdrop-blur-sm 
@@ -25,11 +25,13 @@ export const SearchInput = memo<SearchInputProps>(({ value, onChange }) => {
                      text-gray-800 dark:text-java-dark-text
                      placeholder:text-gray-500 dark:placeholder:text-java-dark-text-secondary"
         />
-        <MagnifyingGlassIcon className="absolute left-4 top-1/2 transform -translate-y-1/2 
-                                       w-6 h-6 text-gray-500 dark:text-java-dark-text-secondary" />
+        <MagnifyingGlassIcon
+          className="absolute left-4 top-1/2 transform -translate-y-1/2 
+                                       w-6 h-6 text-gray-500 dark:text-java-dark-text-secondary"
+        />
       </div>
     </div>
-  )
-})
+  );
+});
 
-SearchInput.displayName = 'SearchInput' 
+SearchInput.displayName = 'SearchInput';

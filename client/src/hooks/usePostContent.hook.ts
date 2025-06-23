@@ -1,20 +1,20 @@
-import { useQuery } from '@tanstack/react-query'
-import { postContentApi, PostContentApiError } from '../api/postContent.api'
-import type { PostContentResponse } from '../api/postContent.api'
+import { useQuery } from '@tanstack/react-query';
+import { postContentApi, PostContentApiError } from '../api/postContent.api';
+import type { PostContentResponse } from '../api/postContent.api';
 
 export interface UsePostContentOptions {
-  enabled?: boolean
-  staleTime?: number
-  refetchOnMount?: boolean
+  enabled?: boolean;
+  staleTime?: number;
+  refetchOnMount?: boolean;
 }
 
 export interface UsePostContentResult {
-  content: PostContentResponse | undefined
-  isLoading: boolean
-  isError: boolean
-  error: PostContentApiError | Error | null
-  isSuccess: boolean
-  refetch: () => void
+  content: PostContentResponse | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  error: PostContentApiError | Error | null;
+  isSuccess: boolean;
+  refetch: () => void;
 }
 
 export const usePostContent = (
@@ -29,11 +29,11 @@ export const usePostContent = (
     refetchOnMount: options.refetchOnMount ?? true,
     retry: (failureCount, error) => {
       if (error instanceof PostContentApiError && error.status === 404) {
-        return false
+        return false;
       }
-      return failureCount < 3
-    }
-  })
+      return failureCount < 3;
+    },
+  });
 
   return {
     content: query.data,
@@ -41,9 +41,9 @@ export const usePostContent = (
     isError: query.isError,
     error: query.error || null,
     isSuccess: query.isSuccess,
-    refetch: query.refetch
-  }
-}
+    refetch: query.refetch,
+  };
+};
 
 export const usePostContentByPostId = (
   postId: number,
@@ -57,11 +57,11 @@ export const usePostContentByPostId = (
     refetchOnMount: options.refetchOnMount ?? true,
     retry: (failureCount, error) => {
       if (error instanceof PostContentApiError && error.status === 404) {
-        return false
+        return false;
       }
-      return failureCount < 3
-    }
-  })
+      return failureCount < 3;
+    },
+  });
 
   return {
     content: query.data,
@@ -69,9 +69,9 @@ export const usePostContentByPostId = (
     isError: query.isError,
     error: query.error || null,
     isSuccess: query.isSuccess,
-    refetch: query.refetch
-  }
-}
+    refetch: query.refetch,
+  };
+};
 
 export const useAllPostContent = (
   categoryId?: number,
@@ -82,8 +82,8 @@ export const useAllPostContent = (
     queryFn: () => postContentApi.getAll(categoryId),
     enabled: options.enabled !== false,
     staleTime: options.staleTime ?? 2 * 60 * 1000,
-    refetchOnMount: options.refetchOnMount ?? true
-  })
+    refetchOnMount: options.refetchOnMount ?? true,
+  });
 
   return {
     contents: query.data || [],
@@ -91,6 +91,6 @@ export const useAllPostContent = (
     isError: query.isError,
     error: query.error || null,
     isSuccess: query.isSuccess,
-    refetch: query.refetch
-  }
-} 
+    refetch: query.refetch,
+  };
+};

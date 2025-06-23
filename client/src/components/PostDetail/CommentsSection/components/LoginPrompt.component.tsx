@@ -1,24 +1,24 @@
-import { memo, useCallback } from 'react'
-import { motion } from 'framer-motion'
-import { UserCircleIcon } from '@heroicons/react/24/outline'
-import type { LoginPromptProps } from '../types'
+import { memo, useCallback } from 'react';
+import { motion } from 'framer-motion';
+import { UserCircleIcon } from '@heroicons/react/24/outline';
+import type { LoginPromptProps } from '../types';
 
 export const LoginPrompt = memo<LoginPromptProps>(({ onAuthRedirect }) => {
   const handleLogin = useCallback(() => {
     if (onAuthRedirect) {
-      onAuthRedirect()
+      onAuthRedirect();
     } else {
-      window.location.href = '/auth'
+      window.location.href = '/auth';
     }
-  }, [onAuthRedirect])
+  }, [onAuthRedirect]);
 
   const handleRegister = useCallback(() => {
     if (onAuthRedirect) {
-      onAuthRedirect()
+      onAuthRedirect();
     } else {
-      window.location.href = '/auth'
+      window.location.href = '/auth';
     }
-  }, [onAuthRedirect])
+  }, [onAuthRedirect]);
 
   return (
     <motion.div
@@ -55,7 +55,7 @@ export const LoginPrompt = memo<LoginPromptProps>(({ onAuthRedirect }) => {
         </button>
       </div>
     </motion.div>
-  )
-})
+  );
+});
 
-LoginPrompt.displayName = 'LoginPrompt' 
+LoginPrompt.displayName = 'LoginPrompt';

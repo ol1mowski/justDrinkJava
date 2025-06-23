@@ -7,11 +7,13 @@ export const queryKeys = {
   posts: {
     all: ['posts'] as const,
     lists: () => [...queryKeys.posts.all, 'list'] as const,
-    list: (filters: Record<string, any>) => [...queryKeys.posts.lists(), filters] as const,
+    list: (filters: Record<string, any>) =>
+      [...queryKeys.posts.lists(), filters] as const,
     details: () => [...queryKeys.posts.all, 'detail'] as const,
     detail: (id: number) => [...queryKeys.posts.details(), id] as const,
     latest: () => [...queryKeys.posts.all, 'latest'] as const,
-    search: (query: string) => [...queryKeys.posts.all, 'search', query] as const,
+    search: (query: string) =>
+      [...queryKeys.posts.all, 'search', query] as const,
   },
 
   comments: {
@@ -33,21 +35,25 @@ export const queryKeys = {
 
   categories: {
     all: ['categories'] as const,
-    list: (limit?: number) => [...queryKeys.categories.all, 'list', { limit }] as const,
+    list: (limit?: number) =>
+      [...queryKeys.categories.all, 'list', { limit }] as const,
   },
 
   quizzes: {
     all: ['quizzes'] as const,
     lists: () => [...queryKeys.quizzes.all, 'list'] as const,
-    list: (page: number, size: number) => [...queryKeys.quizzes.lists(), { page, size }] as const,
+    list: (page: number, size: number) =>
+      [...queryKeys.quizzes.lists(), { page, size }] as const,
     details: () => [...queryKeys.quizzes.all, 'detail'] as const,
     detail: (id: number) => [...queryKeys.quizzes.details(), id] as const,
-    questions: (id: number) => [...queryKeys.quizzes.all, 'questions', id] as const,
-    category: (category: string) => [...queryKeys.quizzes.all, 'category', category] as const,
+    questions: (id: number) =>
+      [...queryKeys.quizzes.all, 'questions', id] as const,
+    category: (category: string) =>
+      [...queryKeys.quizzes.all, 'category', category] as const,
   },
 
   rankings: {
     all: ['rankings'] as const,
     users: () => [...queryKeys.rankings.all, 'users'] as const,
-  }
-} as const 
+  },
+} as const;

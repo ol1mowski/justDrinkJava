@@ -1,2 +1,2 @@
-export { usePosts } from './usePostsMain.hook'
-export type { PostDTO, UsePostsReturn } from '../types' 
+export { usePosts } from './usePostsMain.hook';
+export type { PostDTO, UsePostsReturn } from '../types';

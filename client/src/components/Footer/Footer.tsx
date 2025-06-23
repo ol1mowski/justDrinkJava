@@ -1,8 +1,8 @@
-import { memo } from 'react'
-import { FooterLink, FooterSection, SocialLinks } from './components'
+import { memo } from 'react';
+import { FooterLink, FooterSection, SocialLinks } from './components';
 
 export const Footer = memo(() => {
-  const currentYear = new Date().getFullYear()
+  const currentYear = new Date().getFullYear();
 
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
@@ -10,8 +10,8 @@ export const Footer = memo(() => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <FooterSection title="O nas">
             <p className="text-gray-600 text-sm leading-relaxed">
-              JustDrinkJava to platforma dla programistów Java. 
-              Dzielimy się wiedzą, poradami i najlepszymi praktykami.
+              JustDrinkJava to platforma dla programistów Java. Dzielimy się
+              wiedzą, poradami i najlepszymi praktykami.
             </p>
             <div className="mt-4">
               <SocialLinks />
@@ -38,7 +38,9 @@ export const Footer = memo(() => {
 
           <FooterSection title="Prawne">
             <div className="flex flex-col space-y-2">
-              <FooterLink href="/polityka-prywatnosci">Polityka prywatności</FooterLink>
+              <FooterLink href="/polityka-prywatnosci">
+                Polityka prywatności
+              </FooterLink>
               <FooterLink href="/regulamin">Regulamin</FooterLink>
               <FooterLink href="/cookies">Pliki cookies</FooterLink>
               <FooterLink href="/rodo">RODO</FooterLink>
@@ -61,9 +63,9 @@ export const Footer = memo(() => {
         </div>
       </div>
     </footer>
-  )
-})
+  );
+});
 
-Footer.displayName = 'Footer'
+Footer.displayName = 'Footer';
 
-export default Footer 
+export default Footer;

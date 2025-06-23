@@ -1,10 +1,10 @@
 import {
   useInfiniteQuery,
   useSuspenseInfiniteQuery,
-} from "@tanstack/react-query";
-import { queryKeys } from "../../../lib/queryKeys";
-import type { PostDTO } from "../../PostCard/types";
-import { API_BASE_URL } from "../../../utils/api";
+} from '@tanstack/react-query';
+import { queryKeys } from '../../../lib/queryKeys';
+import type { PostDTO } from '../../PostCard/types';
+import { API_BASE_URL } from '../../../utils/api';
 
 export interface SearchPostsParams {
   query?: string;
@@ -49,7 +49,7 @@ export const useSearchPosts = (params: SearchPostsParams) => {
       };
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    getNextPageParam: lastPage => lastPage.nextPage,
     enabled: !!(params.query || params.category || params.hashtag),
     staleTime: 30 * 1000,
   });
@@ -84,6 +84,6 @@ export const useSearchPostsSuspense = (params: SearchPostsParams) => {
       };
     },
     initialPageParam: 1,
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    getNextPageParam: lastPage => lastPage.nextPage,
   });
 };

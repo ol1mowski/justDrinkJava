@@ -1,17 +1,17 @@
-import { useEffect } from 'react'
-import { useParams, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../../hooks/auth/useAuth.hook'
-import { useQuizData } from '../../../hooks/useQuizData.hook'
-import { useQuizState } from '../../../hooks/useQuizState.hook'
+import { useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../hooks/auth/useAuth.hook';
+import { useQuizData } from '../../../hooks/useQuizData.hook';
+import { useQuizState } from '../../../hooks/useQuizState.hook';
 
 export const useQuizDetailLogic = () => {
-  const { id } = useParams<{ id: string }>()
-  const navigate = useNavigate()
-  const { isAuthenticated } = useAuth()
-  const quizId = id ? parseInt(id, 10) : null
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
+  const quizId = id ? parseInt(id, 10) : null;
 
-  const isPremiumQuiz = quizId !== null && quizId > 1
-  const hasAccess = isAuthenticated || !isPremiumQuiz
+  const isPremiumQuiz = quizId !== null && quizId > 1;
+  const hasAccess = isAuthenticated || !isPremiumQuiz;
 
   const {
     quiz,
@@ -22,8 +22,8 @@ export const useQuizDetailLogic = () => {
     questionsError,
     loadQuiz,
     loadQuestions,
-    submitAnswers
-  } = useQuizData()
+    submitAnswers,
+  } = useQuizData();
 
   const {
     currentQuestionIndex,
@@ -38,57 +38,61 @@ export const useQuizDetailLogic = () => {
     resetQuiz,
     progress,
     hasAnswered,
-    getTimeSpent
+    getTimeSpent,
   } = useQuizState({
     questions,
-    timeLimit: quiz?.timeLimit || 15
-  })
+    timeLimit: quiz?.timeLimit || 15,
+  });
 
   useEffect(() => {
     if (quizId && hasAccess) {
-      loadQuiz(quizId)
-      loadQuestions(quizId)
+      loadQuiz(quizId);
+      loadQuestions(quizId);
     }
-  }, [quizId, hasAccess, loadQuiz, loadQuestions])
+  }, [quizId, hasAccess, loadQuiz, loadQuestions]);
 
-  const handleAnswerSelect = (questionId: number, optionId: string, isMultiple: boolean) => {
-    selectAnswer(questionId, optionId, isMultiple)
-  }
+  const handleAnswerSelect = (
+    questionId: number,
+    optionId: string,
+    isMultiple: boolean
+  ) => {
+    selectAnswer(questionId, optionId, isMultiple);
+  };
 
   const handleNextQuestion = () => {
-    nextQuestion()
-  }
+    nextQuestion();
+  };
 
   const handlePreviousQuestion = () => {
-    previousQuestion()
-  }
+    previousQuestion();
+  };
 
   const handleSubmitQuiz = async () => {
-    if (!quiz) return
+    if (!quiz) return;
 
     const request = {
       quizId: quiz.id,
       answers: selectedAnswers,
-      timeSpent: getTimeSpent()
-    }
+      timeSpent: getTimeSpent(),
+    };
 
-    const result = await submitAnswers(request)
+    const result = await submitAnswers(request);
     if (result) {
-      completeQuiz(result)
+      completeQuiz(result);
     }
-  }
+  };
 
   const handleRestartQuiz = () => {
-    resetQuiz()
-  }
+    resetQuiz();
+  };
 
   const navigateToQuizzes = () => {
-    navigate('/quizzes')
-  }
+    navigate('/quizzes');
+  };
 
   const navigateToLogin = () => {
-    navigate('/login')
-  }
+    navigate('/login');
+  };
 
   return {
     quiz,
@@ -104,7 +108,7 @@ export const useQuizDetailLogic = () => {
     selectedAnswers,
     timeRemaining,
     progress,
-    
+
     handleAnswerSelect,
     handleNextQuestion,
     handlePreviousQuestion,
@@ -112,6 +116,6 @@ export const useQuizDetailLogic = () => {
     handleRestartQuiz,
     navigateToQuizzes,
     navigateToLogin,
-    hasAnswered: (index: number) => hasAnswered(index)
-  }
-} 
+    hasAnswered: (index: number) => hasAnswered(index),
+  };
+};

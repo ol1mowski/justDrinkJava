@@ -5,6 +5,7 @@ Aplikacja webowa stworzona z myślą o społeczności Java Developer. Projekt ł
 ## 🚀 Technologie
 
 ### Frontend
+
 - **React 19.1.0** - Nowoczesna biblioteka do tworzenia interfejsów użytkownika
 - **TypeScript** - Typowane rozszerzenie JavaScript
 - **Vite** - Szybki bundler i narzędzie deweloperskie
@@ -12,6 +13,7 @@ Aplikacja webowa stworzona z myślą o społeczności Java Developer. Projekt ł
 - **Heroicons** - Zestaw ikon
 
 ### Backend
+
 - **Spring Boot 3.5.0** - Framework do tworzenia aplikacji Java
 - **Java 24** - Najnowsza wersja języka Java
 - **Spring Security** - Zabezpieczenia aplikacji
@@ -131,16 +133,38 @@ Frontend będzie dostępny pod adresem: `http://localhost:5173`
 ## 📜 Dostępne skrypty
 
 ### Frontend (client/)
+
 - `npm run dev` - Uruchomienie serwera deweloperskiego
 - `npm run build` - Budowanie aplikacji produkcyjnej
 - `npm run preview` - Podgląd zbudowanej aplikacji
 - `npm run lint` - Sprawdzanie jakości kodu
 
 ### Backend (server/)
+
 - `./mvnw spring-boot:run` - Uruchomienie aplikacji
 - `./mvnw test` - Uruchomienie testów
+- `./mvnw clean test jacoco:report` - 📊 Testy z raportem pokrycia
 - `./mvnw clean package` - Budowanie JAR
 - `./mvnw spring-boot:build-image` - Tworzenie obrazu Docker
+
+#### 📊 Pokrycie Testami
+
+- **Aktualne pokrycie:** 85% instrukcji (3,892/4,594)
+- **Status testów:** ✅ 740/740 testów przechodzi (100% sukces)
+- **Raport HTML:** `server/target/site/jacoco/index.html`
+- **Klasy przeanalizowane:** 46 klas
+
+**Szybkie uruchomienie raportu pokrycia:**
+
+```bash
+# Windows
+cd server && coverage.bat
+
+# Linux/Mac
+cd server && ./coverage.sh
+```
+
+📋 **Szczegółowe informacje:** Zobacz [TEST_COVERAGE.md](TEST_COVERAGE.md)
 
 ## 🔧 Rozwój aplikacji
 
@@ -177,6 +201,7 @@ npm run test # (jeśli zostanie dodane)
 API będzie dostępne pod adresem `http://localhost:8080/api/`
 
 ### Główne endpointy:
+
 - `GET /api/health` - Status aplikacji
 - `POST /api/auth/login` - Logowanie
 - `POST /api/auth/register` - Rejestracja

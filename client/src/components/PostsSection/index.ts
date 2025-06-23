@@ -1,2 +1,2 @@
-export { PostsSection } from './PostsSection.component'
-export * from './components' 
+export { PostsSection } from './PostsSection.component';
+export * from './components';

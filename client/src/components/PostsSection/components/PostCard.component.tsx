@@ -1,46 +1,47 @@
-import { memo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { CalendarIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline'
-import type { PostData } from '../../../utils/api'
+import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CalendarIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
+import type { PostData } from '../../../utils/api';
 
 interface PostCardProps {
-  post: PostData
-  onReadMore?: () => void
+  post: PostData;
+  onReadMore?: () => void;
 }
 
 export const PostCard = memo<PostCardProps>(({ post, onReadMore }) => {
-  const navigate = useNavigate()
-  const hasImage = post.imageUrl && post.imageUrl.trim() !== ''
-  const imageUrl = hasImage ? post.imageUrl : null
+  const navigate = useNavigate();
+  const hasImage = post.imageUrl && post.imageUrl.trim() !== '';
+  const imageUrl = hasImage ? post.imageUrl : null;
 
   const handleClick = () => {
     if (onReadMore) {
-      onReadMore()
+      onReadMore();
     } else {
-      navigate(`/posts/${post.id}`)
+      navigate(`/posts/${post.id}`);
     }
-  }
+  };
 
   return (
-    <article className="group relative bg-java-white rounded-xl overflow-hidden 
+    <article
+      className="group relative bg-java-white rounded-xl overflow-hidden 
                        border border-java-gray/10 
                        hover:border-java-orange/30 
                        transition-all duration-300 hover:shadow-lg hover:shadow-java-orange/10
                        hover:-translate-y-1 cursor-pointer"
-             onClick={handleClick}>
-              
+      onClick={handleClick}
+    >
       <div className="relative h-48 overflow-hidden">
         {imageUrl ? (
           <>
-            <img 
-              src={imageUrl} 
+            <img
+              src={imageUrl}
               alt={post.title}
               className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-              onError={(e) => {
-                const target = e.target as HTMLImageElement
-                target.style.display = 'none'
-                const fallback = target.nextElementSibling as HTMLDivElement
-                if (fallback) fallback.style.display = 'flex'
+              onError={e => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                const fallback = target.nextElementSibling as HTMLDivElement;
+                if (fallback) fallback.style.display = 'flex';
               }}
             />
             <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-java-orange via-java-red to-java-blue opacity-90">
@@ -66,7 +67,7 @@ export const PostCard = memo<PostCardProps>(({ post, onReadMore }) => {
               {new Date(post.createdAt).toLocaleDateString('pl-PL', {
                 year: 'numeric',
                 month: 'short',
-                day: 'numeric'
+                day: 'numeric',
               })}
             </time>
           </div>
@@ -76,8 +77,10 @@ export const PostCard = memo<PostCardProps>(({ post, onReadMore }) => {
           </div>
         </div>
 
-        <h3 className="text-lg font-bold text-java-gray 
-                      mb-3 group-hover:text-java-orange transition-colors duration-300 line-clamp-2">
+        <h3
+          className="text-lg font-bold text-java-gray 
+                      mb-3 group-hover:text-java-orange transition-colors duration-300 line-clamp-2"
+        >
           {post.title}
         </h3>
 
@@ -86,8 +89,10 @@ export const PostCard = memo<PostCardProps>(({ post, onReadMore }) => {
         </p>
 
         <div className="flex items-center gap-2">
-          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-java-orange to-java-red 
-                         flex items-center justify-center text-white font-medium text-xs">
+          <div
+            className="w-6 h-6 rounded-full bg-gradient-to-r from-java-orange to-java-red 
+                         flex items-center justify-center text-white font-medium text-xs"
+          >
             {post.user.username.charAt(0).toUpperCase()}
           </div>
           <div className="flex items-center gap-1 text-xs text-java-gray">
@@ -97,7 +102,7 @@ export const PostCard = memo<PostCardProps>(({ post, onReadMore }) => {
         </div>
       </div>
     </article>
-  )
-})
+  );
+});
 
-PostCard.displayName = 'PostCard' 
+PostCard.displayName = 'PostCard';

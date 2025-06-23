@@ -1,12 +1,12 @@
-import { memo } from 'react'
-import { careerTips } from '../types/careerTipsData'
+import { memo } from 'react';
+import { careerTips } from '../types/careerTipsData';
 
 export const CVCareerTipsUnauthenticated = memo(() => (
   <div className="relative">
     <div className="blur-sm pointer-events-none">
       <div className="space-y-8">
         {careerTips.slice(0, 3).map((tip, index) => (
-          <div 
+          <div
             key={tip.id}
             className="bg-white rounded-xl shadow-lg p-8 border-l-4 border-java-orange"
           >
@@ -41,16 +41,16 @@ export const CVCareerTipsUnauthenticated = memo(() => (
         <p className="text-lg text-gray-600 mb-8">
           Aby zobaczyć więcej porad musisz się zalogować
         </p>
-        
+
         <div className="flex justify-center space-x-4">
-          <button 
-            onClick={() => window.location.href = '/login'}
+          <button
+            onClick={() => (window.location.href = '/login')}
             className="bg-java-orange text-white font-bold py-3 px-8 rounded-lg hover:bg-java-orange/90 transition-colors"
           >
             Zaloguj się ☕
           </button>
-          <button 
-            onClick={() => window.location.href = '/register'}
+          <button
+            onClick={() => (window.location.href = '/register')}
             className="bg-java-blue text-white font-bold py-3 px-8 rounded-lg hover:bg-java-blue/90 transition-colors"
           >
             Zarejestruj się 🚀
@@ -58,7 +58,9 @@ export const CVCareerTipsUnauthenticated = memo(() => (
         </div>
 
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-          <h4 className="font-bold text-gray-800 mb-2">Co zyskasz po zalogowaniu?</h4>
+          <h4 className="font-bold text-gray-800 mb-2">
+            Co zyskasz po zalogowaniu?
+          </h4>
           <ul className="text-gray-600 text-sm space-y-1">
             <li>✅ 10 sprawdzonych porad karrierowych</li>
             <li>✅ Dostęp do wszystkich quizów</li>
@@ -68,6 +70,6 @@ export const CVCareerTipsUnauthenticated = memo(() => (
       </div>
     </div>
   </div>
-))
+));
 
-CVCareerTipsUnauthenticated.displayName = 'CVCareerTipsUnauthenticated' 
+CVCareerTipsUnauthenticated.displayName = 'CVCareerTipsUnauthenticated';

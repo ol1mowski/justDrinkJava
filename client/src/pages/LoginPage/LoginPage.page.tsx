@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import { AuthPage } from '../../components/Auth'
+import { memo } from 'react';
+import { AuthPage } from '../../components/Auth';
 
-export const LoginPage = memo(() => <AuthPage />)
+export const LoginPage = memo(() => <AuthPage />);
 
-LoginPage.displayName = 'LoginPage' 
+LoginPage.displayName = 'LoginPage';

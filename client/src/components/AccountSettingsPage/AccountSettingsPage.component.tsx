@@ -1,6 +1,6 @@
-import { memo } from 'react'
-import { AccountSettingsContainer } from './components/AccountSettingsContainer.component'
-import { ErrorBoundaryWrapper } from '../ui'
+import { memo } from 'react';
+import { AccountSettingsContainer } from './components/AccountSettingsContainer.component';
+import { ErrorBoundaryWrapper } from '../ui';
 
 export const AccountSettingsPage = memo(() => {
   return (
@@ -19,13 +19,13 @@ export const AccountSettingsPage = memo(() => {
                 Zarządzaj swoim kontem
               </p>
             </div>
-            
+
             <AccountSettingsContainer />
           </div>
         </div>
       </div>
     </ErrorBoundaryWrapper>
-  )
-})
+  );
+});
 
-AccountSettingsPage.displayName = 'AccountSettingsPage' 
+AccountSettingsPage.displayName = 'AccountSettingsPage';

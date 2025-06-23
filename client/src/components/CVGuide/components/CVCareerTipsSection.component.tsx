@@ -1,10 +1,10 @@
-import { memo } from 'react'
-import { useAuthStatus } from '../../../hooks/useAuthStatus.hook'
-import { CVCareerTipsAuthenticated } from './CVCareerTipsAuthenticated.component'
-import { CVCareerTipsUnauthenticated } from './CVCareerTipsUnauthenticated.component'
+import { memo } from 'react';
+import { useAuthStatus } from '../../../hooks/useAuthStatus.hook';
+import { CVCareerTipsAuthenticated } from './CVCareerTipsAuthenticated.component';
+import { CVCareerTipsUnauthenticated } from './CVCareerTipsUnauthenticated.component';
 
 export const CVCareerTipsSection = memo(() => {
-  const { isAuthenticated, user, isLoading } = useAuthStatus()
+  const { isAuthenticated, user, isLoading } = useAuthStatus();
 
   if (isLoading) {
     return (
@@ -12,7 +12,7 @@ export const CVCareerTipsSection = memo(() => {
         <div className="text-4xl mb-4">⏳</div>
         <p className="text-gray-600">Sprawdzanie statusu logowania...</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -32,7 +32,7 @@ export const CVCareerTipsSection = memo(() => {
         <CVCareerTipsUnauthenticated />
       )}
     </div>
-  )
-})
+  );
+});
 
-CVCareerTipsSection.displayName = 'CVCareerTipsSection' 
+CVCareerTipsSection.displayName = 'CVCareerTipsSection';

@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { apiService } from "../../../utils/api";
+import { useState, useCallback } from 'react';
+import { apiService } from '../../../utils/api';
 
 interface UseDeleteAccountState {
   isLoading: boolean;
@@ -26,16 +26,16 @@ export const useDeleteAccount = (): UseDeleteAccountReturn => {
       await apiService.deleteAccount();
       setState({ isLoading: false, error: null, success: true });
 
-      localStorage.removeItem("accessToken");
+      localStorage.removeItem('accessToken');
 
-      window.location.href = "/";
+      window.location.href = '/';
     } catch (error) {
       setState({
         isLoading: false,
         error:
           error instanceof Error
             ? error.message
-            : "Błąd podczas usuwania konta",
+            : 'Błąd podczas usuwania konta',
         success: false,
       });
       throw error;

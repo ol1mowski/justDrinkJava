@@ -1,13 +1,13 @@
-import { memo, useState, useRef, useEffect } from "react";
+import { memo, useState, useRef, useEffect } from 'react';
 import {
   UserIcon,
   Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
-} from "@heroicons/react/24/outline";
-import { useCurrentUser } from "../../../hooks/useCurrentUser.hook";
-import { useAuth } from "../../../hooks/auth/useAuth.hook";
-import { Link } from "react-router-dom";
+} from '@heroicons/react/24/outline';
+import { useCurrentUser } from '../../../hooks/useCurrentUser.hook';
+import { useAuth } from '../../../hooks/auth/useAuth.hook';
+import { Link } from 'react-router-dom';
 
 export const UserMenu = memo(() => {
   const { data: user, isLoading } = useCurrentUser();
@@ -22,14 +22,14 @@ export const UserMenu = memo(() => {
       }
     };
 
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const handleLogout = () => {
     logout();
     setIsOpen(false);
-    window.location.href = "/login";
+    window.location.href = '/login';
   };
 
   const handleSettings = () => {
@@ -63,9 +63,9 @@ export const UserMenu = memo(() => {
         </span>
         <ChevronDownIcon
           className={[
-            "w-4 h-4 text-gray-500 transition-transform duration-200",
-            isOpen ? "rotate-180" : "",
-          ].join(" ")}
+            'w-4 h-4 text-gray-500 transition-transform duration-200',
+            isOpen ? 'rotate-180' : '',
+          ].join(' ')}
         />
       </button>
 
@@ -101,4 +101,4 @@ export const UserMenu = memo(() => {
   );
 });
 
-UserMenu.displayName = "UserMenu";
+UserMenu.displayName = 'UserMenu';

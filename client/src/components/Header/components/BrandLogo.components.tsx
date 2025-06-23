@@ -1,5 +1,5 @@
-import { memo } from 'react'
-import { Link } from 'react-router-dom'
+import { memo } from 'react';
+import { Link } from 'react-router-dom';
 
 export const BrandLogo = memo(() => {
   return (
@@ -13,7 +13,7 @@ export const BrandLogo = memo(() => {
         />
       </Link>
     </div>
-  )
-})
+  );
+});
 
-BrandLogo.displayName = 'BrandLogo' 
+BrandLogo.displayName = 'BrandLogo';

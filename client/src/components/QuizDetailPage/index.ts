@@ -1,3 +1,3 @@
-export { QuizDetailPage } from './QuizDetailPage.component'
-export * from './components'
-export * from './types' 
+export { QuizDetailPage } from './QuizDetailPage.component';
+export * from './components';
+export * from './types';

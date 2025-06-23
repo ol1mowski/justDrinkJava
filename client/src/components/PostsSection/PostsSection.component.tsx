@@ -1,14 +1,14 @@
-import { memo } from 'react'
-import { useLatestPosts } from './hooks/useLatestPosts.hook'
-import { ErrorBoundaryWrapper } from '../ui'
-import { PostsSectionHeader } from './components/PostsSectionHeader.component'
-import { PostsGrid } from './components/PostsGrid.component'
-import { PostsLoadingState } from './components/PostsLoadingState.component'
-import { PostsErrorState } from './components/PostsErrorState.component'
-import { PostsSectionFooter } from './components/PostsSectionFooter.component'
+import { memo } from 'react';
+import { useLatestPosts } from './hooks/useLatestPosts.hook';
+import { ErrorBoundaryWrapper } from '../ui';
+import { PostsSectionHeader } from './components/PostsSectionHeader.component';
+import { PostsGrid } from './components/PostsGrid.component';
+import { PostsLoadingState } from './components/PostsLoadingState.component';
+import { PostsErrorState } from './components/PostsErrorState.component';
+import { PostsSectionFooter } from './components/PostsSectionFooter.component';
 
 const PostsSectionContent = memo(() => {
-  const { posts, loading, error, refetch } = useLatestPosts(9)
+  const { posts, loading, error, refetch } = useLatestPosts(9);
 
   if (loading) {
     return (
@@ -18,7 +18,7 @@ const PostsSectionContent = memo(() => {
           <PostsLoadingState itemsCount={9} />
         </div>
       </section>
-    )
+    );
   }
 
   if (error) {
@@ -29,7 +29,7 @@ const PostsSectionContent = memo(() => {
           <PostsErrorState error={error} onRetry={refetch} />
         </div>
       </section>
-    )
+    );
   }
 
   if (!posts || posts.length === 0) {
@@ -44,7 +44,7 @@ const PostsSectionContent = memo(() => {
           </div>
         </div>
       </section>
-    )
+    );
   }
 
   return (
@@ -55,10 +55,10 @@ const PostsSectionContent = memo(() => {
         <PostsSectionFooter />
       </div>
     </section>
-  )
-})
+  );
+});
 
-PostsSectionContent.displayName = 'PostsSectionContent'
+PostsSectionContent.displayName = 'PostsSectionContent';
 
 export const PostsSection = memo(() => {
   return (
@@ -68,7 +68,7 @@ export const PostsSection = memo(() => {
     >
       <PostsSectionContent />
     </ErrorBoundaryWrapper>
-  )
-})
+  );
+});
 
-PostsSection.displayName = 'PostsSection' 
+PostsSection.displayName = 'PostsSection';

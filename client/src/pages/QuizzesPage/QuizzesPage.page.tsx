@@ -1,8 +1,8 @@
-import { memo } from 'react'
-import { QuizzesPage as QuizzesPageComponent } from '../../components/QuizzesPage/QuizzesPage.component'
+import { memo } from 'react';
+import { QuizzesPage as QuizzesPageComponent } from '../../components/QuizzesPage/QuizzesPage.component';
 
 export const QuizzesPage = memo(() => {
-  return <QuizzesPageComponent />
-})
+  return <QuizzesPageComponent />;
+});
 
-QuizzesPage.displayName = 'QuizzesPage'
+QuizzesPage.displayName = 'QuizzesPage';

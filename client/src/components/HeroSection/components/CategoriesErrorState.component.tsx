@@ -1,6 +1,6 @@
-import { memo } from "react";
-import { FolderIcon } from "@heroicons/react/24/outline";
-import { ErrorState } from "../../ui";
+import { memo } from 'react';
+import { FolderIcon } from '@heroicons/react/24/outline';
+import { ErrorState } from '../../ui';
 
 interface CategoriesErrorStateProps {
   error: string;
@@ -37,4 +37,4 @@ export const CategoriesErrorState = memo<CategoriesErrorStateProps>(
   }
 );
 
-CategoriesErrorState.displayName = "CategoriesErrorState";
+CategoriesErrorState.displayName = 'CategoriesErrorState';

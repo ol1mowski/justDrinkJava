@@ -1,9 +1,9 @@
-import { memo } from 'react'
-import { HeroSection } from './components/HeroSection.component'
-import { MissionSection } from './components/MissionSection.component'
-import { CreatorSection } from './components/CreatorSection.component'
-import { CTASection } from './components/CTASection.component'
-import { ErrorBoundaryWrapper } from '../ui'
+import { memo } from 'react';
+import { HeroSection } from './components/HeroSection.component';
+import { MissionSection } from './components/MissionSection.component';
+import { CreatorSection } from './components/CreatorSection.component';
+import { CTASection } from './components/CTASection.component';
+import { ErrorBoundaryWrapper } from '../ui';
 
 export const AboutPage = memo(() => {
   return (
@@ -18,7 +18,7 @@ export const AboutPage = memo(() => {
         <CTASection />
       </div>
     </ErrorBoundaryWrapper>
-  )
-})
+  );
+});
 
-AboutPage.displayName = 'AboutPage' 
+AboutPage.displayName = 'AboutPage';

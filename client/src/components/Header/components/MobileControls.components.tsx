@@ -1,11 +1,11 @@
-import { memo, useState } from 'react'
-import { Bars3Icon } from '@heroicons/react/24/outline'
-import { ThemeSwitcher } from './ThemeSwitcher.components'
-import { LanguageSwitcher } from './LanguageSwitcher.components'
-import { MobileMenu } from './MobileMenu.components'
+import { memo, useState } from 'react';
+import { Bars3Icon } from '@heroicons/react/24/outline';
+import { ThemeSwitcher } from './ThemeSwitcher.components';
+import { LanguageSwitcher } from './LanguageSwitcher.components';
+import { MobileMenu } from './MobileMenu.components';
 
 export const MobileControls = memo(() => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
     <>
@@ -24,13 +24,13 @@ export const MobileControls = memo(() => {
           <Bars3Icon className="w-6 h-6 text-java-gray dark:text-java-dark-text" />
         </button>
       </div>
-      
-      <MobileMenu 
-        isOpen={isMobileMenuOpen} 
-        onClose={() => setIsMobileMenuOpen(false)} 
+
+      <MobileMenu
+        isOpen={isMobileMenuOpen}
+        onClose={() => setIsMobileMenuOpen(false)}
       />
     </>
-  )
-})
+  );
+});
 
-MobileControls.displayName = 'MobileControls' 
+MobileControls.displayName = 'MobileControls';

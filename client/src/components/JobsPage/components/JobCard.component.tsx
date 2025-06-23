@@ -1,28 +1,28 @@
-import { memo } from 'react'
-import { motion } from 'framer-motion'
-import { 
-  StarIcon, 
-  UserGroupIcon, 
-  CheckBadgeIcon, 
-  ArrowTopRightOnSquareIcon 
-} from '@heroicons/react/24/outline'
-import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid'
+import { memo } from 'react';
+import { motion } from 'framer-motion';
+import {
+  StarIcon,
+  UserGroupIcon,
+  CheckBadgeIcon,
+  ArrowTopRightOnSquareIcon,
+} from '@heroicons/react/24/outline';
+import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
 interface JobBoardData {
-  rank: number
-  name: string
-  description: string
-  rating: number
-  userCount: string
-  verified: boolean
-  pros: string[]
-  cons: string[]
-  url: string
-  logo?: string
+  rank: number;
+  name: string;
+  description: string;
+  rating: number;
+  userCount: string;
+  verified: boolean;
+  pros: string[];
+  cons: string[];
+  url: string;
+  logo?: string;
 }
 
 interface JobCardProps {
-  jobBoard: JobBoardData
+  jobBoard: JobBoardData;
 }
 
 export const JobCard = memo(({ jobBoard }: JobCardProps) => {
@@ -34,7 +34,10 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
         ) : i === Math.floor(rating) && rating % 1 !== 0 ? (
           <div className="relative">
             <StarIcon className="w-5 h-5 text-java-orange/30" />
-            <div className="absolute inset-0 overflow-hidden" style={{ width: `${(rating % 1) * 100}%` }}>
+            <div
+              className="absolute inset-0 overflow-hidden"
+              style={{ width: `${(rating % 1) * 100}%` }}
+            >
               <StarSolidIcon className="w-5 h-5 text-java-orange" />
             </div>
           </div>
@@ -42,42 +45,42 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
           <StarIcon className="w-5 h-5 text-java-orange/30" />
         )}
       </div>
-    ))
-  }
+    ));
+  };
 
   return (
     <motion.div
       className="bg-java-white dark:bg-java-dark-surface rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-java-orange/10 relative overflow-hidden group"
-      whileHover={{ 
-        y: -8, 
+      whileHover={{
+        y: -8,
         scale: 1.02,
-        transition: { duration: 0.2 }
+        transition: { duration: 0.2 },
       }}
       initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
-      <motion.div 
+      <motion.div
         className="absolute -top-10 -right-10 w-20 h-20 bg-gradient-to-br from-java-orange/20 to-java-blue/20 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
         initial={{ scale: 0 }}
         whileHover={{ scale: 1 }}
         transition={{ duration: 0.3 }}
       />
-      
+
       <div className="relative">
         <div className="flex items-center justify-between mb-6">
-          <motion.div 
+          <motion.div
             className="flex items-center gap-4"
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <motion.div 
+            <motion.div
               className="w-12 h-12 bg-gradient-to-br from-java-orange to-java-blue rounded-full flex items-center justify-center text-white font-bold text-xl"
               whileHover={{ scale: 1.1, rotate: 5 }}
-              transition={{ type: "spring", stiffness: 300 }}
+              transition={{ type: 'spring', stiffness: 300 }}
             >
               #{jobBoard.rank}
             </motion.div>
@@ -89,7 +92,7 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
                 {jobBoard.verified && (
                   <motion.div
                     whileHover={{ scale: 1.2, rotate: 10 }}
-                    transition={{ type: "spring", stiffness: 300 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
                   >
                     <CheckBadgeIcon className="w-6 h-6 text-java-blue" />
                   </motion.div>
@@ -118,7 +121,7 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
           </motion.a>
         </div>
 
-        <motion.p 
+        <motion.p
           className="text-java-blue mb-6 leading-relaxed"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -128,7 +131,7 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
           {jobBoard.description}
         </motion.p>
 
-        <motion.div 
+        <motion.div
           className="flex items-center gap-4 mb-6 text-sm"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -154,8 +157,8 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
             </h4>
             <ul className="space-y-2">
               {jobBoard.pros.map((pro, index) => (
-                <motion.li 
-                  key={index} 
+                <motion.li
+                  key={index}
                   className="text-java-blue text-sm flex items-start gap-2"
                   initial={{ opacity: 0, x: -10 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -181,8 +184,8 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
             </h4>
             <ul className="space-y-2">
               {jobBoard.cons.map((con, index) => (
-                <motion.li 
-                  key={index} 
+                <motion.li
+                  key={index}
                   className="text-java-blue text-sm flex items-start gap-2"
                   initial={{ opacity: 0, x: 10 }}
                   whileInView={{ opacity: 1, x: 0 }}
@@ -200,7 +203,7 @@ export const JobCard = memo(({ jobBoard }: JobCardProps) => {
         </div>
       </div>
     </motion.div>
-  )
-})
+  );
+});
 
-JobCard.displayName = 'JobCard' 
+JobCard.displayName = 'JobCard';

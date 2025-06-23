@@ -1,4 +1,4 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 @theme {
   --color-java-orange: #f89820;
@@ -63,7 +63,8 @@ input {
 }
 
 @keyframes pulse-glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 20px rgba(248, 152, 32, 0.3);
   }
   50% {
@@ -117,4 +118,4 @@ html {
 
 .text-java-blue\/90 {
   color: rgba(83, 130, 161, 0.9) !important;
-} 
+}

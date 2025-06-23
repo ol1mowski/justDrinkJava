@@ -1,1 +1,1 @@
-export { RankingPage } from './RankingPage.page'; 
+export { RankingPage } from './RankingPage.page';

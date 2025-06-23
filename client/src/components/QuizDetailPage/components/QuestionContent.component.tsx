@@ -1,11 +1,11 @@
-import { memo } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import type { Components } from 'react-markdown'
+import { memo } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import type { Components } from 'react-markdown';
 
 interface QuestionContentProps {
-  question: string
-  questionType: 'single' | 'multiple'
+  question: string;
+  questionType: 'single' | 'multiple';
 }
 
 const questionMarkdownComponents: Components = {
@@ -15,9 +15,7 @@ const questionMarkdownComponents: Components = {
     </span>
   ),
   strong: ({ children }) => (
-    <strong className="font-bold text-java-orange">
-      {children}
-    </strong>
+    <strong className="font-bold text-java-orange">{children}</strong>
   ),
   em: ({ children }) => (
     <em className="italic text-java-gray dark:text-java-dark-text">
@@ -65,31 +63,30 @@ const questionMarkdownComponents: Components = {
         {children}
       </div>
     </blockquote>
-  )
-}
+  ),
+};
 
-export const QuestionContent = memo<QuestionContentProps>(({
-  question,
-  questionType
-}) => {
-  return (
-    <div>
-      <div className="prose prose-lg max-w-none">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          components={questionMarkdownComponents}
-        >
-          {question}
-        </ReactMarkdown>
+export const QuestionContent = memo<QuestionContentProps>(
+  ({ question, questionType }) => {
+    return (
+      <div>
+        <div className="prose prose-lg max-w-none">
+          <ReactMarkdown
+            remarkPlugins={[remarkGfm]}
+            components={questionMarkdownComponents}
+          >
+            {question}
+          </ReactMarkdown>
+        </div>
+
+        {questionType === 'multiple' && (
+          <p className="text-sm text-gray-500 dark:text-java-dark-text-secondary mt-2">
+            Zaznacz wszystkie poprawne odpowiedzi
+          </p>
+        )}
       </div>
-      
-      {questionType === 'multiple' && (
-        <p className="text-sm text-gray-500 dark:text-java-dark-text-secondary mt-2">
-          Zaznacz wszystkie poprawne odpowiedzi
-        </p>
-      )}
-    </div>
-  )
-})
+    );
+  }
+);
 
-QuestionContent.displayName = 'QuestionContent' 
+QuestionContent.displayName = 'QuestionContent';

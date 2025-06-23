@@ -1,5 +1,5 @@
-import { memo } from 'react'
-import { DocumentTextIcon, SparklesIcon } from '@heroicons/react/24/outline'
+import { memo } from 'react';
+import { DocumentTextIcon, SparklesIcon } from '@heroicons/react/24/outline';
 
 export const PostsSectionHeader = memo(() => {
   return (
@@ -14,10 +14,11 @@ export const PostsSectionHeader = memo(() => {
         <SparklesIcon className="w-6 h-6 text-java-orange" />
       </div>
       <p className="text-lg text-java-blue/90 dark:text-java-dark-text-secondary max-w-2xl mx-auto">
-        Odkryj najnowsze trendy w Java, poznaj najlepsze praktyki i rozwijaj swoje umiejętności programistyczne.
+        Odkryj najnowsze trendy w Java, poznaj najlepsze praktyki i rozwijaj
+        swoje umiejętności programistyczne.
       </p>
     </div>
-  )
-})
+  );
+});
 
-PostsSectionHeader.displayName = 'PostsSectionHeader' 
+PostsSectionHeader.displayName = 'PostsSectionHeader';

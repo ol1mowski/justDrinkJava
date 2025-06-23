@@ -1,18 +1,22 @@
-import { memo } from 'react'
-import { BenefitItem } from './BenefitItem.component'
-import { 
-  AcademicCapIcon, 
-  TrophyIcon, 
-  UserGroupIcon, 
-  ChartBarIcon 
-} from '@heroicons/react/24/outline'
-import type { BenefitsSectionProps } from '../types'
+import { memo } from 'react';
+import { BenefitItem } from './BenefitItem.component';
+import {
+  AcademicCapIcon,
+  TrophyIcon,
+  UserGroupIcon,
+  ChartBarIcon,
+} from '@heroicons/react/24/outline';
+import type { BenefitsSectionProps } from '../types';
 
 export const BenefitsSection = memo<BenefitsSectionProps>(({ className }) => (
-  <div className={[
-    'relative bg-java-orange min-h-screen flex items-center justify-center p-8 lg:p-12',
-    className
-  ].filter(Boolean).join(' ')}>
+  <div
+    className={[
+      'relative bg-java-orange min-h-screen flex items-center justify-center p-8 lg:p-12',
+      className,
+    ]
+      .filter(Boolean)
+      .join(' ')}
+  >
     <div className="absolute inset-0 opacity-10">
       <div className="absolute top-20 left-20 w-32 h-32 bg-white rounded-full" />
       <div className="absolute bottom-20 right-20 w-24 h-24 bg-white rounded-full" />
@@ -38,13 +42,13 @@ export const BenefitsSection = memo<BenefitsSectionProps>(({ className }) => (
           title="Ekskluzywne quizy"
           description="Dostęp do zaawansowanych quizów i testów sprawdzających Twoją wiedzę z Java"
         />
-        
+
         <BenefitItem
           icon={<UserGroupIcon className="w-6 h-6 text-white" />}
           title="Społeczność"
           description="Dołącz do aktywnej społeczności programistów i dziel się doświadczeniem"
         />
-        
+
         <BenefitItem
           icon={<ChartBarIcon className="w-6 h-6 text-white" />}
           title="Śledź postępy"
@@ -54,11 +58,12 @@ export const BenefitsSection = memo<BenefitsSectionProps>(({ className }) => (
 
       <div className="mt-12 text-center">
         <p className="text-orange-100 text-sm">
-          Już <span className="font-semibold text-white">10,000+</span> programistów nam zaufało
+          Już <span className="font-semibold text-white">10,000+</span>{' '}
+          programistów nam zaufało
         </p>
       </div>
     </div>
   </div>
-))
+));
 
-BenefitsSection.displayName = 'BenefitsSection' 
+BenefitsSection.displayName = 'BenefitsSection';
