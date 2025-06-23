@@ -137,6 +137,36 @@ Frontend będzie dostępny pod adresem: `http://localhost:5173`
 - `npm run dev` - Uruchomienie serwera deweloperskiego
 - `npm run build` - Budowanie aplikacji produkcyjnej
 - `npm run preview` - Podgląd zbudowanej aplikacji
+- `npm run test` - 🧪 Uruchomienie testów Vitest
+- `npm run test:coverage` - 📊 Testy z pokryciem kodu
+
+#### 🧪 Testy Frontend
+
+Framework testowy został w pełni skonfigurowany z **Vitest + React Testing Library + MSW**.
+
+**Status testów:** 12/15 przechodzi (80% sukces)
+
+```bash
+# Uruchomienie testów
+cd client
+npm test
+
+# Testy z interfejsem UI
+npm run test:ui
+
+# Testy z coverage
+npm run test:coverage
+```
+
+**Przetestowane komponenty:**
+
+- ✅ AuthContainer (8/8 testów) - Kontener autentykacji
+- ✅ useAuthMain hook (4/7 testów) - Hook głównej logiki auth
+
+**Szczegóły:** Zobacz `client/TEST_COVERAGE_FRONTEND.md`
+
+📋 **Szczegółowe informacje:** Zobacz [TEST_COVERAGE_FRONTEND.md](client/TEST_COVERAGE_FRONTEND.md)
+
 - `npm run lint` - Sprawdzanie jakości kodu
 
 ### Backend (server/)
