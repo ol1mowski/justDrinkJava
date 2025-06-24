@@ -1,7 +1,7 @@
 import {
   useCurrentUser,
   useUpdateProfile,
-} from '../../../hooks/useCurrentUser.hook';
+} from '../../Header/hooks/useCurrentUser.hook';
 import type { UpdateProfileRequest } from '../../../utils/api';
 
 interface UseUserProfileReturn {
