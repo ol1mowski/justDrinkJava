@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
-import type { QuizContentData, QuizResultData } from '../api/types.api';
+import type { QuizContentData, QuizResultData } from '../../../api/types.api';
 
 interface UseQuizStateReturn {
   currentQuestionIndex: number;

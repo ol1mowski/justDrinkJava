@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { Button } from '../../ui/Button/Button.component';
 import { GoogleAuthButton } from './GoogleAuthButton.component';
 import type { SocialLoginProps } from '../types';
-import type { GoogleUser } from '../../../hooks/useGoogleAuth.hook';
+import type { GoogleUser } from '../hooks/useGoogleAuth.hook';
 
 const GitHubIcon = () => (
   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">

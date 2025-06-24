@@ -1,7 +1,7 @@
 import { memo, useEffect } from 'react';
 import { TrophyIcon, StarIcon } from '@heroicons/react/24/solid';
 import { UserIcon } from '@heroicons/react/24/outline';
-import { useRanking } from '../../hooks/useRanking.hook';
+import { useRanking } from './hooks/useRanking.hook';
 import { useAuth } from '../../hooks/auth/useAuth.hook';
 
 interface RankingSectionProps {

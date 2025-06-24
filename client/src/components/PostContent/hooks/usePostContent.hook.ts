@@ -1,6 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { postContentApi, PostContentApiError } from '../api/postContent.api';
-import type { PostContentResponse } from '../api/postContent.api';
+import {
+  postContentApi,
+  PostContentApiError,
+} from '../../../api/postContent.api';
+import type { PostContentResponse } from '../../../api/postContent.api';
 
 export interface UsePostContentOptions {
   enabled?: boolean;

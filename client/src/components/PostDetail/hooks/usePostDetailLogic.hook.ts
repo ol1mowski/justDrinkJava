@@ -2,15 +2,11 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useState } from 'react';
 import { usePost } from './usePost.hook';
 import { useRelatedPosts } from './useRelatedPosts.hook';
-import { usePostLike } from './usePostLike.hook';
-import { useAuth } from './auth/useAuth.hook';
+import { usePostLike } from '../../PostCard/hooks/usePostLike.hook';
+import { useAuth } from '../../../hooks/auth/useAuth.hook';
+import type { PostInteractions } from './usePostInteractions.hook';
 
-export interface PostInteractions {
-  isLiked: boolean;
-  isBookmarked: boolean;
-  likeCount: number;
-  bookmarkCount: number;
-}
+// PostInteractions interface przeniesione do usePostInteractions.hook.ts
 
 export interface UsePostDetailLogicResult {
   postId: number;

@@ -7,7 +7,7 @@ import {
   PostDetailSkeleton,
   PostDetailError,
 } from '../../components/PostDetail';
-import { usePostDetailLogic } from '../../hooks/usePostDetailLogic.hook';
+import { usePostDetailLogic } from '../../components/PostDetail/hooks/usePostDetailLogic.hook';
 
 export const PostDetailPage = () => {
   const {

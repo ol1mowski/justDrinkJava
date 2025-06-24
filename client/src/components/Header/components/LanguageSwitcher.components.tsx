@@ -1,6 +1,6 @@
 import { memo, useState, useEffect, useRef } from 'react';
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
-import { useLanguage } from '../../../hooks/useLanguage.hooks';
+import { useLanguage } from '../../../hooks/useLanguage.hook';
 
 export const LanguageSwitcher = memo(() => {
   const {

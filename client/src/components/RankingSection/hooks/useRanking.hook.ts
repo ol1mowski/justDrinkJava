@@ -1,7 +1,10 @@
 import { useState, useCallback } from 'react';
-import { rankingApi } from '../api/ranking.api';
-import type { UserRankingDto, UpdateScoreRequest } from '../api/ranking.api';
-import { useAuth } from './auth/useAuth.hook';
+import { rankingApi } from '../../../api/ranking.api';
+import type {
+  UserRankingDto,
+  UpdateScoreRequest,
+} from '../../../api/ranking.api';
+import { useAuth } from '../../../hooks/auth/useAuth.hook';
 
 interface UseRankingReturn {
   userRanking: UserRankingDto | null;

@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react';
-import { quizService } from '../api';
+import { quizService } from '../../../api';
 import type {
   QuizData,
   QuizContentData,
   QuizResultData,
   QuizAnswerRequest,
-} from '../api/types.api';
+} from '../../../api/types.api';
 
 interface UseQuizDataReturn {
   quiz: QuizData | null;

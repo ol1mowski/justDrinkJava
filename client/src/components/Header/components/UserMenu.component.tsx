@@ -5,7 +5,7 @@ import {
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
 } from '@heroicons/react/24/outline';
-import { useCurrentUser } from '../../../hooks/useCurrentUser.hook';
+import { useCurrentUser } from '../hooks/useCurrentUser.hook';
 import { useAuth } from '../../../hooks/auth/useAuth.hook';
 import { Link } from 'react-router-dom';
 

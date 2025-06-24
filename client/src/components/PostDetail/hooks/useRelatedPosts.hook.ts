@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../utils/api';
-import type { PostData } from '../utils/api';
+import { API_BASE_URL } from '../../../utils/api';
+import type { PostData } from '../../../utils/api';
 
 export interface UseRelatedPostsResult {
   posts: PostData[];

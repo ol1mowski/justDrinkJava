@@ -1,6 +1,6 @@
 import { memo, useState, useRef, useEffect } from 'react';
 import { MagnifyingGlassIcon, XMarkIcon } from '@heroicons/react/24/outline';
-import { useLanguage } from '../../../hooks/useLanguage.hooks';
+import { useLanguage } from '../../../hooks/useLanguage.hook';
 import { useTranslations } from '../../../translations';
 import { useSearchPosts } from '../../../hooks/useSearchPosts.hook';
 import { SearchResults } from '../../SearchResults/SearchResults.component';

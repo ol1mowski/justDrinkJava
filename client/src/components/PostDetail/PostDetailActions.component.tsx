@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { HeartIcon, ShareIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartSolidIcon } from '@heroicons/react/24/solid';
 import { memo } from 'react';
-import type { PostInteractions } from '../../hooks/usePostInteractions.hook';
+import type { PostInteractions } from './hooks/usePostInteractions.hook';
 
 interface PostDetailActionsProps {
   interactions: PostInteractions;

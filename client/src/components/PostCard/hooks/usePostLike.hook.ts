@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
-import { apiService } from '../utils/api';
-import { useAuth } from './auth/useAuth.hook';
+import { apiService } from '../../../utils/api';
+import { useAuth } from '../../../hooks/auth/useAuth.hook';
 
 export interface UsePostLikeResult {
   isLoading: boolean;

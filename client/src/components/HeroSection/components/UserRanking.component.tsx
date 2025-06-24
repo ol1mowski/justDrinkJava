@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react';
-import { useRanking } from '../../../hooks/useRanking.hook';
+import { useRanking } from '../../RankingSection/hooks/useRanking.hook';
 import { useAuth } from '../../../hooks/auth/useAuth.hook';
 import {
   UserRankingLoadingState,

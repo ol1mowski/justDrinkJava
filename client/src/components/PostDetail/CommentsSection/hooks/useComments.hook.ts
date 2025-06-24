@@ -5,7 +5,7 @@ import {
   type CreateCommentRequest,
   type UpdateCommentRequest,
   CommentsApiError,
-} from '../api/comments.api';
+} from '../../../../api/comments.api';
 
 export interface UseCommentsOptions {
   enabled?: boolean;

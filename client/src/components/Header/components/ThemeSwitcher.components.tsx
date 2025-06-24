@@ -4,8 +4,8 @@ import {
   MoonIcon,
   ComputerDesktopIcon,
 } from '@heroicons/react/24/outline';
-import { useTheme, type ThemeMode } from '../../../hooks/useTheme.hooks';
-import { useLanguage } from '../../../hooks/useLanguage.hooks';
+import { useTheme, type ThemeMode } from '../../../hooks/useTheme.hook';
+import { useLanguage } from '../../../hooks/useLanguage.hook';
 import { useTranslations } from '../../../translations';
 
 export const ThemeSwitcher = memo(() => {

@@ -4,7 +4,7 @@ import { PostContentContainer } from '../PostContent';
 import { PostDetailMeta } from './PostDetailMeta.component';
 import { PostDetailActions } from './PostDetailActions.component';
 import type { PostData } from '../../utils/api';
-import type { PostInteractions } from '../../hooks/usePostInteractions.hook';
+import type { PostInteractions } from './hooks/usePostInteractions.hook';
 
 interface PostDetailContentProps {
   post: PostData;

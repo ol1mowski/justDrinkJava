@@ -1,6 +1,6 @@
 import { memo, useEffect } from 'react';
-import { useGoogleAuth } from '../../../hooks/useGoogleAuth.hook';
-import type { GoogleUser } from '../../../hooks/useGoogleAuth.hook';
+import { useGoogleAuth } from '../hooks/useGoogleAuth.hook';
+import type { GoogleUser } from '../hooks/useGoogleAuth.hook';
 
 interface GoogleAuthButtonProps {
   onSuccess: (user: GoogleUser, token: string) => Promise<void>;

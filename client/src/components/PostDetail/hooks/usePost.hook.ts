@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiService } from '../utils/api';
-import type { PostData } from '../utils/api';
+import { apiService } from '../../../utils/api';
+import type { PostData } from '../../../utils/api';
 
 export interface UsePostOptions {
   enabled?: boolean;

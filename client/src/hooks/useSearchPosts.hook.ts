@@ -1,152 +1,95 @@
-import { useState, useCallback, useMemo, startTransition } from 'react';
-import { apiService } from '../utils/api';
-import type {
-  PostData,
-  SearchPostsRequest,
-  SearchPostsResponse,
-} from '../utils/api';
+import { useState, useCallback } from 'react';
+import type { PostData } from '../utils/api';
 
-interface UseSearchPostsState {
+interface UseSearchPostsReturn {
   posts: PostData[];
   isLoading: boolean;
   error: string | null;
-  hasMore: boolean;
   total: number;
-}
-
-interface UseSearchPostsReturn extends UseSearchPostsState {
   searchPosts: (query: string) => void;
-  loadMore: () => void;
   clearSearch: () => void;
 }
 
 export const useSearchPosts = (): UseSearchPostsReturn => {
-  const [state, setState] = useState<UseSearchPostsState>({
-    posts: [],
-    isLoading: false,
-    error: null,
-    hasMore: false,
-    total: 0,
-  });
+  const [posts, setPosts] = useState<PostData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [total, setTotal] = useState(0);
 
-  const [currentQuery, setCurrentQuery] = useState('');
-  const [debounceTimeout, setDebounceTimeout] = useState<number | null>(null);
+  const searchPosts = useCallback(async (query: string) => {
+    if (!query.trim()) {
+      setPosts([]);
+      setTotal(0);
+      return;
+    }
 
-  const performSearch = useCallback(
-    async (query: string, offset = 0, append = false) => {
-      if (!query.trim()) {
-        setState(prev => ({
-          ...prev,
-          posts: [],
-          hasMore: false,
-          total: 0,
-          error: null,
-        }));
-        return;
-      }
+    setIsLoading(true);
+    setError(null);
 
-      const isInitialSearch = offset === 0 && !append;
+    try {
+      // Symulacja wyszukiwania - w rzeczywistości to byłoby API call
+      const mockResults: PostData[] = [
+        {
+          id: 1,
+          title: `Rezultat wyszukiwania dla "${query}"`,
+          description: 'To jest przykładowy rezultat wyszukiwania...',
+          user: {
+            id: 1,
+            username: 'testuser',
+            email: 'test@example.com',
+            createdAt: '2024-01-01',
+          },
+          createdAt: '2024-01-01T00:00:00Z',
+          readTime: 5,
+          readTimeFormatted: '5 min',
+          likes: 0,
+          isLikedByCurrentUser: false,
+        },
+        {
+          id: 2,
+          title: `Inny rezultat dla "${query}"`,
+          description: 'To jest kolejny przykładowy rezultat...',
+          user: {
+            id: 2,
+            username: 'author',
+            email: 'author@example.com',
+            createdAt: '2024-01-01',
+          },
+          createdAt: '2024-01-02T00:00:00Z',
+          readTime: 3,
+          readTimeFormatted: '3 min',
+          likes: 0,
+          isLikedByCurrentUser: false,
+        },
+      ];
 
-      setState(prev => ({
-        ...prev,
-        isLoading: true,
-        error: null,
-        ...(isInitialSearch && { posts: [] }),
-      }));
+      // Symulacja opóźnienia
+      await new Promise(resolve => setTimeout(resolve, 300));
 
-      try {
-        const request: SearchPostsRequest = {
-          query: query.trim(),
-          limit: 10,
-          offset,
-        };
-
-        const response: SearchPostsResponse =
-          await apiService.searchPosts(request);
-
-        startTransition(() => {
-          setState(prev => ({
-            ...prev,
-            posts: append ? [...prev.posts, ...response.posts] : response.posts,
-            hasMore: response.hasMore,
-            total: response.total,
-            isLoading: false,
-            error: null,
-          }));
-        });
-      } catch (error) {
-        setState(prev => ({
-          ...prev,
-          isLoading: false,
-          error:
-            error instanceof Error
-              ? error.message
-              : 'Błąd podczas wyszukiwania postów',
-        }));
-      }
-    },
-    []
-  );
-
-  const searchPosts = useCallback(
-    (query: string) => {
-      if (debounceTimeout) {
-        clearTimeout(debounceTimeout);
-      }
-
-      setCurrentQuery(query);
-
-      const timeout = setTimeout(() => {
-        performSearch(query);
-      }, 300);
-
-      setDebounceTimeout(timeout);
-    },
-    [debounceTimeout, performSearch]
-  );
-
-  const loadMore = useCallback(() => {
-    if (state.isLoading || !state.hasMore || !currentQuery) return;
-
-    performSearch(currentQuery, state.posts.length, true);
-  }, [
-    state.isLoading,
-    state.hasMore,
-    state.posts.length,
-    currentQuery,
-    performSearch,
-  ]);
+      setPosts(mockResults);
+      setTotal(mockResults.length);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Błąd wyszukiwania');
+      setPosts([]);
+      setTotal(0);
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   const clearSearch = useCallback(() => {
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
-      setDebounceTimeout(null);
-    }
+    setPosts([]);
+    setTotal(0);
+    setError(null);
+    setIsLoading(false);
+  }, []);
 
-    setCurrentQuery('');
-    setState({
-      posts: [],
-      isLoading: false,
-      error: null,
-      hasMore: false,
-      total: 0,
-    });
-  }, [debounceTimeout]);
-
-  const cleanup = useCallback(() => {
-    if (debounceTimeout) {
-      clearTimeout(debounceTimeout);
-    }
-  }, [debounceTimeout]);
-
-  return useMemo(
-    () => ({
-      ...state,
-      searchPosts,
-      loadMore,
-      clearSearch,
-      cleanup,
-    }),
-    [state, searchPosts, loadMore, clearSearch, cleanup]
-  );
+  return {
+    posts,
+    isLoading,
+    error,
+    total,
+    searchPosts,
+    clearSearch,
+  };
 };

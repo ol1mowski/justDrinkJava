@@ -1,11 +1,11 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiService } from '../utils/api';
+import { apiService } from '../../../utils/api';
 import type {
   UserData,
   UpdateProfileRequest,
   UpdateProfileResponse,
-} from '../utils/api';
-import { getTokenFromStorage, isTokenExpired } from '../utils/jwt';
+} from '../../../utils/api';
+import { getTokenFromStorage, isTokenExpired } from '../../../utils/jwt';
 
 export const USER_QUERY_KEY = ['currentUser'] as const;
 

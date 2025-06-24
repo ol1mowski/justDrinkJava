@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { NavigationItem } from './NavigationItem.components';
-import { useLanguage } from '../../../hooks/useLanguage.hooks';
+import { useLanguage } from '../../../hooks/useLanguage.hook';
 import { useTranslations } from '../../../translations';
 
 export const DesktopNavigation = memo(() => {

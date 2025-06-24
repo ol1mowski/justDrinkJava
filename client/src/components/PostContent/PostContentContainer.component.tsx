@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { usePostContentByPostId } from '../../hooks/usePostContent.hook';
+import { usePostContentByPostId } from './hooks/usePostContent.hook';
 import { PostContentRenderer } from './PostContentRenderer.component';
 import { PostContentSkeleton } from './PostContentSkeleton.component';
 import { PostContentError } from './PostContentError.component';

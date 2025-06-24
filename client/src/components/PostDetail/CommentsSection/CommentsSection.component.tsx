@@ -2,7 +2,7 @@ import { memo, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
 import type { CommentsSectionProps } from './types';
-import { useComments } from '../../../hooks/useComments.hook';
+import { useComments } from './hooks/useComments.hook';
 import {
   CommentItem,
   AddCommentForm,
