@@ -38,7 +38,9 @@ export const useQuizzes = (): UseQuizzesReturn => {
       setQuizzes(mappedQuizzes);
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : 'Błąd podczas ładowania quizów';
+        err && typeof err === 'object' && 'message' in err
+          ? (err as any).message
+          : String(err) || 'Błąd podczas ładowania quizów';
       setError(errorMessage);
       console.error('❌ Błąd ładowania quizów:', err);
     } finally {
