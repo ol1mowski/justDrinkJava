@@ -28,15 +28,17 @@ jobs:
         
     - name: Install client dependencies
       working-directory: ./client
-      run: npm ci
-      
-    - name: Run client tests
-      working-directory: ./client
-      run: npm test -- --coverage --watchAll=false
+      run: npm ci --prefer-offline --no-audit
       
     - name: Run client linting
       working-directory: ./client
       run: npm run lint
+      
+    - name: Run client tests
+      working-directory: ./client
+      run: npm run test:coverage
+      env:
+        CI: true
       
     - name: Build client
       working-directory: ./client
@@ -55,14 +57,17 @@ jobs:
         distribution: 'temurin'
         java-version: '21'
         cache: 'maven'
+        cache-dependency-path: server/pom.xml
         
     - name: Generate Maven wrapper
       working-directory: ./server
       run: mvn -N io.takari:maven:wrapper
       
-    - name: Run server tests
+    - name: Run server tests with test profile
       working-directory: ./server
-      run: ./mvnw test
+      run: ./mvnw test -Pcoverage
+      env:
+        SPRING_PROFILES_ACTIVE: test
       
     - name: Build server
       working-directory: ./server
