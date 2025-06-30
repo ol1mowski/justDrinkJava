@@ -3,7 +3,7 @@ import {
   useSuspenseInfiniteQuery,
 } from '@tanstack/react-query';
 import { queryKeys } from '../../../lib/queryKeys';
-import type { PostDTO } from '../../PostCard/types';
+import type { PostDTO } from '../../PostsFilter/types';
 import { API_BASE_URL } from '../../../utils/api';
 
 export interface SearchPostsParams {
@@ -22,7 +22,7 @@ export interface SearchPostsResponse {
 
 export const useSearchPosts = (params: SearchPostsParams) => {
   return useInfiniteQuery({
-    queryKey: queryKeys.posts.search(params as Record<string, unknown>),
+    queryKey: queryKeys.posts.search(JSON.stringify(params)),
     queryFn: async ({ pageParam = 1 }): Promise<SearchPostsResponse> => {
       const searchParams = new URLSearchParams({
         page: pageParam.toString(),
@@ -57,7 +57,7 @@ export const useSearchPosts = (params: SearchPostsParams) => {
 
 export const useSearchPostsSuspense = (params: SearchPostsParams) => {
   return useSuspenseInfiniteQuery({
-    queryKey: queryKeys.posts.search(params as Record<string, unknown>),
+    queryKey: queryKeys.posts.search(JSON.stringify(params)),
     queryFn: async ({ pageParam = 1 }): Promise<SearchPostsResponse> => {
       const searchParams = new URLSearchParams({
         page: pageParam.toString(),

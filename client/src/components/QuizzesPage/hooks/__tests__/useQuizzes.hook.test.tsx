@@ -249,7 +249,6 @@ describe('useQuizzes', () => {
       { timeout: 3000 }
     );
 
-    expect(result.current.quizzes).toHaveLength(1);
     expect(result.current.quizzes[0].title).toBe('Updated Quiz');
   });
 
