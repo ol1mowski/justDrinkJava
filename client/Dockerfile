@@ -5,10 +5,11 @@ WORKDIR /app
 COPY package*.json ./
 COPY vite.config.ts ./
 COPY tsconfig.json ./
+COPY tsconfig.app.json ./
 COPY tsconfig.node.json ./
 COPY index.html ./
 
-RUN npm ci
+RUN npm install
 
 COPY src/ ./src/
 COPY public/ ./public/

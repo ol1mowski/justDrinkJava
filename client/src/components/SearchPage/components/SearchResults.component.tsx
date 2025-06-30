@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { PostsGrid } from '../../PostsGrid/PostsGrid.component';
 import { LoadingSpinner } from '../../ui';
-import type { PostDTO } from '../../PostCard/types';
+import type { PostDTO } from '../../PostsFilter/types';
 
 interface SearchResultsProps {
   posts: PostDTO[];

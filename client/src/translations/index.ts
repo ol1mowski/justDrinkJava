@@ -1,4 +1,4 @@
-import type { Language } from '../hooks/useLanguage.hooks';
+import type { Language } from '../hooks/useLanguage.hook';
 
 export interface Translations {
   navigation: {

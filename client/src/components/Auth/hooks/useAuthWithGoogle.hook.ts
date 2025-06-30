@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { authApi } from '../../../utils/api';
-import type { GoogleUser } from '../../../hooks/useGoogleAuth.hook';
+import type { GoogleUser } from './useGoogleAuth.hook';
 import type { AuthResponse } from '../../../utils/api';
 
 interface UseAuthWithGoogleReturn {
