@@ -46,7 +46,9 @@ export const useQuizData = (): UseQuizDataReturn => {
       setQuiz(response.data || null);
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : 'Błąd podczas ładowania quizu';
+        err && typeof err === 'object' && 'message' in err
+          ? (err as any).message
+          : String(err) || 'Błąd podczas ładowania quizu';
       setError(errorMessage);
       console.error('❌ Błąd ładowania quizu:', err);
     } finally {
@@ -63,7 +65,9 @@ export const useQuizData = (): UseQuizDataReturn => {
       setQuestions(response.data || []);
     } catch (err) {
       const errorMessage =
-        err instanceof Error ? err.message : 'Błąd podczas ładowania pytań';
+        err && typeof err === 'object' && 'message' in err
+          ? (err as any).message
+          : String(err) || 'Błąd podczas ładowania pytań';
       setQuestionsError(errorMessage);
       console.error('❌ Błąd ładowania pytań:', err);
     } finally {
@@ -81,9 +85,9 @@ export const useQuizData = (): UseQuizDataReturn => {
         return response.data || null;
       } catch (err) {
         const errorMessage =
-          err instanceof Error
-            ? err.message
-            : 'Błąd podczas sprawdzania odpowiedzi';
+          err && typeof err === 'object' && 'message' in err
+            ? (err as any).message
+            : String(err) || 'Błąd podczas sprawdzania odpowiedzi';
         setSubmitError(errorMessage);
         console.error('❌ Błąd sprawdzania odpowiedzi:', err);
         return null;

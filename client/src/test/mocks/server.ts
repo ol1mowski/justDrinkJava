@@ -176,6 +176,94 @@ export const handlers = [
 
     return HttpResponse.json(postsToReturn);
   }),
+
+  http.get('http://localhost:8080/api/quizzes/:id', ({ params }) => {
+    const quizId = params.id;
+
+    if (quizId === '1') {
+      return HttpResponse.json({
+        data: {
+          id: 1,
+          userId: 1,
+          title: 'Test Quiz',
+          description: 'Test Description',
+          category: 'Programming',
+          difficulty: 'EASY',
+          timeLimit: 15,
+          createdAt: '2023-01-01T00:00:00Z',
+          updatedAt: '2023-01-01T00:00:00Z',
+        },
+      });
+    }
+
+    return HttpResponse.json({ message: 'Quiz not found' }, { status: 404 });
+  }),
+
+  http.get('http://localhost:8080/api/quizzes/:id/questions', ({ params }) => {
+    const quizId = params.id;
+
+    if (quizId === '1') {
+      return HttpResponse.json({
+        data: [
+          {
+            id: 1,
+            quizId: 1,
+            question: 'Question 1',
+            options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+            correctAnswer: 'Option 1',
+            createdAt: '2023-01-01T00:00:00Z',
+            updatedAt: '2023-01-01T00:00:00Z',
+          },
+          {
+            id: 2,
+            quizId: 1,
+            question: 'Question 2',
+            options: ['Option A', 'Option B', 'Option C', 'Option D'],
+            correctAnswer: 'Option A',
+            createdAt: '2023-01-01T00:00:00Z',
+            updatedAt: '2023-01-01T00:00:00Z',
+          },
+        ],
+      });
+    }
+
+    return HttpResponse.json(
+      { message: 'Questions not found' },
+      { status: 404 }
+    );
+  }),
+
+  http.post(
+    'http://localhost:8080/api/quizzes/check-answers',
+    async ({ request }) => {
+      const body = (await request.json()) as any;
+
+      if (body?.quizId === 1) {
+        return HttpResponse.json({
+          data: {
+            quizId: 1,
+            quizTitle: 'Test Quiz',
+            score: 80,
+            totalQuestions: 2,
+            correctAnswers: 1,
+            timeSpent: body?.timeSpent || 120,
+            results: [
+              {
+                questionId: 1,
+                question: 'Question 1',
+                userAnswers: body?.answers?.[1] || [],
+                correctAnswer: 'Option 1',
+                isCorrect: body?.answers?.[1]?.includes('Option 1') || false,
+                explanation: 'Correct answer',
+              },
+            ],
+          },
+        });
+      }
+
+      return HttpResponse.json({ message: 'Invalid answers' }, { status: 400 });
+    }
+  ),
 ];
 
 export const server = setupServer(...handlers);

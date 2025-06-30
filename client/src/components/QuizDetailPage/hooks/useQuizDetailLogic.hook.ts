@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../hooks/auth/useAuth.hook';
-import { useQuizData } from '../../../hooks/useQuizData.hook';
-import { useQuizState } from '../../../hooks/useQuizState.hook';
+import { useQuizData } from './useQuizData.hook';
+import { useQuizState } from './useQuizState.hook';
 
 export const useQuizDetailLogic = () => {
   const { id } = useParams<{ id: string }>();
