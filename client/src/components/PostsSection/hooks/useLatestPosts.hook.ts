@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import { API_BASE_URL, type PostData } from '../../../utils/api';
+import { API_BASE_URL } from '../../../api';
+import type { PostData } from '../../../utils/api';
 import { useErrorHandler } from '../../../hooks/useErrorHandler.hook';
 
 export const useLatestPosts = (limit: number = 9) => {

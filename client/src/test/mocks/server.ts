@@ -5,9 +5,9 @@ import type {
   LoginRequest,
   RegisterRequest,
   UserData,
+  PostData,
 } from '../../api/types.api';
 
-// Mock user data
 const mockUser: UserData = {
   id: 1,
   username: 'testuser',
@@ -15,28 +15,59 @@ const mockUser: UserData = {
   createdAt: '2024-01-01T00:00:00Z',
 };
 
-// Mock token
 const mockToken = 'mock-jwt-token-123';
 
-// Mock auth response
 const mockAuthResponse: AuthResponse = {
   token: mockToken,
   type: 'Bearer',
   user: mockUser,
 };
 
-// API handlers
+const mockPosts: PostData[] = [
+  {
+    id: 1,
+    user: {
+      id: 1,
+      username: 'user1',
+      email: 'user1@test.com',
+      createdAt: '2023-01-01T00:00:00Z',
+    },
+    category: { id: 1, name: 'Programming' },
+    title: 'Test Post 1',
+    description: 'Description 1',
+    createdAt: '2023-01-01T00:00:00Z',
+    readTime: 5,
+    readTimeFormatted: '5 min',
+    likes: 10,
+    isLikedByCurrentUser: false,
+  },
+  {
+    id: 2,
+    user: {
+      id: 2,
+      username: 'user2',
+      email: 'user2@test.com',
+      createdAt: '2023-01-02T00:00:00Z',
+    },
+    category: { id: 2, name: 'Design' },
+    title: 'Test Post 2',
+    description: 'Description 2',
+    createdAt: '2023-01-02T00:00:00Z',
+    readTime: 3,
+    readTimeFormatted: '3 min',
+    likes: 15,
+    isLikedByCurrentUser: false,
+  },
+];
+
 export const handlers = [
-  // Login endpoint
   http.post('http://localhost:8080/api/auth/login', async ({ request }) => {
     const body = (await request.json()) as LoginRequest;
 
-    // Simulate successful login
     if (body.email === 'test@example.com' && body.password === 'password123') {
       return HttpResponse.json(mockAuthResponse);
     }
 
-    // Simulate login error
     return HttpResponse.json(
       {
         status: 'error',
@@ -49,16 +80,13 @@ export const handlers = [
     );
   }),
 
-  // Register endpoint
   http.post('http://localhost:8080/api/auth/register', async ({ request }) => {
     const body = (await request.json()) as RegisterRequest;
 
-    // Simulate successful registration
     if (body.email && body.password) {
       return HttpResponse.json(mockAuthResponse);
     }
 
-    // Simulate registration error
     return HttpResponse.json(
       {
         status: 'error',
@@ -71,16 +99,13 @@ export const handlers = [
     );
   }),
 
-  // Get current user endpoint (used by userService.getCurrent)
   http.get('http://localhost:8080/api/user/profile', ({ request }) => {
     const authHeader = request.headers.get('Authorization');
 
-    // Check if user is authenticated
     if (authHeader && authHeader.includes(mockToken)) {
       return HttpResponse.json(mockUser);
     }
 
-    // Return unauthorized
     return HttpResponse.json(
       {
         status: 'error',
@@ -90,11 +115,9 @@ export const handlers = [
     );
   }),
 
-  // Current user endpoint
   http.get('http://localhost:8080/api/auth/me', ({ request }) => {
     const authHeader = request.headers.get('Authorization');
 
-    // Check if user is authenticated
     if (authHeader && authHeader.includes(mockToken)) {
       return HttpResponse.json({
         status: 'success',
@@ -102,7 +125,6 @@ export const handlers = [
       });
     }
 
-    // Return unauthorized
     return HttpResponse.json(
       {
         status: 'error',
@@ -112,7 +134,6 @@ export const handlers = [
     );
   }),
 
-  // Google OAuth endpoint
   http.post('http://localhost:8080/api/auth/google', async ({ request }) => {
     const body = (await request.json()) as { credential: string };
 
@@ -129,7 +150,6 @@ export const handlers = [
     );
   }),
 
-  // GitHub OAuth endpoint
   http.post('http://localhost:8080/api/auth/github', async ({ request }) => {
     const body = (await request.json()) as { code: string; state: string };
 
@@ -145,7 +165,17 @@ export const handlers = [
       { status: 400 }
     );
   }),
+
+  http.get('http://localhost:8080/api/posts', ({ request }) => {
+    const url = new URL(request.url);
+    const limit = url.searchParams.get('limit');
+
+    const postsToReturn = limit
+      ? mockPosts.slice(0, parseInt(limit))
+      : mockPosts;
+
+    return HttpResponse.json(postsToReturn);
+  }),
 ];
 
-// Setup server
 export const server = setupServer(...handlers);
