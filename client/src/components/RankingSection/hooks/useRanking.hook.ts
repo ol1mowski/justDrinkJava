@@ -33,6 +33,7 @@ export const useRanking = (): UseRankingReturn => {
     async (pointsToAdd: number): Promise<UserRankingDto | null> => {
       if (!user?.id) {
         setError('Musisz być zalogowany aby aktualizować ranking');
+        setUserRanking(null);
         return null;
       }
 
@@ -61,8 +62,11 @@ export const useRanking = (): UseRankingReturn => {
         return updatedRanking;
       } catch (err: any) {
         const errorMessage =
-          err.message || 'Nie udało się zaktualizować rankingu';
+          err && typeof err === 'object' && 'message' in err
+            ? err.message
+            : String(err) || 'Nie udało się zaktualizować rankingu';
         setError(errorMessage);
+        setUserRanking(null);
         console.error('Błąd aktualizacji rankingu:', err);
         return null;
       } finally {
@@ -77,6 +81,7 @@ export const useRanking = (): UseRankingReturn => {
       const targetUserId = userId || user?.id;
       if (!targetUserId) {
         setError('Nie można pobrać rankingu - brak ID użytkownika');
+        setUserRanking(null);
         return;
       }
 
@@ -92,8 +97,11 @@ export const useRanking = (): UseRankingReturn => {
         setUserRanking(ranking);
       } catch (err: any) {
         const errorMessage =
-          err.message || 'Nie udało się pobrać rankingu użytkownika';
+          err && typeof err === 'object' && 'message' in err
+            ? err.message
+            : String(err) || 'Nie udało się pobrać rankingu użytkownika';
         setError(errorMessage);
+        setUserRanking(null);
         console.error('Błąd pobierania rankingu:', err);
       } finally {
         setLoading(false);
@@ -111,8 +119,12 @@ export const useRanking = (): UseRankingReturn => {
         const rankings = await rankingApi.getTopRankings(limit);
         setTopRankings(rankings);
       } catch (err: any) {
-        const errorMessage = err.message || 'Nie udało się pobrać rankingu';
+        const errorMessage =
+          err && typeof err === 'object' && 'message' in err
+            ? err.message
+            : String(err) || 'Nie udało się pobrać rankingu';
         setError(errorMessage);
+        setTopRankings([]);
         console.error('Błąd pobierania top rankingu:', err);
       } finally {
         setLoading(false);
