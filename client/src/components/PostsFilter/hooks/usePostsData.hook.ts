@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { queryKeys } from '../../../lib/queryKeys';
-import { API_BASE_URL } from '../../../utils/api';
+import { API_BASE_URL } from '../../../api';
 import type { PostDTO } from '../types';
 
 export const usePostsData = () => {
