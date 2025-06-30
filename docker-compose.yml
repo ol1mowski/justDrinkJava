@@ -1,71 +1,51 @@
-version: "3.8"
+version: '3.8'
 
 services:
-  # MySQL Database
-  mysql:
-    image: mysql:8.0
-    container_name: justdrinkjava-mysql
-    restart: unless-stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: justdrinkjava
-      MYSQL_USER: justdrinkjava_user
-      MYSQL_PASSWORD: justdrinkjava_password
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
     ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-      - ./server/data/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - "3000:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
     networks:
-      - justdrinkjava-network
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      timeout: 20s
-      retries: 10
+      - justdrink-network
 
-  # Java Spring Boot Application
-  app:
+  backend:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: justdrinkjava-app
-    restart: unless-stopped
     ports:
       - "8080:8080"
     environment:
-      # Database Configuration
-      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/justdrinkjava?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-      SPRING_DATASOURCE_USERNAME: root
-      SPRING_DATASOURCE_PASSWORD: root
-      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
-
-      # JPA Configuration
-      SPRING_JPA_HIBERNATE_DDL_AUTO: update
-      SPRING_JPA_SHOW_SQL: true
-      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
-      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: true
-      SPRING_JPA_DEFER_DATASOURCE_INITIALIZATION: true
-      SPRING_SQL_INIT_MODE: always
-
-      # Server Configuration
-      SERVER_SERVLET_CONTEXT_PATH: /api
-      SERVER_PORT: 8080
-
-      # Security Configuration
-      APP_JWT_SECRET: tajny_klucz_jwt_zmien_na_produkcji_bardzo_dluga_wartosc_dla_bezpieczenstwa_docker
-      APP_JWT_EXPIRATION: 86400000
-
-      # Active Profile
-      SPRING_PROFILES_ACTIVE: prod
+      - SPRING_PROFILES_ACTIVE=docker
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/justdrink
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=password
     depends_on:
-      mysql:
-        condition: service_healthy
+      - db
     networks:
-      - justdrinkjava-network
+      - justdrink-network
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=justdrink
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    networks:
+      - justdrink-network
 
 volumes:
-  mysql_data:
+  postgres_data:
 
 networks:
-  justdrinkjava-network:
+  justdrink-network:
     driver: bridge
