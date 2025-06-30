@@ -6,8 +6,6 @@ import { usePostLike } from '../../PostCard/hooks/usePostLike.hook';
 import { useAuth } from '../../../hooks/auth/useAuth.hook';
 import type { PostInteractions } from './usePostInteractions.hook';
 
-// PostInteractions interface przeniesione do usePostInteractions.hook.ts
-
 export interface UsePostDetailLogicResult {
   postId: number;
   post: ReturnType<typeof usePost>['post'];

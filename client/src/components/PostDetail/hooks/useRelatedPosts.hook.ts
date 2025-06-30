@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../../../utils/api';
+import { API_BASE_URL } from '../../../api';
 import type { PostData } from '../../../utils/api';
 
 export interface UseRelatedPostsResult {
@@ -10,12 +10,15 @@ export interface UseRelatedPostsResult {
 
 export const useRelatedPosts = (mainPostId: number): UseRelatedPostsResult => {
   const [posts, setPosts] = useState<PostData[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [hasErrors, setHasErrors] = useState(false);
 
   useEffect(() => {
     const fetchRelatedPosts = async () => {
-      if (!mainPostId) return;
+      if (!mainPostId || mainPostId <= 0) {
+        setIsLoading(false);
+        return;
+      }
 
       setIsLoading(true);
       setHasErrors(false);
