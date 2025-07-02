@@ -61,7 +61,7 @@ jobs:
       
     - name: Compile project with Lombok processing
       working-directory: ./server
-      run: ./mvnw compile -Dmaven.compiler.proc=only
+      run: ./mvnw compile
       
     - name: Run server tests with coverage
       working-directory: ./server
