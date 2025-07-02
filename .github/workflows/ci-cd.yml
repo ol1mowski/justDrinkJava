@@ -19,11 +19,16 @@ jobs:
       with:
         node-version: '20'
         
-    - name: Install all dependencies (workspace)
+    - name: Install root dependencies
+      run: npm install --legacy-peer-deps
+      
+    - name: Install client dependencies
+      working-directory: ./client
       run: npm install --legacy-peer-deps
         
     - name: Run client tests
-      run: npm run test --workspace=client
+      working-directory: ./client
+      run: npm run test
       env:
         CI: true
 
