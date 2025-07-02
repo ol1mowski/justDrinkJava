@@ -14,8 +14,7 @@
     "lint": "npm run lint --workspace=client",
     "build": "npm run build --workspace=client",
     "test": "npm run test --workspace=client",
-    "dev:client": "npm run dev --workspace=client",
-    "postinstall": "npm install --workspace=client"
+    "dev:client": "npm run dev --workspace=client"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
