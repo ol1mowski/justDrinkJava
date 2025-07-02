@@ -22,7 +22,7 @@ jobs:
     - name: Install client dependencies and update package-lock.json
       run: |
         cd client
-        npm install --legacy-peer-deps
+        npm install
         
     - name: Run client tests
       run: |
