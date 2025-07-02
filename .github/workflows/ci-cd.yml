@@ -19,15 +19,11 @@ jobs:
       with:
         node-version: '20'
         
-    - name: Install client dependencies and update package-lock.json
-      run: |
-        cd client
-        npm install --legacy-peer-deps
+    - name: Install all dependencies (workspace)
+      run: npm install --legacy-peer-deps
         
     - name: Run client tests
-      run: |
-        cd client
-        npm run test
+      run: npm run test --workspace=client
       env:
         CI: true
 
