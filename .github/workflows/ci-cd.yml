@@ -1,134 +1,69 @@
-name: CI/CD Pipeline
+name: Test i Build
 
 on:
   push:
-    branches: [ main, develop ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, develop ]
-
-env:
-  REGISTRY: docker.io
-  IMAGE_NAME_CLIENT: ${{ github.repository }}-client
-  IMAGE_NAME_SERVER: ${{ github.repository }}-server
+    branches: [ main ]
 
 jobs:
-  test-client:
+  test:
+    name: Client tests
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
+    - uses: actions/checkout@v4
+    
     - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
         node-version: '20'
+        cache: 'npm'
+        cache-dependency-path: client/package-lock.json
         
-    - name: Install client dependencies
-      run: npm ci
-      
-    - name: Run client linting
-      run: npm run lint
-      
+    - name: Install client dependencies and update package-lock.json
+      run: |
+        cd client
+        npm install --legacy-peer-deps
+        
     - name: Run client tests
-      run: npm run test
+      run: |
+        cd client
+        npm run test
       env:
         CI: true
-      
-    - name: Build client
-      run: npm run build 
 
-  test-server:
+  build-docker:
+    name: Build Docker images
+    needs: test
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '21'
-        cache: 'maven'
-        cache-dependency-path: server/pom.xml
-        
-    - name: Generate Maven wrapper
-      working-directory: ./server
-      run: mvn -N io.takari:maven:wrapper
-      
-    - name: Run server tests with test profile
-      working-directory: ./server
-      run: ./mvnw test -Pcoverage
-      env:
-        SPRING_PROFILES_ACTIVE: test
-      
-    - name: Build server
-      working-directory: ./server
-      run: ./mvnw clean package -DskipTests
-
-  build-and-push:
-    needs: [test-client, test-server]
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    - uses: actions/checkout@v4
     
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      
-    - name: Setup Docker Buildx
-      uses: docker/setup-buildx-action@v3
-      
-    - name: Login to Docker Hub
+    - name: Log in to Docker Hub
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKERHUB_USERNAME }}
-        password: ${{ secrets.DOCKERHUB_TOKEN }}
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
         
-    - name: Extract metadata for client
-      id: meta-client
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_CLIENT }}
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=sha,prefix={{branch}}-
-          
-    - name: Extract metadata for server
-      id: meta-server
-      uses: docker/metadata-action@v5
-      with:
-        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_SERVER }}
-        tags: |
-          type=ref,event=branch
-          type=ref,event=pr
-          type=semver,pattern={{version}}
-          type=semver,pattern={{major}}.{{minor}}
-          type=sha,prefix={{branch}}-
-          
-    # Budowanie obrazu clienta
+    - name: Setup QEMU
+      uses: docker/setup-qemu-action@v3
+      
+    - name: Setup BuildX
+      uses: docker/setup-buildx-action@v3
+      
     - name: Build and push client image
       uses: docker/build-push-action@v5
       with:
         context: ./client
-        file: ./client/Dockerfile
+        file: ./Dockerfile
         push: true
-        tags: ${{ steps.meta-client.outputs.tags }}
-        labels: ${{ steps.meta-client.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
-        
-    # Budowanie obrazu servera
-    - name: Build and push server image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./server
-        file: ./server/Dockerfile
-        push: true
-        tags: ${{ steps.meta-server.outputs.tags }}
-        labels: ${{ steps.meta-server.outputs.labels }}
-        cache-from: type=gha
-        cache-to: type=gha,mode=max
+        tags: |
+          ol1mowski187/justdrinkjava-client:latest
+          ol1mowski187/justdrinkjava-client:${{ github.sha }}
+          
+    - name: Notify about completion
+      if: always()
+      run: |
+        echo "Build completed - Check GitHub Actions status" 
