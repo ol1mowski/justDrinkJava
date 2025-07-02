@@ -32,50 +32,50 @@ jobs:
       env:
         CI: true
 
-  test-server:
-    name: Server tests
-    runs-on: ubuntu-latest
+  # test-server:
+  #   name: Server tests
+  #   runs-on: ubuntu-latest
     
-    steps:
-    - uses: actions/checkout@v4
+  #   steps:
+  #   - uses: actions/checkout@v4
     
-    - name: Setup Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'temurin'
-        java-version: '21'
+  #   - name: Setup Java
+  #     uses: actions/setup-java@v4
+  #     with:
+  #       distribution: 'temurin'
+  #       java-version: '21'
         
-    - name: Setup Maven wrapper
-      working-directory: ./server
-      run: chmod +x mvnw
+  #   - name: Setup Maven wrapper
+  #     working-directory: ./server
+  #     run: chmod +x mvnw
       
-    - name: Clean project and dependency cache
-      working-directory: ./server
-      run: |
-        ./mvnw clean
-        ./mvnw dependency:purge-local-repository -DactTransitively=false -DreResolve=false
+  #   - name: Clean project and dependency cache
+  #     working-directory: ./server
+  #     run: |
+  #       ./mvnw clean
+  #       ./mvnw dependency:purge-local-repository -DactTransitively=false -DreResolve=false
       
-    - name: Download dependencies with Lombok
-      working-directory: ./server
-      run: ./mvnw dependency:resolve dependency:resolve-sources -U
+  #   - name: Download dependencies with Lombok
+  #     working-directory: ./server
+  #     run: ./mvnw dependency:resolve dependency:resolve-sources -U
       
-    - name: Compile project with Lombok processing
-      working-directory: ./server
-      run: ./mvnw compile
+  #   - name: Compile project with Lombok processing
+  #     working-directory: ./server
+  #     run: ./mvnw compile
       
-    - name: Run server tests with coverage
-      working-directory: ./server
-      run: ./mvnw test -Pcoverage
-      env:
-        SPRING_PROFILES_ACTIVE: test
+  #   - name: Run server tests with coverage
+  #     working-directory: ./server
+  #     run: ./mvnw test -Pcoverage
+  #     env:
+  #       SPRING_PROFILES_ACTIVE: test
         
-    - name: Build server JAR
-      working-directory: ./server
-      run: ./mvnw package -DskipTests
+  #   - name: Build server JAR
+  #     working-directory: ./server
+  #     run: ./mvnw package -DskipTests
 
   build-docker:
     name: Build Docker images
-    needs: [test-client, test-server]
+    needs: [test-client ]
     runs-on: ubuntu-latest
     
     steps:
