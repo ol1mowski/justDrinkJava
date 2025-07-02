@@ -7,14 +7,15 @@
     "client"
   ],
   "scripts": {
-    "prepare": "husky install",
+    "prepare": "test \"$CI\" = \"true\" || husky install",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
     "format:check": "prettier --check \"**/*.{js,jsx,ts,tsx,json,css,md}\" --ignore-path .prettierignore",
     "format:client": "prettier --write \"client/**/*.{js,jsx,ts,tsx,json,css,md}\"",
     "lint": "npm run lint --workspace=client",
     "build": "npm run build --workspace=client",
     "test": "npm run test --workspace=client",
-    "dev:client": "npm run dev --workspace=client"
+    "dev:client": "npm run dev --workspace=client",
+    "postinstall": "npm install --workspace=client"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.4.3",
@@ -25,10 +26,10 @@
   },
   "lint-staged": {
     "client/**/*.{js,jsx,ts,tsx,json,css,md}": [
-      "prettier --write"
+      "npx prettier --write"
     ],
     "*.{js,jsx,ts,tsx,json,css,md}": [
-      "prettier --write"
+      "npx prettier --write"
     ]
   },
   "commitlint": {
