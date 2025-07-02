@@ -25,22 +25,18 @@ jobs:
         node-version: '20'
         
     - name: Install client dependencies
-      working-directory: ./client
-      run: npm install
+      run: npm install --workspace=client
       
     - name: Run client linting
-      working-directory: ./client
-      run: npm run lint
+      run: npm run lint --workspace=client
       
     - name: Run client tests
-      working-directory: ./client
-      run: npm run test:coverage
+      run: npm run test:coverage --workspace=client
       env:
         CI: true
       
     - name: Build client
-      working-directory: ./client
-      run: npm run build
+      run: npm run build --workspace=client
 
   test-server:
     runs-on: ubuntu-latest
