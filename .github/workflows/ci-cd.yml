@@ -50,19 +50,16 @@ jobs:
       working-directory: ./server
       run: chmod +x mvnw
       
-    - name: Download Maven dependencies
+    - name: Clean and compile project with Lombok
       working-directory: ./server
-      run: ./mvnw dependency:resolve dependency:resolve-sources
-      
-    - name: Compile project (Lombok processing)
-      working-directory: ./server
-      run: ./mvnw clean compile
+      run: ./mvnw clean compile -X
       
     - name: Run server tests with coverage
       working-directory: ./server
-      run: ./mvnw test -Pcoverage
+      run: ./mvnw test -Pcoverage -X
       env:
         SPRING_PROFILES_ACTIVE: test
+        MAVEN_OPTS: "-Xmx2048m"
         
     - name: Build server JAR
       working-directory: ./server
