@@ -193,6 +193,7 @@
 					<target>21</target>
 					<encoding>UTF-8</encoding>
 					<forceJavacCompilerUse>true</forceJavacCompilerUse>
+					<proc>full</proc>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -202,29 +203,11 @@
 					</annotationProcessorPaths>
 					<compilerArgs>
 						<arg>-parameters</arg>
-						<arg>-Xlint:deprecation</arg>
-						<arg>-Xlint:unchecked</arg>
+						<arg>-Aproject=${project.groupId}/${project.artifactId}</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>
-			<plugin>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok-maven-plugin</artifactId>
-				<version>1.18.20.0</version>
-				<executions>
-					<execution>
-						<phase>generate-sources</phase>
-						<goals>
-							<goal>delombok</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<sourceDirectory>src/main/java</sourceDirectory>
-					<outputDirectory>${project.build.directory}/delombok</outputDirectory>
-					<addOutputDirectory>false</addOutputDirectory>
-				</configuration>
-			</plugin>
+
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
