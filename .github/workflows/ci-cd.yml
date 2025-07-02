@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  test-client:
     name: Client tests
     runs-on: ubuntu-latest
     
@@ -32,9 +32,37 @@ jobs:
       env:
         CI: true
 
+  test-server:
+    name: Server tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'
+        java-version: '21'
+        cache: 'maven'
+        
+    - name: Setup Maven wrapper
+      working-directory: ./server
+      run: chmod +x mvnw
+      
+    - name: Run server tests with coverage
+      working-directory: ./server
+      run: ./mvnw test -Pcoverage
+      env:
+        SPRING_PROFILES_ACTIVE: test
+        
+    - name: Build server JAR
+      working-directory: ./server
+      run: ./mvnw clean package -DskipTests
+
   build-docker:
     name: Build Docker images
-    needs: test
+    needs: [test-client, test-server]
     runs-on: ubuntu-latest
     
     steps:
@@ -56,11 +84,21 @@ jobs:
       uses: docker/build-push-action@v5
       with:
         context: ./client
-        file: ./Dockerfile
+        file: ./client/Dockerfile
         push: true
         tags: |
           ol1mowski187/justdrinkjava-client:latest
           ol1mowski187/justdrinkjava-client:${{ github.sha }}
+          
+    - name: Build and push server image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./server
+        file: ./server/Dockerfile
+        push: true
+        tags: |
+          ol1mowski187/justdrinkjava-server:latest
+          ol1mowski187/justdrinkjava-server:${{ github.sha }}
           
     - name: Notify about completion
       if: always()
