@@ -92,16 +92,6 @@ jobs:
       
     - name: Setup BuildX
       uses: docker/setup-buildx-action@v3
-      
-    - name: Build and push client image
-      uses: docker/build-push-action@v5
-      with:
-        context: ./client
-        file: ./client/Dockerfile
-        push: true
-        tags: |
-          ol1mowski187/justdrinkjava-client:latest
-          ol1mowski187/justdrinkjava-client:${{ github.sha }}
           
     - name: Build and push server image
       uses: docker/build-push-action@v5
