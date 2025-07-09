@@ -86,16 +86,19 @@ jobs:
       with:
         distribution: 'temurin'
         java-version: '21'
+        cache: 'maven'
         
     - name: Setup Maven wrapper
       working-directory: ./server
-      run: chmod +x mvnw
-      
+      run: |
+        chmod +x mvnw
+        ./mvnw -N wrapper:wrapper -Dmaven=3.9.9
+        
     - name: Debug Maven and Lombok
       working-directory: ./server
       run: |
         ./mvnw --version
-        ./mvnw dependency:tree | grep lombok
+        ./mvnw dependency:tree | grep lombok || echo "Lombok not found in dependency tree"
         
     - name: Clean and prepare for Lombok
       working-directory: ./server
