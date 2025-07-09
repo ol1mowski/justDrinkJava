@@ -171,6 +171,10 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>jakarta.annotation</groupId>
+			<artifactId>jakarta.annotation-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -201,9 +205,11 @@
 					</annotationProcessorPaths>
 					<compilerArgs>
 						<arg>-parameters</arg>
+						<arg>-Xlint:-processing</arg>
 						<arg>-Aproject=${project.groupId}/${project.artifactId}</arg>
-						<arg>-proc:full</arg>
 					</compilerArgs>
+					<showWarnings>true</showWarnings>
+					<showDeprecation>true</showDeprecation>
 				</configuration>
 			</plugin>
 

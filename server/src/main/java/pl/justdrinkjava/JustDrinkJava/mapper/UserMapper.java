@@ -1,6 +1,7 @@
 package pl.justdrinkjava.JustDrinkJava.mapper;
 
 import org.springframework.stereotype.Component;
+
 import pl.justdrinkjava.JustDrinkJava.dto.UserDto;
 import pl.justdrinkjava.JustDrinkJava.entity.User;
 
@@ -15,7 +16,7 @@ public class UserMapper {
         return UserDto.builder()
                 .id(user.getId())
                 .email(user.getEmail())
-                .username(user.getUsername())
+                .username(user.getDisplayUsername())
                 .createdAt(user.getCreatedAt())
                 .build();
     }
