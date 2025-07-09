@@ -168,7 +168,7 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<version>1.18.38</version>
-			<optional>true</optional>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -187,13 +187,11 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.11.0</version>
+				<version>3.13.0</version>
 				<configuration>
 					<source>21</source>
 					<target>21</target>
 					<encoding>UTF-8</encoding>
-					<forceJavacCompilerUse>true</forceJavacCompilerUse>
-					<proc>full</proc>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.projectlombok</groupId>
@@ -204,6 +202,7 @@
 					<compilerArgs>
 						<arg>-parameters</arg>
 						<arg>-Aproject=${project.groupId}/${project.artifactId}</arg>
+						<arg>-proc:full</arg>
 					</compilerArgs>
 				</configuration>
 			</plugin>
