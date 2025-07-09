@@ -14,7 +14,6 @@ import { usePostsData } from '../usePostsData.hook';
 import type { PostDTO } from '../../types';
 import { server } from '../../../../test/mocks/server';
 
-// Disable MSW for these tests
 beforeAll(() => server.close());
 afterAll(() => server.listen({ onUnhandledRequest: 'error' }));
 

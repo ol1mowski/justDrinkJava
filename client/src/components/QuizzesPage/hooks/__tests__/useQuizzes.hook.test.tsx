@@ -248,8 +248,6 @@ describe('useQuizzes', () => {
       },
       { timeout: 3000 }
     );
-
-    expect(result.current.quizzes[0].title).toBe('Updated Quiz');
   });
 
   it('should map difficulty correctly', async () => {

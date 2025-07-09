@@ -11,6 +11,9 @@ export default defineConfig({
     setupFiles: ['./src/test/setup.ts'],
     css: true,
     reporters: ['verbose'],
+    env: {
+      VITE_API_URL: 'http://localhost:8080/api',
+    },
     coverage: {
       reporter: ['text', 'json', 'html'],
       exclude: [
