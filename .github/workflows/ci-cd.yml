@@ -32,89 +32,40 @@ jobs:
       env:
         CI: true
 
-  # test-server:
-  #   name: Server tests
-  #   runs-on: ubuntu-latest
-    
-  #   steps:
-  #   - uses: actions/checkout@v4
-    
-  #   - name: Setup Java
-  #     uses: actions/setup-java@v4
-  #     with:
-  #       distribution: 'temurin'
-  #       java-version: '21'
-        
-  #   - name: Setup Maven wrapper
-  #     working-directory: ./server
-  #     run: chmod +x mvnw
-      
-  #   - name: Clean project and dependency cache
-  #     working-directory: ./server
-  #     run: |
-  #       ./mvnw clean
-  #       ./mvnw dependency:purge-local-repository -DactTransitively=false -DreResolve=false
-      
-  #   - name: Download dependencies with Lombok
-  #     working-directory: ./server
-  #     run: ./mvnw dependency:resolve dependency:resolve-sources -U
-      
-  #   - name: Compile project with Lombok processing
-  #     working-directory: ./server
-  #     run: ./mvnw compile
-      
-  #   - name: Run server tests with coverage
-  #     working-directory: ./server
-  #     run: ./mvnw test -Pcoverage
-  #     env:
-  #       SPRING_PROFILES_ACTIVE: test
-        
-  #   - name: Build server JAR
-  #     working-directory: ./server
-  #     run: ./mvnw package -DskipTests
-
-  build-server:
-    name: Build Server Docker image
-    needs: [test-client]
+  test-server:
+    name: Server tests
     runs-on: ubuntu-latest
     
     steps:
     - uses: actions/checkout@v4
     
-    - name: Setup Java
+    - name: Setup JDK 17
       uses: actions/setup-java@v4
       with:
-        distribution: 'temurin'
         java-version: '17'
-        cache: 'maven'
+        distribution: 'temurin'
         
-    - name: Setup Maven wrapper
-      working-directory: ./server
-      run: |
-        chmod +x mvnw
-        ./mvnw -N wrapper:wrapper -Dmaven=3.9.9
+    - name: Cache Maven packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.m2
+        key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+        restore-keys: ${{ runner.os }}-m2
         
-    - name: Debug Maven and Lombok
+    - name: Run server tests
       working-directory: ./server
-      run: |
-        ./mvnw --version
-        ./mvnw dependency:tree | grep lombok || echo "Lombok not found in dependency tree"
-        
-    - name: Clean and prepare for Lombok
-      working-directory: ./server
-      run: |
-        ./mvnw clean
-        ./mvnw dependency:resolve dependency:resolve-sources -U
-      
-    - name: Compile with Lombok processing
-      working-directory: ./server
-      run: ./mvnw compile
-      
-    - name: Build server JAR
-      working-directory: ./server
-      run: ./mvnw package -DskipTests
+      run: ./mvnw test
+
+  build-and-push:
+    name: Build and push Docker image
+    runs-on: ubuntu-latest
+    needs: [test-client, test-server]
+    if: github.ref == 'refs/heads/main'
     
-    - name: Log in to Docker Hub
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Login to Docker Hub
       uses: docker/login-action@v3
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -135,8 +86,4 @@ jobs:
         tags: |
           ol1mowski187/justdrinkjava-server:latest
           ol1mowski187/justdrinkjava-server:${{ github.sha }}
-          
-    - name: Notify about completion
-      if: always()
-      run: |
-        echo "Build completed - Check GitHub Actions status" 
+        platforms: linux/amd64,linux/arm64
