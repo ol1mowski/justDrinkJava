@@ -2,6 +2,7 @@ package pl.justdrinkjava.JustDrinkJava.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -29,7 +30,8 @@ import pl.justdrinkjava.JustDrinkJava.service.CommentService;
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class CommentController {
     
-    private final CommentService commentService;
+    @Autowired
+    private CommentService commentService;
     
     @GetMapping("/post/{postId}")
     public ResponseEntity<List<CommentDTO>> getCommentsByPostId(@PathVariable Integer postId) {

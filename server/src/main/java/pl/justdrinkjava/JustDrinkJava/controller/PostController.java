@@ -2,6 +2,7 @@ package pl.justdrinkjava.JustDrinkJava.controller;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +28,8 @@ import pl.justdrinkjava.JustDrinkJava.service.PostService;
 @CrossOrigin(origins = {"http://localhost:3000", "http://localhost:5173"})
 public class PostController {
     
-    private final PostService postService;
+    @Autowired
+    private PostService postService;
     
     @GetMapping("/latest")
     public ResponseEntity<PostDTO> getLatestPost() {

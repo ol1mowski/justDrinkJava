@@ -1,24 +1,30 @@
 package pl.justdrinkjava.JustDrinkJava.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import pl.justdrinkjava.JustDrinkJava.dto.AuthResponse;
 import pl.justdrinkjava.JustDrinkJava.dto.LoginRequest;
 import pl.justdrinkjava.JustDrinkJava.dto.RegisterRequest;
 import pl.justdrinkjava.JustDrinkJava.service.AuthService;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Slf4j
 public class AuthController {
+
     
-    private final AuthService authService;
+    @Autowired
+    private AuthService authService;
     
     
     @PostMapping("/register")
