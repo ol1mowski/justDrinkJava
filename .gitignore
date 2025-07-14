@@ -1,4 +1,2 @@
 .env
 node_modules
-application.properties
-application-prod.properties

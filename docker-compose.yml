@@ -1,35 +1,50 @@
 services:
+  mysql:
+    image: mysql:8.0
+    container_name: justdrinkjava-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-root}
+      MYSQL_DATABASE: ${MYSQL_DATABASE:-justdrinkjava}
+      MYSQL_USER: ${MYSQL_USER:-appuser}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-apppassword}
+    ports:
+      - "${MYSQL_PORT:-3306}:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./server/src/main/resources/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - justdrink-network
+    command: --default-authentication-plugin=mysql_native_password
+
   server:
     build:
       context: ./server
       dockerfile: Dockerfile
+    container_name: justdrinkjava-server
     ports:
-      - "${SERVER_PORT}:8080"
+      - "${SERVER_PORT:-8080}:8080"
     environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE}
-      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL}
-      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME}
-      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-prod}
+      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:mysql://mysql:3306/justdrinkjava?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+      - SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-root}
+      - SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD:-root}
+      - APP_JWT_SECRET=${APP_JWT_SECRET:-change_this_secret_in_production_very_long_value_for_security}
+      - APP_JWT_EXPIRATION=${APP_JWT_EXPIRATION:-86400000}
+      - SERVER_PORT=${SERVER_PORT:-8080}
+      - LOGGING_LEVEL_WEB=${LOGGING_LEVEL_WEB:-WARN}
+      - LOGGING_LEVEL_SQL=${LOGGING_LEVEL_SQL:-WARN}
+      - LOGGING_LEVEL_HIBERNATE_BINDER=${LOGGING_LEVEL_HIBERNATE_BINDER:-WARN}
+      - LOGGING_LEVEL_APP=${LOGGING_LEVEL_APP:-INFO}
     depends_on:
-      - db
+      - mysql
     networks:
       - justdrink-network
+    restart: unless-stopped
 
-  db:
-    image: postgres:15-alpine
-    environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "${DB_PORT}:5432"
-    networks:
-      - justdrink-network
 
 volumes:
-  postgres_data:
+  mysql_data:
+    driver: local
 
 networks:
   justdrink-network:
