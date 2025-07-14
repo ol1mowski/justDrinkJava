@@ -59,7 +59,7 @@ jobs:
 
       - name: Build and run tests
         working-directory: ./server
-        run: ./mvnw clean install
+        run: ./mvnw clean compile test
 
   build-and-push:
     name: Build and push Docker image
