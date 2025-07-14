@@ -1,6 +1,7 @@
 package pl.justdrinkjava.JustDrinkJava.config;
 
-import lombok.RequiredArgsConstructor;
+import java.util.Arrays;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +21,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
+import lombok.RequiredArgsConstructor;
 
 @Configuration
 @EnableWebSecurity
@@ -83,7 +84,7 @@ public class SecurityConfig {
         CorsConfiguration configuration = new CorsConfiguration();
         
         String allowedOrigins = System.getProperty("app.cors.allowed-origins", 
-            "http://localhost:3000,http://localhost:5173");
+            "https://justdrinkjava.netlify.app,http://localhost:5173");
         configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
         
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));

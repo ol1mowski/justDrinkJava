@@ -51,13 +51,16 @@ export const useGitHubAuth = ({
 
         localStorage.removeItem('github_oauth_state');
 
-        const response = await fetch('/api/auth/github/callback', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code, state }),
-        });
+        const response = await fetch(
+          `${import.meta.env.VITE_API_URL}/auth/github/callback`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ code, state }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error('Błąd podczas wymiany kodu na token');
