@@ -25,7 +25,7 @@ export const NavigationItem = memo<NavigationItemProps>(
       ? `block w-full text-left px-4 py-3 rounded-xl transition-all duration-300 font-medium ${
           isActive
             ? 'text-java-orange bg-java-orange/10'
-            : 'text-java-gray hover:text-java-orange hover:bg-java-orange/5'
+            : 'text-java-gray dark:text-java-dark-text hover:text-java-orange hover:bg-java-orange/5'
         }`
       : `relative px-3 py-2 font-medium transition-all duration-300 group rounded-lg text-sm focus:outline-none ${
           isActive

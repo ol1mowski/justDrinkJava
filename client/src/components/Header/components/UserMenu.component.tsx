@@ -58,7 +58,7 @@ export const UserMenu = memo(() => {
         <div className="w-8 h-8 bg-java-orange rounded-full flex items-center justify-center">
           <UserIcon className="w-4 h-4 text-white" />
         </div>
-        <span className="text-sm font-medium text-java-gray max-w-24 truncate">
+        <span className="text-sm font-medium text-java-gray dark:text-java-dark-text max-w-24 truncate">
           {user.username}
         </span>
         <ChevronDownIcon
@@ -70,18 +70,20 @@ export const UserMenu = memo(() => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 z-50">
-          <div className="px-4 py-3 border-b border-gray-200">
-            <p className="text-sm font-medium text-java-gray break-words">
+        <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-java-dark-bg rounded-lg shadow-lg border border-gray-200 dark:border-java-dark-text/20 z-50">
+          <div className="px-4 py-3 border-b border-gray-200 dark:border-java-dark-text/20">
+            <p className="text-sm font-medium text-java-gray dark:text-java-dark-text break-words">
               {user.username}
             </p>
-            <p className="text-xs text-java-gray break-words">{user.email}</p>
+            <p className="text-xs text-java-gray dark:text-java-dark-text break-words">
+              {user.email}
+            </p>
           </div>
 
           <Link to="/account/settings" className="w-full">
             <button
               onClick={handleSettings}
-              className="w-full flex items-center px-4 py-2 text-sm text-java-gray hover:bg-java-gray/10 cursor-pointer transition-colors duration-200"
+              className="w-full flex items-center px-4 py-2 text-sm text-java-gray dark:text-java-dark-text hover:bg-java-gray/10 dark:hover:bg-java-dark-text/10 cursor-pointer transition-colors duration-200"
             >
               <Cog6ToothIcon className="w-4 h-4 mr-3" />
               Ustawienia

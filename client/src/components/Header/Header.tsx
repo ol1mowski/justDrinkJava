@@ -4,7 +4,11 @@ import { DesktopNavigation } from './components/DesktopNavigation.components';
 import { DesktopControls } from './components/DesktopControls.components';
 import { MobileControls } from './components/MobileControls.components';
 
-export const Header = memo(() => {
+interface HeaderProps {
+  onMenuOpen: () => void;
+}
+
+export const Header = memo<HeaderProps>(({ onMenuOpen }) => {
   return (
     <>
       <header
@@ -17,7 +21,7 @@ export const Header = memo(() => {
             <BrandLogo />
             <DesktopNavigation />
             <DesktopControls />
-            <MobileControls />
+            <MobileControls onMenuOpen={onMenuOpen} />
           </div>
         </div>
 
