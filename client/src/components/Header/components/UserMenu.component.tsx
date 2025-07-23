@@ -1,13 +1,11 @@
 import { memo, useState, useRef, useEffect } from 'react';
 import {
   UserIcon,
-  Cog6ToothIcon,
   ArrowRightOnRectangleIcon,
   ChevronDownIcon,
 } from '@heroicons/react/24/outline';
 import { useCurrentUser } from '../hooks/useCurrentUser.hook';
 import { useAuth } from '../../../hooks/auth/useAuth.hook';
-import { Link } from 'react-router-dom';
 
 export const UserMenu = memo(() => {
   const { data: user, isLoading } = useCurrentUser();
@@ -32,11 +30,6 @@ export const UserMenu = memo(() => {
     window.location.href = '/login';
   };
 
-  const handleSettings = () => {
-    setIsOpen(false);
-  };
-
-  // Pokaż loading spinner gdy dane się ładują
   if (isLoading) {
     return (
       <div className="w-8 h-8 bg-gray-200 rounded-full animate-pulse flex items-center justify-center">
@@ -45,7 +38,6 @@ export const UserMenu = memo(() => {
     );
   }
 
-  // Nie pokazuj menu jeśli nie ma użytkownika
   if (!user) return null;
 
   return (
@@ -79,16 +71,6 @@ export const UserMenu = memo(() => {
               {user.email}
             </p>
           </div>
-
-          <Link to="/account/settings" className="w-full">
-            <button
-              onClick={handleSettings}
-              className="w-full flex items-center px-4 py-2 text-sm text-java-gray dark:text-java-dark-text hover:bg-java-gray/10 dark:hover:bg-java-dark-text/10 cursor-pointer transition-colors duration-200"
-            >
-              <Cog6ToothIcon className="w-4 h-4 mr-3" />
-              Ustawienia
-            </button>
-          </Link>
 
           <button
             onClick={handleLogout}
