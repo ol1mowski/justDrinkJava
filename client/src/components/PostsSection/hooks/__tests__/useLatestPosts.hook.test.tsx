@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { http, HttpResponse } from 'msw';
 import { server } from '../../../../test/mocks/server';
 import { useLatestPosts } from '../useLatestPosts.hook';
-import type { PostData } from '../../../../utils/api';
+import type { PostData } from '../../../../api/types.api';
 
 vi.mock('../../../../api', () => ({
   API_BASE_URL: 'http://localhost:8080/api',

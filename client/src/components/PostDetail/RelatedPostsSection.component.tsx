@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { memo } from 'react';
 import { PostCard } from '../PostsSection/components/PostCard.component';
-import type { PostData } from '../../utils/api';
+import type { PostData } from '../../api/types.api';
 
 interface RelatedPostsSectionProps {
   posts: PostData[];

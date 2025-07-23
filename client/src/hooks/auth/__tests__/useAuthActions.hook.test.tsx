@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { useAuthActions } from '../useAuthActions.hook';
 
 // Mock authApi
-vi.mock('../../../utils/api', () => ({
+vi.mock('../../../api', () => ({
   authApi: {
     login: vi.fn(),
     register: vi.fn(),
@@ -15,7 +15,7 @@ vi.mock('../../../utils/jwt', () => ({
   getUserFromToken: vi.fn(),
 }));
 
-import { authApi } from '../../../utils/api';
+import { authApi } from '../../../api';
 import { getUserFromToken } from '../../../utils/jwt';
 
 const mockAuthApi = authApi as any;

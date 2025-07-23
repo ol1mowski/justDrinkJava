@@ -37,9 +37,8 @@ const mockPosts: PostData[] = [
     description: 'Description 1',
     createdAt: '2023-01-01T00:00:00Z',
     readTime: 5,
-    readTimeFormatted: '5 min',
     likes: 10,
-    isLikedByCurrentUser: false,
+    isLiked: false,
   },
   {
     id: 2,
@@ -54,9 +53,8 @@ const mockPosts: PostData[] = [
     description: 'Description 2',
     createdAt: '2023-01-02T00:00:00Z',
     readTime: 3,
-    readTimeFormatted: '3 min',
     likes: 15,
-    isLikedByCurrentUser: false,
+    isLiked: false,
   },
 ];
 

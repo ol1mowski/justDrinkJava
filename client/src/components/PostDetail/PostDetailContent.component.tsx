@@ -3,7 +3,7 @@ import { memo } from 'react';
 import { PostContentContainer } from '../PostContent';
 import { PostDetailMeta } from './PostDetailMeta.component';
 import { PostDetailActions } from './PostDetailActions.component';
-import type { PostData } from '../../utils/api';
+import type { PostData } from '../../api/types.api';
 import type { PostInteractions } from './hooks/usePostInteractions.hook';
 
 interface PostDetailContentProps {

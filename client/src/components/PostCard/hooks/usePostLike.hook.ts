@@ -35,7 +35,7 @@ export const usePostLike = (): UsePostLikeResult => {
 
         return {
           likes: updatedPost.likes,
-          isLikedByCurrentUser: updatedPost.isLiked || false,
+          isLikedByCurrentUser: updatedPost.isLikedByCurrentUser || false,
         };
       } catch (err) {
         const errorMessage =

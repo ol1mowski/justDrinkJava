@@ -1,7 +1,7 @@
 import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CalendarIcon, ClockIcon, UserIcon } from '@heroicons/react/24/outline';
-import type { PostData } from '../../../utils/api';
+import type { PostData } from '../../../api/types.api';
 
 interface PostCardProps {
   post: PostData;

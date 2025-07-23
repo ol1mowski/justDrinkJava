@@ -34,11 +34,13 @@ export interface PostData {
   description: string;
   imageUrl?: string;
   readTime: number;
+  readTimeFormatted: string;
   createdAt: string;
   category: CategoryData;
   user: UserData;
   likes: number;
   isLiked?: boolean;
+  isLikedByCurrentUser?: boolean;
 }
 
 export interface CategoryData {

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import type { PostData } from '../../utils/api';
+import type { PostData } from '../../api/types.api';
 
 interface SearchResultsProps {
   posts: PostData[];

@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 import { userService } from '../../../api/services.api';
-import type { ChangePasswordRequest } from '../../../utils/api';
+import type { ChangePasswordRequest } from '../../../api/types.api';
 
 interface UseChangePasswordState {
   isLoading: boolean;

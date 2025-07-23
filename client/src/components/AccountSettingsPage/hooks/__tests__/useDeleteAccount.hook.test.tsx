@@ -2,15 +2,15 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { useDeleteAccount } from '../useDeleteAccount.hook';
 
-vi.mock('../../../../utils/api', () => ({
-  apiService: {
+vi.mock('../../../../api/services.api', () => ({
+  userService: {
     deleteAccount: vi.fn(),
   },
 }));
 
-import { apiService } from '../../../../utils/api';
+import { userService } from '../../../../api/services.api';
 
-const mockApiService = apiService as any;
+const mockUserService = userService as any;
 
 Object.defineProperty(window, 'location', {
   value: {
@@ -47,7 +47,7 @@ describe('useDeleteAccount', () => {
   });
 
   it('should handle successful account deletion', async () => {
-    mockApiService.deleteAccount.mockResolvedValue({});
+    mockUserService.deleteAccount.mockResolvedValue({});
 
     const { result } = renderHook(() => useDeleteAccount());
 
@@ -55,7 +55,7 @@ describe('useDeleteAccount', () => {
       await result.current.deleteAccount();
     });
 
-    expect(mockApiService.deleteAccount).toHaveBeenCalledWith();
+    expect(mockUserService.deleteAccount).toHaveBeenCalledWith();
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(null);
     expect(result.current.success).toBe(true);
@@ -65,8 +65,8 @@ describe('useDeleteAccount', () => {
   });
 
   it('should handle API error during account deletion', async () => {
-    const errorMessage = 'Nie można usunąć konta w tym momencie';
-    mockApiService.deleteAccount.mockRejectedValue(new Error(errorMessage));
+    const errorMessage = 'Nie można usunąć konta';
+    mockUserService.deleteAccount.mockRejectedValue(new Error(errorMessage));
 
     const { result } = renderHook(() => useDeleteAccount());
 
@@ -76,7 +76,7 @@ describe('useDeleteAccount', () => {
       } catch (error) {}
     });
 
-    expect(mockApiService.deleteAccount).toHaveBeenCalledWith();
+    expect(mockUserService.deleteAccount).toHaveBeenCalledWith();
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(errorMessage);
     expect(result.current.success).toBe(false);
@@ -86,7 +86,7 @@ describe('useDeleteAccount', () => {
   });
 
   it('should handle non-Error exception during account deletion', async () => {
-    mockApiService.deleteAccount.mockRejectedValue('String error');
+    mockUserService.deleteAccount.mockRejectedValue('String error');
 
     const { result } = renderHook(() => useDeleteAccount());
 
@@ -106,7 +106,7 @@ describe('useDeleteAccount', () => {
       resolvePromise = resolve;
     });
 
-    mockApiService.deleteAccount.mockReturnValue(pendingPromise);
+    mockUserService.deleteAccount.mockReturnValue(pendingPromise);
 
     const { result } = renderHook(() => useDeleteAccount());
 
@@ -128,7 +128,7 @@ describe('useDeleteAccount', () => {
   });
 
   it('should clear state when clearState is called', async () => {
-    mockApiService.deleteAccount.mockRejectedValue(new Error('Test error'));
+    mockUserService.deleteAccount.mockRejectedValue(new Error('Test error'));
 
     const { result } = renderHook(() => useDeleteAccount());
 
@@ -152,34 +152,33 @@ describe('useDeleteAccount', () => {
   });
 
   it('should reset error and success state when starting new deletion', async () => {
+    mockUserService.deleteAccount
+      .mockRejectedValueOnce(new Error('First error'))
+      .mockResolvedValueOnce({});
+
     const { result } = renderHook(() => useDeleteAccount());
 
-    act(() => {
-      result.current.clearState();
+    await act(async () => {
+      try {
+        await result.current.deleteAccount();
+      } catch (error) {
+        // Expected to throw
+      }
     });
 
-    mockApiService.deleteAccount.mockResolvedValueOnce({});
+    expect(result.current.error).toBe('First error');
+    expect(result.current.success).toBe(false);
 
     await act(async () => {
       await result.current.deleteAccount();
     });
 
+    expect(result.current.error).toBe(null);
     expect(result.current.success).toBe(true);
-
-    mockApiService.deleteAccount.mockRejectedValueOnce(new Error('New error'));
-
-    await act(async () => {
-      try {
-        await result.current.deleteAccount();
-      } catch (error) {}
-    });
-
-    expect(result.current.success).toBe(false);
-    expect(result.current.error).toBe('New error');
   });
 
   it('should not remove token or redirect if deletion fails', async () => {
-    mockApiService.deleteAccount.mockRejectedValue(
+    mockUserService.deleteAccount.mockRejectedValue(
       new Error('Deletion failed')
     );
 

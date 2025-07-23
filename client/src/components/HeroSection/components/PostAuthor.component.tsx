@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { UserIcon } from '@heroicons/react/24/outline';
-import type { UserData } from '../../../utils/api';
+import type { UserData } from '../../../api/types.api';
 
 interface PostAuthorProps {
   user: UserData;

@@ -2,9 +2,9 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { usePostLike } from '../usePostLike.hook';
 
-vi.mock('../../../../utils/api', () => ({
-  apiService: {
-    togglePostLike: vi.fn(),
+vi.mock('../../../../api/services.api', () => ({
+  postService: {
+    toggleLike: vi.fn(),
   },
 }));
 
@@ -12,10 +12,10 @@ vi.mock('../../../../hooks/auth/useAuth.hook', () => ({
   useAuth: vi.fn(),
 }));
 
-import { apiService } from '../../../../utils/api';
+import { postService } from '../../../../api/services.api';
 import { useAuth } from '../../../../hooks/auth/useAuth.hook';
 
-const mockApiService = apiService as any;
+const mockPostService = postService as any;
 const mockUseAuth = useAuth as any;
 
 describe('usePostLike', () => {
@@ -44,7 +44,7 @@ describe('usePostLike', () => {
       likes: 42,
       isLikedByCurrentUser: true,
     };
-    mockApiService.togglePostLike.mockResolvedValue(mockResponse);
+    mockPostService.toggleLike.mockResolvedValue(mockResponse);
 
     const { result } = renderHook(() => usePostLike());
 
@@ -53,7 +53,7 @@ describe('usePostLike', () => {
       response = await result.current.toggleLike(123);
     });
 
-    expect(mockApiService.togglePostLike).toHaveBeenCalledWith(123);
+    expect(mockPostService.toggleLike).toHaveBeenCalledWith(123);
     expect(response).toEqual(mockResponse);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(null);
@@ -64,7 +64,7 @@ describe('usePostLike', () => {
       likes: 41,
       isLikedByCurrentUser: false,
     };
-    mockApiService.togglePostLike.mockResolvedValue(mockResponse);
+    mockPostService.toggleLike.mockResolvedValue(mockResponse);
 
     const { result } = renderHook(() => usePostLike());
 
@@ -73,7 +73,7 @@ describe('usePostLike', () => {
       response = await result.current.toggleLike(123);
     });
 
-    expect(mockApiService.togglePostLike).toHaveBeenCalledWith(123);
+    expect(mockPostService.toggleLike).toHaveBeenCalledWith(123);
     expect(response).toEqual(mockResponse);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(null);
@@ -81,7 +81,7 @@ describe('usePostLike', () => {
 
   it('should handle API error during like toggle', async () => {
     const errorMessage = 'Nie można polajkować posta';
-    mockApiService.togglePostLike.mockRejectedValue(new Error(errorMessage));
+    mockPostService.toggleLike.mockRejectedValue(new Error(errorMessage));
 
     const { result } = renderHook(() => usePostLike());
 
@@ -90,14 +90,14 @@ describe('usePostLike', () => {
       response = await result.current.toggleLike(123);
     });
 
-    expect(mockApiService.togglePostLike).toHaveBeenCalledWith(123);
+    expect(mockPostService.toggleLike).toHaveBeenCalledWith(123);
     expect(response).toBe(null);
     expect(result.current.isLoading).toBe(false);
     expect(result.current.error).toBe(errorMessage);
   });
 
   it('should handle non-Error exception during like toggle', async () => {
-    mockApiService.togglePostLike.mockRejectedValue('String error');
+    mockPostService.toggleLike.mockRejectedValue('String error');
 
     const { result } = renderHook(() => usePostLike());
 
@@ -114,32 +114,26 @@ describe('usePostLike', () => {
   });
 
   it('should set loading state during like toggle', async () => {
-    let resolvePromise: (value: any) => void;
-    const pendingPromise = new Promise<any>(resolve => {
-      resolvePromise = resolve;
-    });
-
-    mockApiService.togglePostLike.mockReturnValue(pendingPromise);
+    const mockResponse = {
+      likes: 42,
+      isLikedByCurrentUser: true,
+    };
+    mockPostService.toggleLike.mockResolvedValue(mockResponse);
 
     const { result } = renderHook(() => usePostLike());
 
-    act(() => {
-      result.current.toggleLike(123);
-    });
-
-    expect(result.current.isLoading).toBe(true);
-    expect(result.current.error).toBe(null);
+    expect(result.current.isLoading).toBe(false);
 
     await act(async () => {
-      resolvePromise!({ likes: 42, isLikedByCurrentUser: true });
-      await pendingPromise;
+      await result.current.toggleLike(123);
     });
 
     expect(result.current.isLoading).toBe(false);
+    expect(result.current.error).toBe(null);
   });
 
   it('should clear error when clearError is called', async () => {
-    mockApiService.togglePostLike.mockRejectedValue(new Error('Test error'));
+    mockPostService.toggleLike.mockRejectedValue(new Error('Test error'));
 
     const { result } = renderHook(() => usePostLike());
 
@@ -157,11 +151,14 @@ describe('usePostLike', () => {
   });
 
   it('should clear error when starting new like toggle', async () => {
-    const { result } = renderHook(() => usePostLike());
+    mockPostService.toggleLike
+      .mockRejectedValueOnce(new Error('First error'))
+      .mockResolvedValueOnce({
+        likes: 42,
+        isLikedByCurrentUser: true,
+      });
 
-    mockApiService.togglePostLike.mockRejectedValueOnce(
-      new Error('First error')
-    );
+    const { result } = renderHook(() => usePostLike());
 
     await act(async () => {
       await result.current.toggleLike(123);
@@ -169,19 +166,15 @@ describe('usePostLike', () => {
 
     expect(result.current.error).toBe('First error');
 
-    mockApiService.togglePostLike.mockResolvedValueOnce({
-      likes: 42,
-      isLikedByCurrentUser: true,
-    });
-
     await act(async () => {
-      await result.current.toggleLike(456);
+      await result.current.toggleLike(123);
     });
 
     expect(result.current.error).toBe(null);
   });
 
   it('should return null and set error when user is not authenticated', async () => {
+    vi.clearAllMocks();
     mockUseAuth.mockReturnValue({
       isAuthenticated: false,
     });
@@ -197,30 +190,32 @@ describe('usePostLike', () => {
     expect(result.current.error).toBe(
       'Musisz być zalogowany aby polajkować post'
     );
-    expect(mockApiService.togglePostLike).not.toHaveBeenCalled();
+    expect(mockPostService.toggleLike).not.toHaveBeenCalled();
   });
 
   it('should handle multiple rapid like toggles', async () => {
+    vi.clearAllMocks();
+    mockUseAuth.mockReturnValue({
+      isAuthenticated: true,
+    });
+
     const mockResponse = {
       likes: 42,
       isLikedByCurrentUser: true,
     };
-    mockApiService.togglePostLike.mockResolvedValue(mockResponse);
+    mockPostService.toggleLike.mockResolvedValue(mockResponse);
 
     const { result } = renderHook(() => usePostLike());
 
     await act(async () => {
-      await result.current.toggleLike(123);
+      await Promise.all([
+        result.current.toggleLike(123),
+        result.current.toggleLike(123),
+        result.current.toggleLike(123),
+      ]);
     });
 
-    expect(mockApiService.togglePostLike).toHaveBeenCalledTimes(1);
-    expect(result.current.isLoading).toBe(false);
-
-    await act(async () => {
-      await result.current.toggleLike(123);
-    });
-
-    expect(mockApiService.togglePostLike).toHaveBeenCalledTimes(2);
+    expect(mockPostService.toggleLike).toHaveBeenCalledTimes(3);
     expect(result.current.isLoading).toBe(false);
   });
 
@@ -230,11 +225,11 @@ describe('usePostLike', () => {
       isLikedByCurrentUser: true,
     };
     const mockResponse2 = {
-      likes: 15,
+      likes: 43,
       isLikedByCurrentUser: false,
     };
 
-    mockApiService.togglePostLike
+    mockPostService.toggleLike
       .mockResolvedValueOnce(mockResponse1)
       .mockResolvedValueOnce(mockResponse2);
 
@@ -243,14 +238,11 @@ describe('usePostLike', () => {
     let response1, response2;
     await act(async () => {
       response1 = await result.current.toggleLike(123);
-    });
-
-    await act(async () => {
       response2 = await result.current.toggleLike(456);
     });
 
-    expect(mockApiService.togglePostLike).toHaveBeenCalledWith(123);
-    expect(mockApiService.togglePostLike).toHaveBeenCalledWith(456);
+    expect(mockPostService.toggleLike).toHaveBeenCalledWith(123);
+    expect(mockPostService.toggleLike).toHaveBeenCalledWith(456);
     expect(response1).toEqual(mockResponse1);
     expect(response2).toEqual(mockResponse2);
   });

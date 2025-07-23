@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { CalendarIcon, ClockIcon } from '@heroicons/react/24/outline';
-import type { CategoryData } from '../../../utils/api';
+import type { CategoryData } from '../../../api/types.api';
 
 interface PostMetadataProps {
   category?: CategoryData | null;

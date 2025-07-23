@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { authApi } from '../../utils/api';
+import { authApi } from '../../api';
 import { getUserFromToken } from '../../utils/jwt';
 import type { LoginRequest, RegisterRequest, AuthUser } from './types';
 
@@ -53,9 +53,9 @@ export const useAuthActions = (
           const userFromToken = getUserFromToken(token);
           const authUser: AuthUser = {
             id: user.id,
-            email: userFromToken?.email || user.email,
-            username: userFromToken?.username || user.username,
-            createdAt: user.createdAt,
+            email: userFromToken?.email || user.email || '',
+            username: userFromToken?.username || user.username || '',
+            createdAt: user.createdAt || '',
           };
 
           onLoginSuccess(authUser, token);
@@ -66,7 +66,6 @@ export const useAuthActions = (
           return {
             success: false,
             error: errorMessage,
-            errors: response.errors,
           };
         }
       } catch (error) {
@@ -91,9 +90,9 @@ export const useAuthActions = (
           const userFromToken = getUserFromToken(token);
           const authUser: AuthUser = {
             id: user.id,
-            email: userFromToken?.email || user.email,
-            username: userFromToken?.username || user.username,
-            createdAt: user.createdAt,
+            email: userFromToken?.email || user.email || '',
+            username: userFromToken?.username || user.username || '',
+            createdAt: user.createdAt || '',
           };
 
           onRegisterSuccess(authUser, token);
@@ -104,7 +103,6 @@ export const useAuthActions = (
           return {
             success: false,
             error: errorMessage,
-            errors: response.errors,
           };
         }
       } catch (error) {
