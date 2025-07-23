@@ -5,8 +5,6 @@ export { AuthHeader } from './components/AuthHeader.component';
 export { AuthTabs } from './components/AuthTabs.component';
 export { LoginForm } from './components/LoginForm.component';
 export { RegisterForm } from './components/RegisterForm.component';
-export { SocialLogin } from './components/SocialLogin.component';
-export { GoogleAuthButton } from './components/GoogleAuthButton.component';
 export { BenefitsSection } from './components/BenefitsSection.component';
 export { BenefitItem } from './components/BenefitItem.component';
 

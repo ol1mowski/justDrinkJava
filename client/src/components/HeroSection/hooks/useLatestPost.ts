@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
-import { apiService } from '../../../utils/api';
-import type { PostData } from '../../../utils/api';
+import { postService } from '../../../api/services.api';
+import type { PostData } from '../../../api/types.api';
 
 interface UseLatestPostState {
   data: PostData | null;
@@ -22,7 +22,7 @@ export const useLatestPost = () => {
       try {
         setState(prev => ({ ...prev, loading: true, error: null }));
 
-        const data = await apiService.getLatestPost();
+        const data = await postService.getLatest();
 
         if (isMounted) {
           setState({
@@ -55,7 +55,7 @@ export const useLatestPost = () => {
   const refetch = async () => {
     try {
       setState(prev => ({ ...prev, loading: true, error: null }));
-      const data = await apiService.getLatestPost();
+      const data = await postService.getLatest();
       setState({
         data,
         loading: false,

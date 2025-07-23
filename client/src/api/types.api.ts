@@ -1,24 +1,3 @@
-export interface ApiResponse<T> {
-  data?: T;
-  status: 'success' | 'error';
-  message?: string;
-  errors?: Record<string, string>;
-}
-
-export interface PaginatedResponse<T> {
-  items: T[];
-  total: number;
-  page: number;
-  limit: number;
-  hasMore: boolean;
-}
-
-export interface AuthResponse {
-  token: string;
-  type: string;
-  user: UserData;
-}
-
 export interface LoginRequest {
   email: string;
   password: string;
@@ -29,20 +8,37 @@ export interface RegisterRequest {
   password: string;
 }
 
-export interface GoogleAuthRequest {
-  credential: string;
-}
-
-export interface GitHubAuthRequest {
-  code: string;
-  state: string;
+export interface AuthResponse {
+  token: string;
+  type: string;
+  user: UserData;
+  expiresIn?: number;
 }
 
 export interface UserData {
   id: number;
-  username: string;
   email: string;
+  username: string;
+  createdAt?: string;
+}
+
+export interface ApiResponse<T> {
+  status: 'success' | 'error';
+  data?: T;
+  message?: string;
+}
+
+export interface PostData {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl?: string;
+  readTime: number;
   createdAt: string;
+  category: CategoryData;
+  user: UserData;
+  likes: number;
+  isLiked?: boolean;
 }
 
 export interface CategoryData {
@@ -50,30 +46,21 @@ export interface CategoryData {
   name: string;
 }
 
-export interface PostData {
-  id: number;
-  user: UserData;
-  category?: CategoryData;
-  title: string;
-  description: string;
-  createdAt: string;
-  readTime: number;
-  readTimeFormatted: string;
-  imageUrl?: string;
-  likes: number;
-  isLikedByCurrentUser: boolean;
-}
-
 export interface SearchPostsRequest {
-  query: string;
-  limit?: number;
-  offset?: number;
+  query?: string;
+  categoryId?: number;
+  page?: number;
+  size?: number;
+  sortBy?: string;
+  sortOrder?: 'asc' | 'desc';
 }
 
 export interface SearchPostsResponse {
-  posts: PostData[];
-  total: number;
-  hasMore: boolean;
+  content: PostData[];
+  totalElements: number;
+  totalPages: number;
+  currentPage: number;
+  size: number;
 }
 
 export interface UpdateProfileRequest {
@@ -82,7 +69,7 @@ export interface UpdateProfileRequest {
 
 export interface UpdateProfileResponse {
   user: UserData;
-  newToken?: string;
+  token?: string;
 }
 
 export interface ChangePasswordRequest {
@@ -91,70 +78,47 @@ export interface ChangePasswordRequest {
   confirmPassword: string;
 }
 
-export interface DeleteAccountRequest {
-  confirmation: string;
-}
-
 export interface StandardResponse {
   status: string;
   message: string;
 }
 
-// Quiz types
-export interface QuizContentData {
-  id: number;
-  quizId: number;
-  question: string;
-  options: string[];
-  correctAnswer?: string;
-  createdAt: string;
-  updatedAt: string;
-}
-
 export interface QuizData {
   id: number;
-  userId: number;
   title: string;
   description: string;
   category: string;
   difficulty: 'EASY' | 'MEDIUM' | 'HARD';
   timeLimit: number;
   createdAt: string;
-  updatedAt: string;
-  questions?: QuizContentData[];
+  user: UserData;
+}
+
+export interface QuizContentData {
+  id: number;
+  question: string;
+  options: string[];
+  correctAnswer: string;
 }
 
 export interface QuizAnswerRequest {
   quizId: number;
-  answers: Record<number, string[]>;
-  timeSpent: number;
+  answers: { questionId: number; selectedAnswer: string }[];
 }
 
 export interface QuizResultData {
   quizId: number;
-  quizTitle: string;
   score: number;
   totalQuestions: number;
   correctAnswers: number;
   timeSpent: number;
-  results: QuizQuestionResult[];
-}
-
-export interface QuizQuestionResult {
-  questionId: number;
-  question: string;
-  userAnswers: string[];
-  correctAnswer: string;
-  isCorrect: boolean;
-  explanation?: string;
+  completedAt: string;
 }
 
 export interface QuizListResponse {
   content: QuizData[];
   totalElements: number;
   totalPages: number;
+  currentPage: number;
   size: number;
-  number: number;
-  first: boolean;
-  last: boolean;
 }

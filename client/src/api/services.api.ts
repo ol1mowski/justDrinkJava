@@ -1,12 +1,10 @@
-import { httpClient } from './http-client.api';
+import { httpClient } from './httpClient.api';
 import { removeAuthToken } from './base.api';
 import type {
   ApiResponse,
   AuthResponse,
   LoginRequest,
   RegisterRequest,
-  GoogleAuthRequest,
-  GitHubAuthRequest,
   PostData,
   SearchPostsRequest,
   SearchPostsResponse,
@@ -29,14 +27,6 @@ export const authService = {
 
   register: async (userData: RegisterRequest): Promise<AuthResponse> => {
     return httpClient.post<AuthResponse>('/auth/register', userData);
-  },
-
-  googleAuth: async (googleData: GoogleAuthRequest): Promise<AuthResponse> => {
-    return httpClient.post<AuthResponse>('/auth/google', googleData);
-  },
-
-  githubAuth: async (githubData: GitHubAuthRequest): Promise<AuthResponse> => {
-    return httpClient.post<AuthResponse>('/auth/github', githubData);
   },
 
   logout: (): void => {
@@ -64,8 +54,11 @@ export const postService = {
   search: async (request: SearchPostsRequest): Promise<SearchPostsResponse> => {
     return httpClient.post<SearchPostsResponse>('/posts/search', {
       query: request.query,
-      limit: request.limit || 10,
-      offset: request.offset || 0,
+      page: request.page || 0,
+      size: request.size || 10,
+      categoryId: request.categoryId,
+      sortBy: request.sortBy,
+      sortOrder: request.sortOrder,
     });
   },
 

@@ -1,10 +1,10 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { apiService } from '../../../utils/api';
+import { userService } from '../../../api/services.api';
 import type {
   UserData,
   UpdateProfileRequest,
   UpdateProfileResponse,
-} from '../../../utils/api';
+} from '../../../api/types.api';
 import { getTokenFromStorage, isTokenExpired } from '../../../utils/jwt';
 
 export const USER_QUERY_KEY = ['currentUser'] as const;
@@ -17,7 +17,7 @@ export const useCurrentUser = () => {
       if (!token || isTokenExpired(token)) {
         throw new Error('Brak ważnego tokenu');
       }
-      return apiService.getCurrentUser();
+      return userService.getCurrent();
     },
     enabled: (() => {
       const token = getTokenFromStorage();
@@ -40,13 +40,13 @@ export const useUpdateProfile = () => {
     mutationFn: async (
       request: UpdateProfileRequest
     ): Promise<UpdateProfileResponse> => {
-      return apiService.updateProfile(request);
+      return userService.updateProfile(request);
     },
     onSuccess: (data: UpdateProfileResponse) => {
       queryClient.setQueryData(USER_QUERY_KEY, data.user);
 
-      if (data.newToken) {
-        localStorage.setItem('accessToken', data.newToken);
+      if (data.token) {
+        localStorage.setItem('accessToken', data.token);
         console.log('🔄 Token zaktualizowany po zmianie nazwy użytkownika');
       }
 

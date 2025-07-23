@@ -1,4 +1,4 @@
-import { httpClient } from './http-client.api';
+import { httpClient } from './httpClient.api';
 
 export interface UpdateScoreRequest {
   userId: number;

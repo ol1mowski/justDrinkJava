@@ -11,21 +11,21 @@ export interface RegisterFormData {
 }
 
 export interface LoginFormProps {
-  onSubmit: (data: LoginFormData) => void;
+  onSubmit?: (data: LoginFormData) => void;
   isLoading?: boolean;
   error?: string;
 }
 
 export interface RegisterFormProps {
-  onSubmit: (data: RegisterFormData) => void;
+  onSubmit?: (data: RegisterFormData) => void;
   isLoading?: boolean;
   error?: string;
 }
 
-export interface SocialLoginProps {
-  onGoogleLogin: (user: any, token: string) => Promise<void>;
-  onGithubLogin: () => void;
+export interface AuthFormProps {
+  onSubmit: (data: LoginFormData | RegisterFormData) => void;
   isLoading?: boolean;
+  error?: string;
 }
 
 export interface AuthTabsProps {
@@ -34,7 +34,7 @@ export interface AuthTabsProps {
 }
 
 export interface AuthHeaderProps {
-  isRegisterMode: boolean;
+  isRegisterMode?: boolean;
 }
 
 export interface LoginActionsProps {
