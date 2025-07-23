@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { apiService } from '../../../utils/api';
+import { userService } from '../../../api/services.api';
 
 interface UseDeleteAccountState {
   isLoading: boolean;
@@ -23,7 +23,7 @@ export const useDeleteAccount = (): UseDeleteAccountReturn => {
     setState({ isLoading: true, error: null, success: false });
 
     try {
-      await apiService.deleteAccount();
+      await userService.deleteAccount();
       setState({ isLoading: false, error: null, success: true });
 
       localStorage.removeItem('accessToken');

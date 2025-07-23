@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { apiService } from '../../../utils/api';
+import { postService } from '../../../api/services.api';
 import { useAuth } from '../../../hooks/auth/useAuth.hook';
 
 export interface UsePostLikeResult {
@@ -31,11 +31,11 @@ export const usePostLike = (): UsePostLikeResult => {
       clearError();
 
       try {
-        const updatedPost = await apiService.togglePostLike(postId);
+        const updatedPost = await postService.toggleLike(postId);
 
         return {
           likes: updatedPost.likes,
-          isLikedByCurrentUser: updatedPost.isLikedByCurrentUser,
+          isLikedByCurrentUser: updatedPost.isLiked || false,
         };
       } catch (err) {
         const errorMessage =

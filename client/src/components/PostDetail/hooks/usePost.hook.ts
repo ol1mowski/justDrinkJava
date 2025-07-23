@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { apiService } from '../../../utils/api';
-import type { PostData } from '../../../utils/api';
+import { postService } from '../../../api/services.api';
+import type { PostData } from '../../../api/types.api';
 
 export interface UsePostOptions {
   enabled?: boolean;
@@ -23,7 +23,7 @@ export const usePost = (
   const query = useQuery({
     queryKey: ['post', postId],
     queryFn: async () => {
-      return await apiService.getPostById(postId);
+      return await postService.getById(postId);
     },
     enabled: options.enabled !== false && !!postId,
     staleTime: options.staleTime ?? 5 * 60 * 1000,

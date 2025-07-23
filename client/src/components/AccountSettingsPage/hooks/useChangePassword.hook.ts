@@ -1,5 +1,5 @@
 import { useState, useCallback } from 'react';
-import { apiService } from '../../../utils/api';
+import { userService } from '../../../api/services.api';
 import type { ChangePasswordRequest } from '../../../utils/api';
 
 interface UseChangePasswordState {
@@ -24,7 +24,7 @@ export const useChangePassword = (): UseChangePasswordReturn => {
     setState({ isLoading: true, error: null, success: false });
 
     try {
-      await apiService.changePassword(request);
+      await userService.changePassword(request);
       setState({ isLoading: false, error: null, success: true });
     } catch (error) {
       setState({
